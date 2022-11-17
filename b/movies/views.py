@@ -101,3 +101,59 @@ def my_reviews(request, my_pk):
         review_list = Review.objects.all().filter(user_id=my_pk)
         serializer = ReviewSerializer(review_list, many=True)
         return Response(serializer.data)
+
+
+
+
+
+
+# @require_POST
+# def likes(request, article_pk):
+#     if request.user.is_authenticated:
+#         article = Article.objects.get(pk=article_pk)
+
+#         # 좋아요 추가할지 취소할지 무슨 기준으로 if문을 작성할까?
+#         # 현재 게시글에 좋아요를 누른 유저 목록에 현재 좋아요를 요청하는 유저가 있는지 없는지를 확인
+#         # if request.user in article.like_users.all():
+        
+#         # 현재 게시글에 좋아요를 누른 유저중에 현재 좋아요를 요청하는 유저를 검색해서 존재하는지를 확인 
+#         if article.like_users.filter(pk=request.user.pk).exists():
+#             # 좋아요 취소 (remove)
+#             article.like_users.remove(request.user)
+#         else:
+#             # 좋아요 추가 (add)
+#             article.like_users.add(request.user)
+#         return redirect('articles:index')
+#     return redirect('accounts:login')
+    
+
+@api_view(['POST'])
+# title=movie_title로 해야하나?
+def movie_like(request, my_pk, movie_pk):
+  movie = get_object_or_404(Movie, pk=movie_pk)
+  me = get_object_or_404(get_user_model(), pk=my_pk)
+  if me.like_movies.filter(pk=movie.pk).exists():
+      me.like_movies.remove(movie.pk)
+      is_like = False
+      
+  else:
+      me.like_movies.add(movie.pk)
+      is_like = True
+  
+  return Response(is_like)
+
+@api_view(['POST'])
+def review_like(request, my_pk, review_pk):
+  review = get_object_or_404(Movie, pk=review_pk)
+  me = get_object_or_404(get_user_model(), pk=my_pk)
+  if me.like_reviews.filter(pk=review.pk).exists():
+      me.like_reviews.remove(review.pk)
+      is_like = False
+      
+  else:
+      me.like_reviews.add(review.pk)
+      is_like = True
+  
+  return Response(is_like)
+
+# Response로 True or False를 보내는게 맞는지? 고민

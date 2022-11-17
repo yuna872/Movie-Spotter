@@ -43,7 +43,7 @@ export default {
     },
     getMovies() {
       axios({
-        methods: 'get',
+        method: 'get',
         url: `${API_URL}/movies/`
       })
       .then((res)=>{
