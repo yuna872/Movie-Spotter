@@ -56,8 +56,10 @@ def reviews(request, movie_pk):
     else:
         movie = get_object_or_404(Movie, pk=movie_pk)
         serializer = ReviewSerializer(data=request.data)
+        # request.data._mutable = True
+        # request.data['movie'] = "example@mail.com"
+        # request.data._mutable = False
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
             serializer.save(movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
