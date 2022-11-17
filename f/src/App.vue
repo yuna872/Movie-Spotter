@@ -19,6 +19,7 @@
   </div>
 </template>
 
+<script src="lodash.js"></script>
 <script>
 export default {
   name: 'App',
