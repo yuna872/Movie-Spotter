@@ -4,7 +4,7 @@
 <br><br><br>
 
 # MOVIE SPOTTER
-![logo](../image/logo.png)
+![logo](../image/logo.png){: width="500" height="500"}
 <hr>
 
 ## 업무분담
