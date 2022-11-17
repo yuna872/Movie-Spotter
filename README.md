@@ -1,6 +1,10 @@
-# MOVIE SPOTTER
 
-## Team : 최김박 프로젝트
+# 👨‍👧‍👧 Team : 최김박 프로젝트
+<hr>
+<br><br><br>
+
+# MOVIE SPOTTER
+![logo](../image/logo.png)
 <hr>
 
 ## 업무분담
@@ -24,15 +28,15 @@
 - 검색 키워드를 실시간으로 파악하여 검색어를 자동 완성해주는 기능
 - 실시간으로 해당하는 영화 목록을 사용자에게 보여줌
 
-## 데이터 베이스 모델링 (ERD)
+## 🛠 데이터 베이스 모델링 (ERD)
 ![erd](../image/erd.png)
 <br>
 
-## 사이트 맵
+## 🗺 사이트 맵
 ![sitemap](../image/sitemap.png)
 <br>
 
-## UX/UI 설계
+## 🎨 UX/UI 설계
 ![uxui](../image/uxui.png)
 <br>
 
