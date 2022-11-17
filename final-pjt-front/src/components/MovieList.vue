@@ -31,20 +31,15 @@
 </template>
 
 <script>
-import axios from 'axios'
 import MovieItem from '@/components/MovieItem';
-
-const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name : 'MovieList',
   components: {
     MovieItem,
   },
-  data() {
-    return {
-      movies: null,
-    }
+  props:{
+    movies : Array,
   },
   computed: {
     newMovies() {
@@ -74,24 +69,6 @@ export default {
       }).slice(20)
     },
   },
-  methods: {
-    getMovies() {
-      axios({
-        methods: 'get',
-        url: `${API_URL}/movies/`,
-      })
-      .then((res)=>{
-        // 평점을 기준으로 모든 영화에 대하여 내림차순 정렬
-        this.movies = res.data.sort(function (a, b){
-          return b['vote_average'] - a['vote_average']
-        })
-      })
-      .catch((err)=>{console.log(err)})
-    }
-  },
-  created() {
-    this.getMovies()
-  }
 }
 </script>
 
