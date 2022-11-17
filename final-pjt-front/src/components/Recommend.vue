@@ -1,6 +1,6 @@
 <template>
-  <div class="movie-list">
-    <h3>Movie List 컴포넌트</h3>
+  <div class="recommend">
+    <h3>로그인된 사용자에게 보여질 영화 추천 컴포넌트</h3>
     <MovieItem/>
     <MovieItem/>
     <MovieItem/>
@@ -11,10 +11,11 @@
 import MovieItem from '@/components/MovieItem';
 
 export default {
-  name : 'MovieList',
+  name: 'Recommend',
   components: {
     MovieItem,
   }
+
 }
 </script>
 
