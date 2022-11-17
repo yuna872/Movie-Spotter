@@ -9,9 +9,27 @@
       <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
       <!-- <router-link :to="{ name : 'Userinfo', params: {id: user.id }}">My Page</router-link> -->
     </nav>
-    <router-view/>
+    <router-view @login="login"/>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  data: function () {
+    return {
+      isLogin : localStorage.getItem('jwt') ? localStorage.getItem('jwt') : false
+    }
+  },
+  methods: {
+    login() {
+      this.isLogin = true
+      console.log(this.isLogin)
+    }
+  },
+}
+</script>
+
 
 <style>
 #app {
