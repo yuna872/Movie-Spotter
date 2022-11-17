@@ -1,8 +1,13 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Movies</router-link> |
+      <router-link to="/accounts/login">Login</router-link> |
+      <router-link to="/accounts/signup">Signup</router-link> |
+      <router-link to="/firsttime">FirstTime</router-link> |
+      <router-link to="/aboutus">About Us</router-link>
+      <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
+      <!-- <router-link :to="{ name : 'Userinfo', params: {id: user.id }}">My Page</router-link> -->
     </nav>
     <router-view/>
   </div>
