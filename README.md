@@ -25,15 +25,15 @@
 - 실시간으로 해당하는 영화 목록을 사용자에게 보여줌
 
 ## 데이터 베이스 모델링 (ERD)
-![erd]('./image/erd.png')
+![erd]('../image/erd.png')
 <br>
 
 ## 사이트 맵
-![sitemap]('./image/sitemap.png')
+![sitemap]('../image/sitemap.png')
 <br>
 
 ## UX/UI 설계
-![uxui]('./image/uxui.png')
+![uxui]('../image/uxui.png')
 <br>
 
 ## 영화 추천 알고리즘 (기술적 설명)
