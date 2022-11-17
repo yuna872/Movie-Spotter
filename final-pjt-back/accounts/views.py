@@ -17,6 +17,7 @@ def signup(request):
         # 비밀번호 해싱
         if serializer.validated_data.get('password') == serializer.validated_data.get('password2'):
             user = serializer.save()
+            print(user)
             user.set_password(password)
             user.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

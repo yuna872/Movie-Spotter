@@ -9,9 +9,13 @@
       <input type="password" id="password" v-model="password"><br>
 
       <label for="password2"> password confirmation : </label>
-      <input type="password" id="password2" v-model="password2">
+      <input type="password" id="password2" v-model="password2"><br>
+
+      <label for="nickname"> nickname : </label>
+      <input type="text" id="nickname" v-model="nickname">
       
-      <input type="submit" value="SignUp">
+      
+      <input type="submit" value="가입">
     </form>
   </div>
 </template>
@@ -26,6 +30,7 @@ export default {
       username: null,
       password: null,
       password2: null,
+      nickname: null,
     }
   },
 
@@ -52,6 +57,7 @@ export default {
           username: this.username,
           password: this.password,
           password2: this.password2,
+          nickname: this.nickname,
         },
       })
         .then(() => {

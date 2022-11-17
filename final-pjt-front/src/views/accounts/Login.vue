@@ -10,6 +10,12 @@
 
       <input type="submit" value="logIn">
     </form>
+    <div>
+      <hr>
+      <p>회원이 아니라면?</p>
+      <router-link :to="{ name: 'signup' }">회원가입</router-link>
+
+    </div>
   </div>
 </template>
 
@@ -43,6 +49,10 @@ export default {
           localStorage.setItem('jwt', token)
           this.$router.push({name:'movies'})
           this.$emit('login')
+        })
+        .catch((err) => {
+          console.log(err)
+          alert('회원정보가 존재하지 않습니다! 회원가입 해주세요.')
         })
     }
   }
