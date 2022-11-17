@@ -5,7 +5,7 @@
 
 # MOVIE SPOTTER
 
-![logo](../image/logo.png){: width="500px" height="500px"}
+![logo](../image/logo.png)
 
 <hr>
 
