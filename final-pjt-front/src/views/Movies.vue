@@ -1,6 +1,13 @@
 <template>
   <div class="movies">
-    <h3>영화 목록 페이지</h3>
+    <div>
+      <h3>MOIVE SPOTTER</h3>
+      <form @submit.prevent="searchInputData">
+        <input type="text" v-model="inputData"><br>
+        <button>검색하기</button>
+      </form>
+    </div>
+    
     <LoginRequest/>
     <Recommend/>
     <MovieList/>
@@ -8,9 +15,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import LoginRequest from '@/components/LoginRequest';
 import MovieList from '@/components/MovieList';
 import Recommend from '@/components/Recommend';
+
+const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'Movies',
@@ -18,6 +29,19 @@ export default {
     LoginRequest,
     MovieList,
     Recommend,
+  },
+  data() {
+    return {
+      inputData : null,
+    }
+  },
+  methods:{
+    // searchInputData() {
+    //   axios({
+    //     method: 'get',
+    //     url: `${API_URL}`
+    //   })
+    // }
   }
 }
 </script>
