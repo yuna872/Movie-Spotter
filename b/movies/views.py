@@ -45,23 +45,28 @@ def movie_detail(request, movie_pk):
     #         return Response(serializer.data)
 
 
-@api_view(['GET','POST'])
+@api_view(['GET'])
 def reviews(request, movie_pk):
     # 리뷰 조회
     movie = get_object_or_404(Movie, pk=movie_pk)
-    if request.method == 'GET':
-        reviews = movie.review_set.all()
-        serializer = ReviewSerializer(reviews, many=True)
-        return Response(serializer.data)
+    reviews = movie.review_set.all()
+    serializer = ReviewSerializer(reviews, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def review_create(request, movie_pk, now_user_pk):
     # 리뷰 create
-    else:
-        serializer = ReviewSerializer(data=request.data)
-        # request.data._mutable = True
-        # request.data['movie'] = "example@mail.com"
-        # request.data._mutable = False
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(movie=movie)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    user = get_object_or_404(get_user_model(), pk=now_user_pk)
+
+    serializer = ReviewSerializer(data=request.data)
+    # request.data._mutable = True
+    # request.data['movie'] = "example@mail.com"
+    # request.data._mutable = False
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=user, movie=movie)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET', 'DELETE', 'PUT'])

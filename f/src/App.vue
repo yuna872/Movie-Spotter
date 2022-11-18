@@ -12,6 +12,7 @@
         <router-link :to="{ name : 'firsttime' }">FirstTime</router-link>
         <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
         <router-link :to="{ name : 'userinfo', params: { id: user_id } }">My Page</router-link>
+
       </div>
     </nav>
     <router-view @login="login"/>
@@ -41,8 +42,10 @@ export default {
     }
   },
   created() {
-    const token = localStorage.getItem('jwt')
-    this.user_id = jwt_decode(token).user_id
+    if (this.isLogin == true) {
+      const token = localStorage.getItem('jwt')
+      this.user_id = jwt_decode(token).user_id
+    }
 
   }
 }

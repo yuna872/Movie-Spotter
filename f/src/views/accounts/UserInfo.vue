@@ -4,6 +4,7 @@
     <p>{{userinfo.username}}님 안녕하세요?</p>
     <p>제 닉네임은 {{userinfo.nickname}} 입니다.</p>
     <p>팔로워: {{userinfo.followers.length}} | 팔로잉: {{userinfo.followings.length}}</p>
+    
   </div>
 </template>
 

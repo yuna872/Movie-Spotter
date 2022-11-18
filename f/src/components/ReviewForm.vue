@@ -10,7 +10,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
+import jwt_decode from "jwt-decode"
+
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -27,9 +29,11 @@ export default {
   },
   methods: {
     postReview() {
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
       axios({
         method: 'post',
-        url: `${API_URL}/movies/${this.movie?.id}/reviews/`,
+        url: `${API_URL}/movies/${this.movie?.id}/reviews/${now_user_id}/`,
         data: {
           rank: this.star,
           content: this.content,
