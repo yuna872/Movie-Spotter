@@ -37,7 +37,6 @@ export default {
       movie : null,
     }
   },
- 
   computed: {
     backdropUrl() {
       return `https://image.tmdb.org/t/p/w500/${this.movie?.backdrop_path}`
@@ -57,7 +56,7 @@ export default {
   },
   created() {
       this.getMovieDetail()
-    }
+  }
 }
 </script>
 
