@@ -35,17 +35,10 @@ def login(request):
 
 
 @api_view(['GET'])
-def profile(request, username):
-    person = get_object_or_404(get_user_model(), username=username)
-    context = {
-        'username': person.username,
-        'nickname': person.nickname,
-        'followers': person.followers,
-        'followings': person.followings,
-        'followers_count': person.followers.count(),
-        'followings_count': person.followings.count(),
-    }
-    return JsonResponse(context)
+def profile(request, user_pk):
+    person = get_object_or_404(get_user_model(), pk=user_pk)
+    serializer = UserSerializer(person)
+    return Response(serializer.data)
 
 
 @api_view(['POST'])

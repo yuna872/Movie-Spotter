@@ -10,9 +10,9 @@
         <router-link :to="{ name : 'login' }">Login</router-link>
         <router-link :to="{ name : 'signup' }">Signup</router-link>
         <router-link :to="{ name : 'firsttime' }">FirstTime</router-link>
+        <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
+        <router-link :to="{ name : 'userinfo', params: { id: user_id } }">My Page</router-link>
       </div>
-      <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
-      <!-- <router-link :to="{ name : 'Userinfo', params: {id: user.id }}">My Page</router-link> -->
     </nav>
     <router-view @login="login"/>
     <div class="about-us-btn" @click="toAboutUs"></div>
@@ -21,11 +21,14 @@
 
 <script src="lodash.js"></script>
 <script>
+import jwt_decode from "jwt-decode"
+
 export default {
   name: 'App',
   data: function () {
     return {
-      isLogin : localStorage.getItem('jwt') ? localStorage.getItem('jwt') : false
+      isLogin : localStorage.getItem('jwt') ? localStorage.getItem('jwt') : false,
+      user_id : null
     }
   },
   methods: {
@@ -37,6 +40,11 @@ export default {
       this.$router.push({ name : 'aboutus' })
     }
   },
+  created() {
+    const token = localStorage.getItem('jwt')
+    this.user_id = jwt_decode(token).user_id
+
+  }
 }
 </script>
 
