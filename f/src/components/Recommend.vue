@@ -25,5 +25,10 @@ export default {
 </script>
 
 <style>
+.recommend {
+  width : 100vw;
+  height : 100vh;
+  border : solid 2px green;
+}
 
 </style>

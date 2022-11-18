@@ -1,10 +1,16 @@
 <template>
   <div class="movies">
-    <div class="banner" :style="{'backgroundImage':`url(${bannerImageUrl})`}">
+    <!-- :style="{'backgroundImage':`url(${bannerImageUrl})`}" -->
+    <div class="banner" >
       <h3>MOVE SPOTTER</h3>
       <form @submit.prevent="searchInputData">
         <input type="text" v-model="inputData" placeholder="영화 제목으로 검색하세요."><br>
         <button>검색하기</button>
+        <MovieItem
+          v-for="(movie, index) in displayArray"
+          :key="`d-${index}`"
+          :movie="movie"
+        /> 
       </form>
     </div>
     <LoginRequest/>
@@ -20,6 +26,7 @@ import _ from 'lodash';
 import LoginRequest from '@/components/LoginRequest';
 import MovieList from '@/components/MovieList';
 import Recommend from '@/components/Recommend';
+import MovieItem from '@/components/MovieItem';
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -29,18 +36,20 @@ export default {
     LoginRequest,
     MovieList,
     Recommend,
+    MovieItem,
   },
   data() {
     return {
-      movies : null,
+      movies : [],
       inputData : null,
       bannerImageUrl : null,
+      displayArray : [],
     }
   },
   methods: {
-    getBannerImage() {
-      console.log(_.sample(this.movies))
-    },
+    // getBannerImage() {
+    //   console.log(_.sample(this.movies))
+    // },
     getMovies() {
       axios({
         method: 'get',
@@ -53,11 +62,27 @@ export default {
         })
       })
       .catch((err)=>{console.log(err)})
+    },
+    searchInputData() {
+      this.displayArray = this.movies.filter((movie)=>{
+        return movie.title.includes(this.inputData) 
+      }) 
     }
+  },
+  watch: {
+    inputData: function() {
+      if (this.inputData.trim().length == 0) {
+        this.displayArray = []
+      }
+      else {
+        this.searchInputData()
+      }
+    }
+
   },
   created() {
     this.getMovies()
-    this.getBannerImage()
+    // this.getBannerImage()
   }
 }
 </script>

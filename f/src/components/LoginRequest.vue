@@ -11,5 +11,10 @@ export default {
 </script>
 
 <style>
+.login-request {
+  width : 100vw;
+  height : 100vh;
+  border : solid 2px blue;
+}
 
 </style>
