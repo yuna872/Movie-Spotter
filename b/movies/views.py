@@ -48,13 +48,13 @@ def movie_detail(request, movie_pk):
 @api_view(['GET','POST'])
 def reviews(request, movie_pk):
     # 리뷰 조회
+    movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'GET':
-        reviews = get_list_or_404(Review, pk=movie_pk)
+        reviews = movie.review_set.all()
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
     # 리뷰 create
     else:
-        movie = get_object_or_404(Movie, pk=movie_pk)
         serializer = ReviewSerializer(data=request.data)
         # request.data._mutable = True
         # request.data['movie'] = "example@mail.com"
