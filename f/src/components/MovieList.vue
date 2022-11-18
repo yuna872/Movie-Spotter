@@ -1,14 +1,14 @@
 <template>
   <!-- 로그인, 비로그인 사용자에게 공통적으로 추천하는 영화들 -->
   <div class="movie-list">
-    <h3>Movie List 컴포넌트</h3>
-    <!-- <div class="movie-list-box">
+    <div>따끈따끈 최신작 TOP 20</div>
+    <div class="movie-list-box">
       <MovieItem 
         v-for="(movie,index) in newMovies"
         :key="`n-${index}`"
         :movie="movie"
       />
-    </div> -->
+    </div>
     <div>투표수가 가장 많은</div>
     <div class="movie-list-box">
       <MovieItem 
@@ -48,12 +48,23 @@ export default {
     movies : Array,
   },
   computed: {
-    // newMovies() {
-    //   return this.movies?.map((movie)=>{
-    //     movie['release_date'] = parseInt(movie?.['release_date'].replace(/\-/g,''))
-    //     return movie
-    //   })
-    // },
+    newMovies() {
+      const tmpArr1 = this.movies?.map((movie)=>{
+        movie['release_date'] = parseInt(movie?.['release_date'].replace(/\-/g,''))
+        return movie
+      })
+      
+      tmpArr1?.sort(function (a, b){
+        return b['release_date'] - a['release_date']
+      })
+
+      if (tmpArr1.length <= 20) {
+        return tmpArr1.slice(0, tmpArr1.length)
+      } else {
+        return tmpArr1.slice(0, 20)
+      }
+      
+    },
     // 국내 영화
     koreanMovies(){
       const tmpArr2 = this.movies?.filter((movie)=>{

@@ -1,6 +1,5 @@
 <template>
   <div class="movies">
-    
     <div class="banner">
       <h3>MOVE SPOTTER</h3>
       <form @submit.prevent="searchInputData">

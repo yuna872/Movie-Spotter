@@ -1,20 +1,19 @@
 <template>
   <div class="detail">
     <div class="detail-box" :style="{'backgroundImage':`url(${backdropUrl})`}">
-    {{ movie?.title }}>
+      {{ movie?.title }}
       {{ movie?.title }}
       {{ movie?.['vote_average'] }}
       {{ movie?.adult }}
       {{ movie?.['release_date'] }}
       {{ movie?.['original_language'] }}
-      {{ movie?.genres }}
+
     </div>
     <div class="review-box">
-      <ReviewForm :movie="movie"/>
       <ReviewList :movie="movie"/>
     </div>
     <div class="similar-box">
-      <SimilarList/>
+      <SimilarList :genres="movie?.genres"/>
     </div>
   </div>
 </template>
@@ -22,7 +21,6 @@
 <script>
 import axios from 'axios'
 
-import ReviewForm from '@/components/ReviewForm';
 import ReviewList from '@/components/ReviewList';
 import SimilarList from '@/components/SimilarList';
 
@@ -31,7 +29,6 @@ const API_URL = 'http://127.0.0.1:8000'
 export default {
   name : 'Detail',
   components: {
-    ReviewForm,
     ReviewList,
     SimilarList,
   },
@@ -40,6 +37,7 @@ export default {
       movie : null,
     }
   },
+ 
   computed: {
     backdropUrl() {
       return `https://image.tmdb.org/t/p/w500/${this.movie?.backdrop_path}`
@@ -55,11 +53,11 @@ export default {
         this.movie = res.data
       })
       .catch((err)=>{console.log(err)})
-    }
+    },
   },
   created() {
-    this.getMovieDetail()
-  }
+      this.getMovieDetail()
+    }
 }
 </script>
 
