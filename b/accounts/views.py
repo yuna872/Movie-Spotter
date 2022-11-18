@@ -21,7 +21,7 @@ def signup(request):
         # 비밀번호 해싱
         if serializer.validated_data.get('password') == serializer.validated_data.get('password2'):
             user = serializer.save()
-            print(user)
+            # print(user)
             user.set_password(password)
             user.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -34,9 +34,23 @@ def login(request):
     pass
 
 
-@api_view(['POST'])
-def follow(request, username):
+@api_view(['GET'])
+def profile(request, username):
     person = get_object_or_404(get_user_model(), username=username)
+    context = {
+        'username': person.username,
+        'nickname': person.nickname,
+        'followers': person.followers,
+        'followings': person.followings,
+        'followers_count': person.followers.count(),
+        'followings_count': person.followings.count(),
+    }
+    return JsonResponse(context)
+
+
+@api_view(['POST'])
+def follow(request, user_pk):
+    person = get_object_or_404(get_user_model(), pk=user_pk)
     user = request.user
 
     if person != user:
@@ -48,6 +62,6 @@ def follow(request, username):
             follow = False
         follow_status = {
             'follow': follow,
-            'count': person.followers.count(),
+            'followers': person.followers,
         }
         return JsonResponse(follow_status)

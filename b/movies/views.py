@@ -73,32 +73,32 @@ def review_detail(request, review_pk):
 
     # 삭제 및 수정 기능
     # 로그인이 상태며
-    if request.user.is_authenticated:
+    # if request.user.is_authenticated:
         # 리뷰를 쓴 사람이면
-        if request.user == review.user:
-            if request.method == 'DELETE':
-                review.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+        # if request.user == review.user:
+    if request.method == 'DELETE':
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-            elif request.method == 'PUT':
-                serializer = ReviewSerializer(review, data=request.data)
-                if serializer.is_valid(raise_exception=True):
-                    serializer.save()
-                    return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ReviewSerializer(review, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
 
-        else:
-            print('')
-            # 작성자만 수정할 수 있습니다.
-    else:
-        print('')
-        # 로그인을 해주세요
+    #     else:
+    #         print('')
+    #         # 작성자만 수정할 수 있습니다.
+    # else:
+    #     print('')
+    #     # 로그인을 해주세요
         
 
 # 내가 쓴 리뷰들을 반환하는 함수
 @api_view(['GET'])
-def my_reviews(request, my_pk):
+def my_reviews(request, user_pk):
     if request.method == 'GET':
-        review_list = Review.objects.all().filter(user_id=my_pk)
+        review_list = Review.objects.all().filter(user_id=user_pk)
         serializer = ReviewSerializer(review_list, many=True)
         return Response(serializer.data)
 
@@ -129,9 +129,9 @@ def my_reviews(request, my_pk):
 
 @api_view(['POST'])
 # title=movie_title로 해야하나?
-def movie_like(request, my_pk, movie_pk):
+def movie_likes(request, user_pk, movie_pk):
   movie = get_object_or_404(Movie, pk=movie_pk)
-  me = get_object_or_404(get_user_model(), pk=my_pk)
+  me = get_object_or_404(get_user_model(), pk=user_pk)
   if me.like_movies.filter(pk=movie.pk).exists():
       me.like_movies.remove(movie.pk)
       is_like = False
@@ -143,9 +143,9 @@ def movie_like(request, my_pk, movie_pk):
   return Response(is_like)
 
 @api_view(['POST'])
-def review_like(request, my_pk, review_pk):
-  review = get_object_or_404(Movie, pk=review_pk)
-  me = get_object_or_404(get_user_model(), pk=my_pk)
+def review_likes(request, user_pk, review_pk):
+  review = get_object_or_404(Review, pk=review_pk)
+  me = get_object_or_404(get_user_model(), pk=user_pk)
   if me.like_reviews.filter(pk=review.pk).exists():
       me.like_reviews.remove(review.pk)
       is_like = False
