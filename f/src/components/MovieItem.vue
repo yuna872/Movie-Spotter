@@ -13,7 +13,12 @@ export default {
   },
   computed:{
     posterUrl() {
-      return `https://image.tmdb.org/t/p/w500/${this.movie?.poster_path}`
+      // 포스터 이미지가 있는 경우에만
+      if (this.movie?.poster_path != undefined){
+        return `https://image.tmdb.org/t/p/w500/${this.movie?.poster_path}`
+      } else {
+        return 'https://ifh.cc/g/8DmqKt.png'
+      }
     }
   },
   methods: {
@@ -26,8 +31,8 @@ export default {
 
 <style>
 .movie-item {
-  width : 15vw;
-  height : 25vw;
+  width : 16vw;
+  height : 24vw;
   background-size: cover;
   margin-top : 10px;
 }

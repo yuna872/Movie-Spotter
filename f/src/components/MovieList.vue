@@ -9,6 +9,7 @@
         :movie="movie"
       />
     </div> -->
+    <div>투표수가 가장 많은</div>
     <div class="movie-list-box">
       <MovieItem 
         v-for="(movie,index) in hotMovies"
@@ -16,6 +17,7 @@
         :movie="movie"
       />
     </div>
+    <div>국내영화 TOP 20</div>
     <div class="movie-list-box">
       <MovieItem 
         v-for="(movie,index) in koreanMovies"
@@ -23,6 +25,7 @@
         :movie="movie"
       />
     </div>
+    <div>해외영화 TOP 20</div>
     <div class="movie-list-box">
       <MovieItem 
         v-for="(movie,index) in internationalMovies"
@@ -53,23 +56,41 @@ export default {
     // },
     // 국내 영화
     koreanMovies(){
-      return this.movies?.filter((movie)=>{
+      const tmpArr2 = this.movies?.filter((movie)=>{
             return movie['original_language'] === 'ko'
       })
+
+      if (tmpArr2.length <= 20) {
+        return tmpArr2.slice(0, tmpArr2.length)
+      } else {
+        return tmpArr2.slice(0, 20)
+      }
     },
     // 해외영화
     internationalMovies() {
-      return this.movies?.filter((movie)=>{
+       const tmpArr3 =  this.movies?.filter((movie)=>{
             return movie['original_language'] != 'ko'
-      }).slice(20)
+      })
+
+      if (tmpArr3.length <= 20) {
+        return tmpArr3.slice(0, tmpArr3.length)
+      } else {
+        return tmpArr3.slice(0, 20)
+      }
     },
     hotMovies() {
       // 리스트 깊은 복사
       const tmpMovies = this.movies?.slice()
       // 투표수를 기준으로 모든 영화에 대하여 내림차순 정렬
-      return tmpMovies?.sort(function (a, b){
+      tmpMovies?.sort(function (a, b){
         return b['vote_count'] - a['vote_count']
-      }).slice(20)
+      })
+
+      if (tmpMovies.length <= 20) {
+        return tmpMovies.slice(0, tmpMovies.length)
+      } else {
+        return tmpMovies.slice(0, 20)
+      }
     },
   },
 }
@@ -80,7 +101,7 @@ export default {
   border : solid 2px blue;
   display: flex;
   flex-direction: column;
-  width : 80vw;
+  width : 85%;
   margin: auto;
 }
 

@@ -1,21 +1,27 @@
 <template>
   <div class="movies">
-    <!-- :style="{'backgroundImage':`url(${bannerImageUrl})`}" -->
-    <div class="banner" >
+    
+    <div class="banner">
       <h3>MOVE SPOTTER</h3>
       <form @submit.prevent="searchInputData">
-        <input type="text" v-model="inputData" placeholder="영화 제목으로 검색하세요."><br>
+        <input type="text"  @input="inputData=$event.target.value" placeholder="영화 제목으로 검색하세요."><br>
         <button>검색하기</button>
-        <MovieItem
-          v-for="(movie, index) in displayArray"
-          :key="`d-${index}`"
-          :movie="movie"
-        /> 
+        <div class="display-array-container">
+          <div class="display-array-box">
+          <MovieItem
+            v-for="(movie, index) in displayArray"
+            :key="`d-${index}`"
+            :movie="movie"
+          /> 
+        </div> 
+        </div>
       </form>
     </div>
     <LoginRequest/>
     <Recommend :movies="movies"/>
-    <MovieList :movies="movies"/>
+    <div class="movies-box">
+      <MovieList :movies="movies"/>
+    </div>
   </div>
 </template>
 
@@ -88,7 +94,7 @@ export default {
 </script>
 
 <style>
-/* 배너 페이지 */
+/* 배너 & 검색 페이지 */
 .banner {
   width : 100vw;
   height : 100vh;
@@ -102,7 +108,26 @@ export default {
   );
   border: solid 2px red;
 }
+
+.display-array-container {
+  width : 80vw;
+  border: solid 2px red;
+  margin: auto;
+}
+
+.display-array-box {
+  width : 90%;
+  /* display: flex;
+  flex-wrap: wrap; */
+}
+
 /* 로그인 제안(?) 페이지 */
 /* 추천 알고리즘 페이지 */
 /* 공통 추천 영화 페이지 */
+.movies-box{
+  width: 100vw;
+  height: 200vh;
+}
+
+
 </style>
