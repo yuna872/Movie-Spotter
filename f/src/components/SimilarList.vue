@@ -35,7 +35,6 @@ export default {
         url: `${API_URL}/movies/`
       })
       .then((res)=>{
-        console.log(this.genres,'🚕')
         // 평점을 기준으로 모든 영화에 대하여 내림차순 정렬
         const movieAll = res.data.sort(function (a, b){
           return b['vote_average'] - a['vote_average']

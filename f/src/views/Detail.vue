@@ -7,10 +7,10 @@
       {{ movie?.adult }}
       {{ movie?.['release_date'] }}
       {{ movie?.['original_language'] }}
-
     </div>
     <div class="review-box">
-      <ReviewList :movie="movie"/>
+      <ReviewForm @add-review="getReviews" :movie="movie"/>
+      {{ reviews }}
     </div>
     <div class="similar-box">
       <SimilarList :genres="movie?.genres"/>
@@ -21,7 +21,7 @@
 <script>
 import axios from 'axios'
 
-import ReviewList from '@/components/ReviewList';
+import ReviewForm from '@/components/ReviewForm';
 import SimilarList from '@/components/SimilarList';
 
 const API_URL = 'http://127.0.0.1:8000'
@@ -29,12 +29,14 @@ const API_URL = 'http://127.0.0.1:8000'
 export default {
   name : 'Detail',
   components: {
-    ReviewList,
+    ReviewForm,
     SimilarList,
   },
   data() {
     return {
       movie : null,
+      movie_id : null,
+      reviews: [],
     }
   },
   computed: {
@@ -50,12 +52,25 @@ export default {
       })
       .then((res)=>{
         this.movie = res.data
+        console.log(this.movie, '🚍')
+      })
+      .catch((err)=>{console.log(err)})
+    },
+    getReviews() {
+      this.movie_id = this.$route.params.id
+      axios({
+        method: 'get',
+        url: `${API_URL}/movies/${this.movie_id}/reviews/`
+      })
+      .then((res)=>{
+        this.reviews = res.data
       })
       .catch((err)=>{console.log(err)})
     },
   },
   created() {
       this.getMovieDetail()
+      this.getReviews()
   }
 }
 </script>
