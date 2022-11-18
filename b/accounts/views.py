@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer
+from .serializers import UserSerializer, SignupSerializer
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
@@ -10,7 +10,7 @@ from django.http.response import JsonResponse
 
 @api_view(['POST'])
 def signup(request):
-    serializer = UserSerializer(data=request.data)
+    serializer = SignupSerializer(data=request.data)
     password = request.data.get('password')
     # password2 = request.data.get('password2')
 

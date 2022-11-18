@@ -6,3 +6,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'nickname','followers','followings',)
+
+
+class SignupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('username', 'nickname',)
+        
