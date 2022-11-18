@@ -11,6 +11,11 @@ export default {
   props: {
     movie : Object,
   },
+  beforeRouteUpdate(to, from, next){
+    console.log(to.params)
+    this.movie = to.params.movie
+    next()
+  },
   computed:{
     posterUrl() {
       // 포스터 이미지가 있는 경우에만

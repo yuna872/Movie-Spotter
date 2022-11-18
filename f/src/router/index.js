@@ -39,7 +39,8 @@ const routes = [
   {
     path: '/:id',
     name: 'detail',
-    component: Detail
+    component: Detail,
+
   },
   {
     path: '/accounts/:id',

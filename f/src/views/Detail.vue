@@ -35,9 +35,15 @@ export default {
   data() {
     return {
       movie : null,
-      movie_id : null,
+      movie_id : this.$route.params.id,
       reviews: [],
     }
+  },
+  beforeRouteUpdate(to, from, next){
+    console.log(to.params.id)
+    this.movie_id = to.params.id
+    this.getMovieDetail()
+    next()
   },
   computed: {
     backdropUrl() {
@@ -48,7 +54,7 @@ export default {
     getMovieDetail() {
       axios({
         method : 'get',
-        url : `${API_URL}/movies/${this.$route.params.id}`
+        url : `${API_URL}/movies/${this.movie_id}`
       })
       .then((res)=>{
         this.movie = res.data

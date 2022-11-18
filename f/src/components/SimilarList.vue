@@ -2,22 +2,28 @@
   <div class="similar-list">
     <h3>비슷한 콘텐츠 컴포넌트</h3>
     {{ genres }}
-    {{ similarList }}
-    <!-- <MovieItem/> -->
+    <!-- {{ similarList }} -->
+    <div class="similar-list-box">
+      <MovieItem
+        v-for="(movie, index) in similarList"
+        :key="`s-${index}`"
+        :movie="movie"
+      />
+    </div>
   </div>
 </template>
  
 <script>
 import axios from 'axios';
 
-// import MovieItem from '@/components/MovieItem';
+import MovieItem from '@/components/MovieItem';
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name : 'SimilarList',
   components: {
-    // MovieItem,
+    MovieItem,
   },
   props: {
     genres:Array,
@@ -40,16 +46,16 @@ export default {
           return b['vote_average'] - a['vote_average']
         })
 
-        while (this.similarList.length < 20) {
-          movieAll.forEach((movie) => {
-            
-            for (const genre of this.genres) {
-              if (this.genres.includes(genre)) {
-                this.similarList.push(movie)
-                break;
-              }
-            }
-          });
+        this.similarList = movieAll.filter((movie)=>{
+          for (const genre of this.genres) {
+            return movie.genres.includes(genre)
+          }
+        })
+
+        if (this.similarList.length <= 20) {
+          return this.similarList.slice(0, this.similarList.length)
+        } else {
+          return this.similarList.slice(0, 20)
         }
       })
       .catch((err)=>{console.log(err)})
@@ -62,5 +68,10 @@ export default {
 </script>
 
 <style>
-
+.similar-list-box{
+  width : 85vw;
+  margin : auto;
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>
