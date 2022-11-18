@@ -117,8 +117,8 @@ export default {
 
 .display-array-box {
   width : 90%;
-  /* display: flex;
-  flex-wrap: wrap; */
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* 로그인 제안(?) 페이지 */
