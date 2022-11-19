@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Genre(models.Model):
     name = models.CharField(max_length=50)
-
+    
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     overview = models.TextField()
@@ -16,6 +16,11 @@ class Movie(models.Model):
     release_date = models.DateField()
     poster_path = models.CharField(max_length=128)
     backdrop_path = models.CharField(max_length=128)
+    video = models.CharField(max_length=128)
+    director = models.CharField(max_length=50)
+    first_actor = models.CharField(max_length=50)
+    second_actor = models.CharField(max_length=50)
+    third_actor = models.CharField(max_length=50)
     genres = models.ManyToManyField(Genre, related_name='movie_genres')
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
 
