@@ -1,30 +1,29 @@
 <template>
   <div class="login-request" :style="{'backgroundImage':`url(${backdropUrl})`}">
-    <h3>비로그인 사용자에게 보여질 로그인 요청 배너 페이지</h3>
+    <div class="login-request-box">
+      <div>MOVIE SPOTTER가 처음이세요?</div>
+      <div>지금 가입하시면 당신에게 딱 맞는 영화를 추천해드려요~</div>
+      <button @click="goSignup">Sign Up</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name : 'LoginRequest',
-  data() {
-    return {
-      randomMovie : null,
-    }
+  props: {
+    randomMovie : Object,
   },
   computed: {
     backdropUrl() {
       return `https://image.tmdb.org/t/p/original/${this.randomMovie?.backdrop_path}`
     }
   },
-  // methods: {
-  //   getRandomMovie(){
-
-  //   }
-  // },
-  // created: {
-  //   getRandomMovie()
-  // }
+  methods: {
+    goSignup() {
+      this.$router.push({name : 'signup'})
+    }
+  }
 }
 </script>
 
@@ -33,6 +32,9 @@ export default {
   width : 100vw;
   height : 100vh;
   border : solid 2px blue;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 </style>

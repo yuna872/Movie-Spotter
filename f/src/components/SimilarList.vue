@@ -1,8 +1,6 @@
 <template>
   <div class="similar-list">
     <h3>비슷한 콘텐츠 컴포넌트</h3>
-    {{ genres }}
-    <!-- {{ similarList }} -->
     <div class="similar-list-box">
       <MovieItem
         v-for="(movie, index) in similarList"

@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <nav>
-      <div class="nav-left">
+      <div class="nav-left" @click="toHome">
         <img src="@/assets/logo.png" class="nav-logo">
         <div class="nav-title">Movie Spotter</div>
       </div>
       <div class="nav-right">
-        <router-link :to="{ name : 'movies' }">Movies</router-link>
+        <router-link :to="{ name : 'movies' }">Home</router-link>
         <router-link :to="{ name : 'login' }">Login</router-link>
         <router-link :to="{ name : 'signup' }">Signup</router-link>
         <router-link :to="{ name : 'firsttime' }">FirstTime</router-link>
@@ -32,18 +32,20 @@ export default {
   name: 'App',
   data: function () {
     return {
-      isLogin : localStorage.getItem('jwt') ? localStorage.getItem('jwt') : false,
+      isLogin : localStorage.getItem('jwt') ? true : false,
       user_id : null
     }
   },
   methods: {
     login() {
       this.isLogin = true
-      console.log(this.isLogin)
     },
     toAboutUs() {
       this.$router.push({ name : 'aboutus' })
     },
+    toHome() {
+      this.$router.push({ name : 'movies' })
+    }
   },
   created() {
     if (this.isLogin == true) {
@@ -76,6 +78,7 @@ nav {
   justify-content: space-between;
   background-color: #343440;
   color : white;
+  cursor: pointer;
 }
 
 nav a {
