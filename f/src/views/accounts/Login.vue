@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    logIn: function () {
+    logIn() {
       axios({
         method: 'post',
         headers: {

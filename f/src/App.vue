@@ -11,6 +11,7 @@
         <router-link :to="{ name : 'signup' }">Signup</router-link>
         <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
         <router-link :to="{ name : 'userinfo', params: { id: user_id } }">My Page</router-link>
+        <button @click='logout'>logout</button>
       </div>
     </nav>
     <router-view class="router-view" @login="login"/>
@@ -44,7 +45,14 @@ export default {
     },
     toHome() {
       this.$router.push({ name : 'movies' })
-    }
+    },
+    logout() {
+      const token = localStorage.getItem('jwt')
+      if (token) {
+        localStorage.removeItem('jwt')
+        this.$router.push({ name: 'login' })
+      }
+    },
   },
   created() {
     if (this.isLogin == true) {
