@@ -1,23 +1,34 @@
 <template>
   <div class="movies">
     <div class="banner">
-      <h3>MOVE SPOTTER</h3>
-      <form @submit.prevent="searchInputData">
-        <input type="text"  @input="inputData=$event.target.value" placeholder="영화 제목으로 검색하세요."><br>
-        <button>검색하기</button>
-        <div class="display-array-container">
-          <div class="display-array-box">
-          <MovieItem
-            v-for="(movie, index) in displayArray"
-            :key="`d-${index}`"
-            :movie="movie"
-          /> 
-        </div> 
-        </div>
-      </form>
+      <div class="banner-items">
+        <h3>MOVE SPOTTER</h3>
+        <form @submit.prevent="searchInputData">
+          <input 
+            type="text"  
+            @input="inputData=$event.target.value" 
+            placeholder="영화 제목으로 검색하세요.">
+          <button>검색하기</button>
+          <div class="display-array-container">
+            <div class="display-array-box">
+            <MovieItem
+              v-for="(movie, index) in displayArray"
+              :key="`d-${index}`"
+              :movie="movie"
+            /> 
+          </div> 
+          </div>
+        </form>
+      </div>
+      
     </div>
-    <LoginRequest/>
-    <Recommend :movies="movies"/>
+    <!-- 비로그인 사용자에게 보여줄 페이지 -->
+    <LoginRequest v-if="!isLogin"/>
+    <!-- 로그인된 사용자에게 보여줄 페이지 -->
+    <Recommend 
+      v-if="isLogin"
+      :movies="movies"
+    />
     <div class="movies-box">
       <MovieList :movies="movies"/>
     </div>
@@ -50,6 +61,9 @@ export default {
       bannerImageUrl : null,
       displayArray : [],
     }
+  },
+  props: {
+    isLogin : String,
   },
   methods: {
     // getBannerImage() {
@@ -97,21 +111,20 @@ export default {
 .banner {
   width : 100vw;
   height : 100vh;
-  background: linear-gradient(
-    to left,
-      rgba(20, 20, 20, 0) 10%,
-      rgba(20, 20, 20, 0.25) 25%,
-      rgba(20, 20, 20, 0.5) 50%,
-      rgba(20, 20, 20, 0.75) 75%,
-      rgba(20, 20, 20, 1) 100%
-  );
+}
+
+.banner-items {
+  display: flex;
+  flex-direction: column;
+  width : 70%;
+  margin : 20vh auto;
   border: solid 2px red;
+  
 }
 
 .display-array-container {
-  width : 80vw;
+  width : 100%;
   border: solid 2px red;
-  margin: auto;
 }
 
 .display-array-box {

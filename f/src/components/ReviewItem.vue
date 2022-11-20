@@ -1,6 +1,8 @@
 <template>
   <div class="review-item">
-    <p @click="goProfile">리뷰쓴이 : {{ review.writer }}</p>
+    <div @click="goProfile">{{ review.writer }}님 작성</div>
+    <div>{{ review.content }}</div>
+    <div>{{ review.rank }}</div>
   </div>
 </template>
 
