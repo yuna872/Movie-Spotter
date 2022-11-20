@@ -33,10 +33,11 @@ export default {
       const now_user_id = jwt_decode(token).user_id
       axios({
         method: 'post',
-        url: `${API_URL}/movies/${this.movie?.id}/reviews/${now_user_id}/`,
+        url: `${API_URL}/movies/${this.movie?.id}/reviews/`,
         data: {
           rank: this.star,
           content: this.content,
+          user_id: now_user_id
         }
       })
       .then(()=>{

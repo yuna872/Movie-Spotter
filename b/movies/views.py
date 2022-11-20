@@ -2,7 +2,10 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 # Authentication Decorators
-# from rest_framework.decorators import authentication_classes
+# from rest_framework.decorators import authentication_classes, permission_classes
+# from rest_framework.permissions import IsAuthenticated
+
+
 from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import MovieSerializer, ReviewSerializer
@@ -45,29 +48,33 @@ def movie_detail(request, movie_pk):
     #         return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def reviews(request, movie_pk):
     # 리뷰 조회
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    reviews = movie.review_set.all()
-    serializer = ReviewSerializer(reviews, many=True)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        reviews = movie.review_set.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+    else:
+        # 리뷰 create
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        user = get_object_or_404(get_user_model(), pk=request.data['user_id'])
+        serializer = ReviewSerializer(data=request.data)
+        # print('설마 reqeust.data에 있다고???', request, request.data)
+        # request.data._mutable = True
+        # request.data['movie'] = "example@mail.com"
+        # request.data._mutable = False
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=user, movie=movie)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['POST'])
-def review_create(request, movie_pk, now_user_pk):
-    # 리뷰 create
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    user = get_object_or_404(get_user_model(), pk=now_user_pk)
 
-    serializer = ReviewSerializer(data=request.data)
-    # request.data._mutable = True
-    # request.data['movie'] = "example@mail.com"
-    # request.data._mutable = False
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=user, movie=movie)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+# @api_view(['POST'])
+# # @permission_classes([IsAuthenticated])
+# def review_create(request, movie_pk):
+    
 
 @api_view(['GET', 'DELETE', 'PUT'])
 def review_detail(request, review_pk):
