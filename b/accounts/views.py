@@ -46,8 +46,8 @@ def follow(request, user_pk):
     if person != user:
         if person.followers.filter(pk=user.pk).exists():
             person.followers.remove(user)
-            is_follow = True
+            is_followed = False
         else:
             person.followers.add(user)
-            is_follow = False
-        return Response(is_follow)
+            is_followed = True
+        return Response(is_followed)

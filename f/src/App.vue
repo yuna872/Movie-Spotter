@@ -57,7 +57,7 @@ export default {
       const token = localStorage.getItem('jwt')
       this.user_id = jwt_decode(token).user_id
     }
-
+    
   }
 }
 </script>
