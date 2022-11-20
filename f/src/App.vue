@@ -9,7 +9,6 @@
         <router-link :to="{ name : 'movies' }">Home</router-link>
         <router-link :to="{ name : 'login' }">Login</router-link>
         <router-link :to="{ name : 'signup' }">Signup</router-link>
-        <router-link :to="{ name : 'firsttime' }">FirstTime</router-link>
         <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
         <router-link :to="{ name : 'userinfo', params: { id: user_id } }">My Page</router-link>
         <button @click='logout'>logout</button>
