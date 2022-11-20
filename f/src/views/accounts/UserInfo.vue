@@ -25,7 +25,8 @@ export default {
     const token = localStorage.getItem('jwt')
     axios({
         method: 'get',
-        url: `${API_URL}/accounts/${jwt_decode(token).user_id}`,
+        // 이거는 유나랑......
+        url: `${API_URL}/accounts/3`,
         headers: {
           'Authorization' : `Bearer ${token}`
         }

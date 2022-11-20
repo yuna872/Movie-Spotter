@@ -12,10 +12,8 @@ def signup(request):
     serializer = SignupSerializer(data=request.data)
     password = request.data.get('password')
     # password2 = request.data.get('password2')
-
     # if password != password2:
     #     return Response({'error': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
-    
     if serializer.is_valid(raise_exception=True):
         # 비밀번호 해싱
         if serializer.validated_data.get('password') == serializer.validated_data.get('password2'):
@@ -43,17 +41,13 @@ def profile(request, user_pk):
 @api_view(['POST'])
 def follow(request, user_pk):
     person = get_object_or_404(get_user_model(), pk=user_pk)
-    user = request.user
+    user = get_object_or_404(get_user_model(), pk=request.data['user_id'])
 
     if person != user:
         if person.followers.filter(pk=user.pk).exists():
             person.followers.remove(user)
-            follow = True
+            is_follow = True
         else:
             person.followers.add(user)
-            follow = False
-        follow_status = {
-            'follow': follow,
-            'followers': person.followers,
-        }
-        return JsonResponse(follow_status)
+            is_follow = False
+        return Response(is_follow)

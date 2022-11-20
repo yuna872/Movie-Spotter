@@ -22,6 +22,7 @@ export default {
     return {
       star : null,
       content : null,
+      modal: false,
     }
   },
   props: {
@@ -46,10 +47,25 @@ export default {
       })
       .catch((err)=>{console.log(err)})
     },
+    modalToggle() {
+      this.$emit('modal-toggle')
+    }
   },
 }
+
 </script>
 
 <style>
+/* 모달창 */
+.review-form {
+  background-color:rgba(0,0,0,.3); 
+
+  justify-content:center; 
+  align-items:center;    
+  position:fixed;                      
+  display:none; 
+  padding:15px; 
+
+}
 
 </style>

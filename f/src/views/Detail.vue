@@ -9,8 +9,21 @@
       {{ movie?.['original_language'] }}
     </div>
     <div class="review-box">
-      <ReviewForm @add-review="getReviews" :movie="movie"/>
+      <button id="show"  @click="modalToggle">팝업열기</button>
+      <ReviewForm 
+        @modal-toggle="modalToggle" 
+        v-if="is_show" 
+        @add-review="getReviews" 
+        :movie="movie"/>
       {{ reviews }}
+    </div>
+    <div class="유나야 고쳐줘">
+      <h1>유나야 고쳐줘</h1>
+      <ReviewItem
+        v-for="(review, index) in reviews"
+        :key="index"
+        :review="review"
+      />
     </div>
     <div class="similar-box">
       <SimilarList :genres="movie?.genres"/>
@@ -22,7 +35,9 @@
 import axios from 'axios'
 
 import ReviewForm from '@/components/ReviewForm';
+import ReviewItem from '@/components/ReviewItem';
 import SimilarList from '@/components/SimilarList';
+
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -30,6 +45,7 @@ export default {
   name : 'Detail',
   components: {
     ReviewForm,
+    ReviewItem,
     SimilarList,
   },
   data() {
@@ -37,6 +53,7 @@ export default {
       movie : null,
       movie_id : this.$route.params.id,
       reviews: [],
+      is_show : false,
     }
   },
   beforeRouteUpdate(to, from, next){
@@ -72,6 +89,9 @@ export default {
         this.reviews = res.data
       })
       .catch((err)=>{console.log(err)})
+    },
+    modalToggle() {
+      this.is_show = !this.is_show
     },
   },
   created() {

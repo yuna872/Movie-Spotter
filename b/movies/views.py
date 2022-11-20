@@ -141,9 +141,9 @@ def my_reviews(request, user_pk):
 
 @api_view(['POST'])
 # title=movie_title로 해야하나?
-def movie_likes(request, user_pk, movie_pk):
+def movie_likes(request, movie_pk):
   movie = get_object_or_404(Movie, pk=movie_pk)
-  me = get_object_or_404(get_user_model(), pk=user_pk)
+  me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
   if me.like_movies.filter(pk=movie.pk).exists():
       me.like_movies.remove(movie.pk)
       is_like = False
@@ -155,9 +155,9 @@ def movie_likes(request, user_pk, movie_pk):
   return Response(is_like)
 
 @api_view(['POST'])
-def review_likes(request, user_pk, review_pk):
+def review_likes(request, review_pk):
   review = get_object_or_404(Review, pk=review_pk)
-  me = get_object_or_404(get_user_model(), pk=user_pk)
+  me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
   if me.like_reviews.filter(pk=review.pk).exists():
       me.like_reviews.remove(review.pk)
       is_like = False
