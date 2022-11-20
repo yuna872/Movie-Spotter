@@ -4,8 +4,6 @@
     <p>{{ userinfo.username }}님 안녕하세요?</p>
     <p>제 닉네임은 {{ userinfo.nickname }} 입니다.</p>
     <p>팔로워: {{ userinfo.followers.length }} | 팔로잉: {{ userinfo.followings.length }}</p>
-    <p>팔로워: {{ this.followersLength }} | 팔로잉: {{ userinfo.followings.length }}</p>
-    <p>팔로워들 : {{ userinfo.followers }}</p>
     <button @click='follow'>{{ is_follow }}</button>
   </div>
 </template>
@@ -26,28 +24,8 @@ export default {
     }
   },
   created() {
-    const token = localStorage.getItem('jwt')
-    const now_user_id = jwt_decode(token).user_id
-
-    axios({
-        method: 'get',
-        url: `${API_URL}/accounts/${this.$route.params.id}`,
-        headers: {
-          'Authorization' : `Bearer ${token}`
-        }
-      })
-      .then((res)=>{
-        this.userinfo = res.data
-        if (this.userinfo.followers.includes(now_user_id)) {
-          this.is_follow = 'UnFollow'
-        } else {
-          this.is_follow = 'follow'
-        }
-        console.log(this.userinfo)
-      })
-      .catch((err)=>{console.log(err)})
-    
-    },
+    this.getuserinfo()
+  },
   methods: {
     follow() {
       const token = localStorage.getItem('jwt')
@@ -69,23 +47,33 @@ export default {
           } else if (res.data === false) {
             this.is_follow = 'Follow'
           }
+          this.getuserinfo()
         })
         .catch((err)=>{console.log(err)})
     },
-    computed: {
-      followersLength() {
-        return this.userinfo?.followers.length
-      },
-      followingsLength() {
-        if (this.userinfo.followings) {
-          return this.userinfo.followings.length
-        } else {
-          return 0
-        }
-      },
+    getuserinfo() {
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+
+      axios({
+          method: 'get',
+          url: `${API_URL}/accounts/${this.$route.params.id}`,
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        .then((res)=>{
+          this.userinfo = res.data
+          if (this.userinfo.followers.includes(now_user_id)) {
+            this.is_follow = 'UnFollow'
+          } else {
+            this.is_follow = 'Follow'
+          }
+          console.log(this.userinfo)
+        })
+        .catch((err)=>{console.log(err)})
     }
-  
-  }
+  },
 }
   
 
