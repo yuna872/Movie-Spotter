@@ -9,21 +9,31 @@
       {{ movie?.['original_language'] }}
     </div>
     <div class="review-box">
-      <button id="show"  @click="modalToggle">팝업열기</button>
-      <ReviewForm 
-        @modal-toggle="modalToggle" 
-        v-if="is_show" 
-        @add-review="getReviews" 
-        :movie="movie"/>
-      {{ reviews }}
-    </div>
-    <div class="유나야 고쳐줘">
-      <h1>유나야 고쳐줘</h1>
-      <ReviewItem
-        v-for="(review, index) in reviews"
-        :key="index"
-        :review="review"
-      />
+      <!-- 리뷰 작성 모달 -->
+      <div class="black-bg" v-if="is_show == true" >
+        <ReviewForm 
+          @modal-toggle="modalToggle"
+          v-if="is_show" 
+          @add-review="getReviews" 
+          :movie="movie"
+          v-click-outside="onClickOutside"
+        />
+      </div>
+      <!-- 리뷰 리스트  -->
+      <div class="review-list-box">
+        <div class="review-left-box">
+          <div>평점 : </div>
+          <div></div>
+          <button @click="modalToggle"> 리뷰 작성하기 </button>
+        </div>
+        <div class="review-right-box" >
+          <ReviewItem
+            v-for="(review, index) in reviews"
+            :key="index"
+            :review="review"
+          />
+        </div>
+      </div>
     </div>
     <div class="similar-box">
       <SimilarList :genres="movie?.genres"/>
@@ -33,6 +43,7 @@
 
 <script>
 import axios from 'axios'
+import vClickOutside from 'v-click-outside'
 
 import ReviewForm from '@/components/ReviewForm';
 import ReviewItem from '@/components/ReviewItem';
@@ -61,6 +72,9 @@ export default {
     this.movie_id = to.params.id
     this.getMovieDetail()
     next()
+  },
+  directives: {
+    clickOutside: vClickOutside.directive
   },
   computed: {
     backdropUrl() {
@@ -92,8 +106,12 @@ export default {
     },
     modalToggle() {
       this.is_show = !this.is_show
-      console.log(this.is_show)
+      // console.log(this.is_show)
     },
+    onClickOutside() {
+      this.is_show = !this.is_show
+      // console.log(this.is_show)
+    }
   },
   created() {
       this.getMovieDetail()
@@ -124,6 +142,35 @@ export default {
   width : 100vw;
   height : 100vh;
 }
+
+.review-list-box {
+  display: flex;
+  border: solid 2px red;
+  width : 90%; 
+  margin : auto;
+}
+
+.review-left-box {
+  display: flex;
+  flex-direction: column;
+  border: solid 2px red;
+  width : 30%;
+}
+.review-right-box {
+  display: flex;
+  flex-direction: column;
+  border: solid 2px red;
+  width : 60%;
+}
+
+
+/* 모달 클릭시 배경 어둡게 */
+.black-bg {
+  position: fixed;
+  top:0; left: 0; bottom: 0; right: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
 
 /* 비슷한 콘텐츠 */
 .similar-box {

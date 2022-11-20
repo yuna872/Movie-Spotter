@@ -12,10 +12,9 @@
         <router-link :to="{ name : 'firsttime' }">FirstTime</router-link>
         <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
         <router-link :to="{ name : 'userinfo', params: { id: user_id } }">My Page</router-link>
-
       </div>
     </nav>
-    <router-view @login="login"/>
+    <router-view class="router-view" @login="login" :isLogin="isLogin"/>
     <div class="about-us-btn" @click="toAboutUs"></div>
   </div>
 </template>
@@ -68,6 +67,9 @@ export default {
 
 /* 네비게이션 */
 nav {
+  position: absolute;
+  z-index: 2;
+  width : 100%;
   height : 50px;
   display: flex;
   justify-content: space-between;
@@ -102,6 +104,12 @@ nav a {
   margin : 5px;
   display: flex;
   align-items: center;
+}
+
+/* 라우터 뷰 */
+.router-view {
+  position: absolute;
+  z-index: 1;
 }
 
 /* AboutUs 버튼 */

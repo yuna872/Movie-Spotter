@@ -1,10 +1,12 @@
 <template>
-  <div class="review-form">
-    <form @submit.prevent="postReview">
-      <input type="number" v-model="star">
-      <input type="text" @input="content=$event.target.value" maxlength='200' placeholder="영화 리뷰를 작성해주세요.">
-      <button @click="modalToggle">리뷰 등록</button>
-    </form>
+  <div class="review-form" >
+      <button @click="modalToggle">창닫기</button>
+      <div>이 영화, 어떠셨나요?</div>
+      <form @submit.prevent="postReview" class="form">
+        <input type="number" v-model="star">
+        <input type="text" @input="content=$event.target.value" maxlength='200' placeholder="영화 리뷰를 작성해주세요.">
+        <button>리뷰 등록</button>
+      </form>
   </div>
   
 </template>
@@ -30,8 +32,21 @@ export default {
   },
   methods: {
     postReview() {
+      // 로그인 되어있지 않다면
+
+      // 내용이 입력되지 않으면 alert
+      if (this.star===null) {
+        alert('별점을 입력하세요!')
+        return
+      } else if (this.content===null) {
+        alert('내용을 입력하세요!')
+        return
+      }
+
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
+
+      console.log(now_user_id)
       axios({
         method: 'post',
         url: `${API_URL}/movies/${this.movie?.id}/reviews/`,
@@ -43,6 +58,9 @@ export default {
       })
       .then(()=>{
         this.$emit('add-review')
+        this.star = null
+        this.content = null
+        this.$emit('modal-toggle')
         return
       })
       .catch((err)=>{console.log(err)})
@@ -57,14 +75,21 @@ export default {
 
 <style>
 /* 모달창 */
-.review-form {
-  background-color:white; 
-  justify-content:center; 
-  align-items:center;    
-  position:fixed;                      
-  display:none; 
-  padding:15px; 
 
+ .review-form{
+  width : 60%;
+  margin : auto;
+  background: #343440; 
+  border-radius: 5px;
+  padding : 15px 0;
+  position: absolute;
+  top: 40vh; left: 20vw;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
 
 </style>
