@@ -26,7 +26,7 @@ export default {
     axios({
         method: 'get',
         // 이거는 유나랑......
-        url: `${API_URL}/accounts/3`,
+        url: `${API_URL}/accounts/${this.$route.params.id}`,
         headers: {
           'Authorization' : `Bearer ${token}`
         }
