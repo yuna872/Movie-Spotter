@@ -3,7 +3,7 @@
     <form @submit.prevent="postReview">
       <input type="number" v-model="star">
       <input type="text" @input="content=$event.target.value" maxlength='200' placeholder="영화 리뷰를 작성해주세요.">
-      <button>리뷰 등록</button>
+      <button @click="modalToggle">리뷰 등록</button>
     </form>
   </div>
   
@@ -58,8 +58,7 @@ export default {
 <style>
 /* 모달창 */
 .review-form {
-  background-color:rgba(0,0,0,.3); 
-
+  background-color:white; 
   justify-content:center; 
   align-items:center;    
   position:fixed;                      

@@ -92,6 +92,7 @@ export default {
     },
     modalToggle() {
       this.is_show = !this.is_show
+      console.log(this.is_show)
     },
   },
   created() {
