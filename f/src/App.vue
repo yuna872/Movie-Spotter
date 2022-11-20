@@ -7,14 +7,14 @@
       </div>
       <div class="nav-right">
         <router-link :to="{ name : 'movies' }">Home</router-link>
-        <router-link :to="{ name : 'login' }">Login</router-link>
-        <router-link :to="{ name : 'signup' }">Signup</router-link>
+        <router-link :to="{ name : 'login' }" v-if="!isLogin">Login</router-link>
+        <router-link :to="{ name : 'signup' }" v-if="!isLogin">Signup</router-link>
         <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
         <router-link :to="{ name : 'userinfo', params: { id: user_id } }">My Page</router-link>
-        <button @click='logout'>logout</button>
+        <button @click='logout' v-if="isLogin">logout</button>
       </div>
     </nav>
-    <router-view class="router-view" @login="login"/>
+    <router-view class="router-view" @login="login" :isLogin="isLogin"/>
     <div class="about-us-btn" @click="toAboutUs"></div>
     <div class="scroll-downs">
       <div class="mousey">

@@ -1,9 +1,11 @@
 <template>
   <div class="movie-item" :style="{'backgroundImage':`url(${posterUrl})`}">
-    {{ movie?.title }}
-    {{ movie?.['vote_average'] }}
-    <button @click="movieLike">{{ is_like }}</button>
-    <p>{{ movieinfo?.like_users }}</p>
+    <div class="item-bg">
+      {{ movie?.title }}
+      {{ movie?.['vote_average'] }}
+      <button @click="movieLike">{{ is_like }}</button>
+      <p>{{ movieinfo?.like_users }}</p>
+    </div>
   </div>
 </template>
 
@@ -99,5 +101,26 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   margin-top : 10px;
+  border-radius: 10px;
 }
+
+.movie-item:hover .item-bg{
+    background-color : white;
+    opacity: 0.8;
+    color : black;
+  }
+
+
+.item-bg {
+    opacity: 0;
+    width : 100%;
+    height : 100%;
+    display: flex;
+    flex-direction : column;
+    justify-content: center;
+    justify-items: center;
+    text-align : center;
+    border-radius: 10px;
+  }
+
 </style>
