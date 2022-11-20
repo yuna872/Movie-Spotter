@@ -1,8 +1,7 @@
 <template>
   <div class="user-info">
-    <h3>회원 정보 페이지</h3>
-    <p>{{ userinfo?.username }}님 안녕하세요?</p>
-    <p>제 닉네임은 {{ userinfo?.nickname }} 입니다.</p>
+    <p>{{ userinfo?.username }}님의 페이지</p>
+    <p>이분의 닉네임은 {{ userinfo?.nickname }} 입니다.</p>
     <p>팔로워: {{ userinfo?.followers.length }} | 팔로잉: {{ userinfo?.followings.length }}</p>
     <button @click='follow'>{{ is_follow }}</button>
   </div>
@@ -30,7 +29,7 @@ export default {
     follow() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
-
+      
       axios({
         method: 'post',
         url: `${API_URL}/accounts/${this.$route.params.id}/follow/`,
@@ -54,8 +53,10 @@ export default {
     getuserinfo() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
-
-      axios({
+      if (now_user_id === this.$route.params.id) {
+        this.$router.push({ name: 'myinfo' })
+      } else {
+        axios({
           method: 'get',
           url: `${API_URL}/accounts/${this.$route.params.id}`,
           headers: {
@@ -72,6 +73,8 @@ export default {
           console.log(this.userinfo)
         })
         .catch((err)=>{console.log(err)})
+      }
+      
     }
   },
 }
