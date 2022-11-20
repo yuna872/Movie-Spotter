@@ -78,7 +78,7 @@ export default {
   },
   computed: {
     backdropUrl() {
-      return `https://image.tmdb.org/t/p/w500/${this.movie?.backdrop_path}`
+      return `https://image.tmdb.org/t/p/original/${this.movie?.backdrop_path}`
     }
   },
   methods: {

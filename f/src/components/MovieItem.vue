@@ -2,6 +2,7 @@
   <div class="movie-item" @click="goDetail" :style="{'backgroundImage':`url(${posterUrl})`}">
     {{ movie?.title }}
     {{ movie?.['vote_average'] }}
+    <button>좋아요 버튼</button>
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
     posterUrl() {
       // 포스터 이미지가 있는 경우에만
       if (this.movie?.poster_path != undefined){
-        return `https://image.tmdb.org/t/p/w500/${this.movie?.poster_path}`
+        return `https://image.tmdb.org/t/p/original/${this.movie?.poster_path}`
       } else {
         return 'https://ifh.cc/g/8DmqKt.png'
       }

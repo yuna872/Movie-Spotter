@@ -14,7 +14,7 @@
         <router-link :to="{ name : 'userinfo', params: { id: user_id } }">My Page</router-link>
       </div>
     </nav>
-    <router-view class="router-view" @login="login" :isLogin="isLogin"/>
+    <router-view class="router-view" @login="login"/>
     <div class="about-us-btn" @click="toAboutUs"></div>
     <div class="scroll-downs">
       <div class="mousey">

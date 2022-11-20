@@ -26,10 +26,9 @@
       
     </div>
     <!-- 비로그인 사용자에게 보여줄 페이지 -->
-    <LoginRequest v-if="!isLogin"/>
+    <LoginRequest/>
     <!-- 로그인된 사용자에게 보여줄 페이지 -->
     <Recommend 
-      v-if="isLogin"
       :movies="movies"
     />
     <div class="movies-box">
@@ -65,9 +64,6 @@ export default {
       displayArray : [],
       randomMovie : null
     }
-  },
-  props: {
-    isLogin : String,
   },
   computed: {
     backdropUrl() {
