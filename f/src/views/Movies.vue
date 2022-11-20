@@ -26,7 +26,7 @@
       
     </div>
     <!-- 비로그인 사용자에게 보여줄 페이지 -->
-    <LoginRequest/>
+    <LoginRequest :randomMovie="randomMovie[1]"/>
     <!-- 로그인된 사용자에게 보여줄 페이지 -->
     <Recommend 
       :movies="movies"
@@ -62,12 +62,12 @@ export default {
       inputData : null,
       bannerImageUrl : null,
       displayArray : [],
-      randomMovie : null
+      randomMovie : [],
     }
   },
   computed: {
     backdropUrl() {
-      return `https://image.tmdb.org/t/p/original/${this.randomMovie?.backdrop_path}`
+      return `https://image.tmdb.org/t/p/original/${this.randomMovie[0]?.backdrop_path}`
     }
   },
   methods: {
@@ -82,7 +82,7 @@ export default {
           return b['vote_average'] - a['vote_average']
         })
 
-        this.randomMovie = _.sample(this.movies)
+        this.randomMovie = _.sampleSize(this.movies, 2)
         console.log(this.randomMovie)
       })
       .catch((err)=>{console.log(err)})
@@ -117,7 +117,9 @@ export default {
   width : 100vw - 50px;
   height : 100vh;
   border: solid 2px pink;
-  background-size: cover;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* .container::after {

@@ -39,7 +39,9 @@ export default {
 .movie-item {
   width : 16vw;
   height : 24vw;
-  background-size: cover;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
   margin-top : 10px;
 }
 </style>

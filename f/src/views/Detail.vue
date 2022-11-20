@@ -133,7 +133,9 @@ export default {
       rgba(20, 20, 20, 0.75) 75%,
       rgba(20, 20, 20, 1) 100%
   );
-  background-size: cover;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* 리뷰 컴포넌트 */
