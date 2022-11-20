@@ -1,13 +1,18 @@
 <template>
-  <div class="movie-item" @click="goDetail" :style="{'backgroundImage':`url(${posterUrl})`}">
+  <div class="movie-item" :style="{'backgroundImage':`url(${posterUrl})`}">
     {{ movie?.title }}
     {{ movie?.['vote_average'] }}
     <button @click="movieLike">{{ is_like }}</button>
+    <p>{{ movieinfo?.like_users.length }}</p>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import jwt_decode from 'jwt-decode'
+
+const API_URL = 'http://127.0.0.1:8000'
+
 export default {
   name: 'MovieItem',
   props: {
@@ -54,6 +59,7 @@ export default {
         })
         .then((res)=>{
           this.is_like = res.data
+          this.getMovieLikeInfo()
         })
         .catch((err)=>{console.log(err)})
     },
@@ -63,20 +69,24 @@ export default {
 
       axios({
         method: 'get',
-        url: `${API_URL}/movies/${movie.id}/`,
-      })
-      .then((res) => {
-        this.movieinfo = res.data
-        if (this.movieinfo.like_movies.includes(now_user_id)) {
-          this.is_like = false
-        } else {
-          this.is_like = true
+        url: `${API_URL}/movies/${this.movie.id}/`,
+        headers: {
+            'Authorization' : `Bearer ${token}`
         }
       })
+        .then((res) => {
+          this.movieinfo = res.data
+          if (this.movieinfo.like_users.includes(now_user_id)) {
+            this.is_like = false
+          } else {
+            this.is_like = true
+          }
+        })
+        .catch((err)=>{console.log(err)})
     }
   },
   created() {
-    getMovieLikeInfo()
+    this.getMovieLikeInfo()
   }
 }
 </script>
