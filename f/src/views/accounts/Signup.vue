@@ -34,17 +34,30 @@ export default {
     }
   },
 
-  // 로그아웃?
-  // created() {
-  //   const token = localStorage.getItem('jwt')
-  //   if (token) {
-  //     localStorage.removeItem('jwt')
-  //     this.$router.push({ name: 'Login' })
-  //   } else {
-  //     this.$router.push({ name: 'Login '})
-  //   }
-  // },
   methods: {
+    logIn() {
+      axios({
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        url: 'http://127.0.0.1:8000/api/token/',
+        data: {
+          username: this.username,
+          password: this.password
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          const token = res.data.access
+          localStorage.setItem('jwt', token)
+          this.$router.push({ name: 'movies' })
+          this.$emit('login')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     signUp() {
       if (this.password != this.password2) {
         alert('비밀번호가 틀렸습니다.')
@@ -61,12 +74,13 @@ export default {
         },
       })
         .then(() => {
-          this.$router.push({ name: 'login'})
+          // login 메서드 넣고싶어여
+          this.logIn()
         })
         .catch((err)=> {
           console.log(err)
         })
-      }
+    }
   }
 }
 
