@@ -3,7 +3,7 @@
   <div class="movie-list">
     <div>따끈따끈 최신작 TOP 20</div>
     <div class="movie-list-box">
-      <MovieSlider :movies="newMovies"/>
+      <!-- <MovieSlider :movies="newMovies"/> -->
       <MovieItem 
         v-for="(movie,index) in newMovies"
         :key="`n-${index}`"
@@ -39,13 +39,13 @@
 
 <script>
 import MovieItem from '@/components/MovieItem';
-import MovieSlider from '@/components/MovieSlider';
+// import MovieSlider from '@/components/MovieSlider';
 
 export default {
   name : 'MovieList',
   components: {
     MovieItem,
-    MovieSlider
+    // MovieSlider
   },
   props:{
     movies : Array,
