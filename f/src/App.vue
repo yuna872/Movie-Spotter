@@ -16,7 +16,7 @@
     </nav>
     <router-view class="router-view" @login="login" :isLogin="isLogin"/>
     <div class="about-us-btn" @click="toAboutUs"></div>
-    <div class="scroll-downs" @click="scrollTo">
+    <div class="scroll-downs">
       <div class="mousey">
         <div class="scroller"></div>
       </div>
@@ -50,7 +50,6 @@ export default {
       const token = localStorage.getItem('jwt')
       this.user_id = jwt_decode(token).user_id
     }
-
   }
 }
 </script>

@@ -6,7 +6,6 @@
       <div class="banner-items">
         <h3>MOVE SPOTTER</h3>
         <!-- {{ backdropUrl }} -->
-
         <form @submit.prevent="searchInputData">
           <input 
             type="text"  
@@ -72,7 +71,7 @@ export default {
   },
   computed: {
     backdropUrl() {
-      return `https://image.tmdb.org/t/p/w500/${this.randomMovie?.backdrop_path}`
+      return `https://image.tmdb.org/t/p/original/${this.randomMovie?.backdrop_path}`
     }
   },
   methods: {
