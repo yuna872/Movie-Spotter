@@ -22,7 +22,7 @@
       <!-- 리뷰 리스트  -->
       <div class="review-list-box">
         <div class="review-left-box">
-          <div>평점 : </div>
+          <div>{{ rankAverage}}</div>
           <div></div>
           <button @click="modalToggle"> 리뷰 작성하기 </button>
         </div>
@@ -79,6 +79,10 @@ export default {
   computed: {
     backdropUrl() {
       return `https://image.tmdb.org/t/p/original/${this.movie?.backdrop_path}`
+    },
+    rankAverage(){
+      const total = this.reviews?.reduce((total, review) => total + review.rank, 0)
+      return total / this.reviews?.length
     }
   },
   methods: {
