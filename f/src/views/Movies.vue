@@ -1,8 +1,12 @@
 <template>
   <div class="movies">
-    <div class="banner">
+    <div class="banner-bg"></div>
+    <!-- {{ backdropUrl }} -->
+    <div class="banner" :style="{'backgroundImage':`url(${backdropUrl})`}">
       <div class="banner-items">
         <h3>MOVE SPOTTER</h3>
+        <!-- {{ backdropUrl }} -->
+
         <form @submit.prevent="searchInputData">
           <input 
             type="text"  
@@ -60,15 +64,18 @@ export default {
       inputData : null,
       bannerImageUrl : null,
       displayArray : [],
+      randomMovie : null
     }
   },
   props: {
     isLogin : String,
   },
+  computed: {
+    backdropUrl() {
+      return `https://image.tmdb.org/t/p/w500/${this.randomMovie?.backdrop_path}`
+    }
+  },
   methods: {
-    // getBannerImage() {
-    //   console.log(_.sample(this.movies))
-    // },
     getMovies() {
       axios({
         method: 'get',
@@ -79,6 +86,9 @@ export default {
         this.movies = res.data.sort(function (a, b){
           return b['vote_average'] - a['vote_average']
         })
+
+        this.randomMovie = _.sample(this.movies)
+        console.log(this.randomMovie)
       })
       .catch((err)=>{console.log(err)})
     },
@@ -86,7 +96,7 @@ export default {
       this.displayArray = this.movies.filter((movie)=>{
         return movie.title.includes(this.inputData) 
       }) 
-    }
+    },
   },
   watch: {
     inputData: function() {
@@ -109,17 +119,29 @@ export default {
 <style>
 /* 배너 & 검색 페이지 */
 .banner {
-  width : 100vw;
+  width : 100vw - 50px;
   height : 100vh;
+  border: solid 2px pink;
+  background-size: cover;
 }
 
+/* .container::after {
+  width: 100%;
+  height: 100%;
+  content: "";
+  background: url("./images/sunrise.jpg");
+} */
+
 .banner-items {
+  position : absolute;
+  z-index : 2;
+  right :0;
+  left: 0;
   display: flex;
   flex-direction: column;
   width : 70%;
   margin : 20vh auto;
   border: solid 2px red;
-  
 }
 
 .display-array-container {

@@ -44,20 +44,13 @@ export default {
     toAboutUs() {
       this.$router.push({ name : 'aboutus' })
     },
-    scrollTo() {
-      window.scrollTo({
-  top: 100,
-  left: 100,
-  behavior: 'smooth'
-});
-    }
   },
   created() {
     if (this.isLogin == true) {
       const token = localStorage.getItem('jwt')
       this.user_id = jwt_decode(token).user_id
     }
-    
+
   }
 }
 </script>
@@ -129,6 +122,7 @@ nav a {
   position: fixed;
   bottom : 20px;
   right: 20px;
+  z-index: 5;
 }
 
 /* 마우스 아이콘 */
