@@ -60,11 +60,9 @@ def reviews(request, movie_pk):
         # 리뷰 create
         movie = get_object_or_404(Movie, pk=movie_pk)
         user = get_object_or_404(get_user_model(), pk=request.data['user_id'])
+        # 닉네임 데이터 추가
+        request.data['writer'] = user.nickname
         serializer = ReviewSerializer(data=request.data)
-        # print('설마 reqeust.data에 있다고???', request, request.data)
-        # request.data._mutable = True
-        # request.data['movie'] = "example@mail.com"
-        # request.data._mutable = False
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=user, movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
