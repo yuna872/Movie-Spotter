@@ -6,7 +6,7 @@ import Signup from '@/views/accounts/Signup'
 import AboutUs from '@/views/AboutUs'
 import Detail from '@/views/Detail'
 import UserInfo from '@/views/accounts/UserInfo'
-import FirstTime from '@/views/FirstTime'
+
 
 Vue.use(VueRouter)
 
@@ -30,11 +30,6 @@ const routes = [
     path: '/aboutus',
     name: 'aboutus',
     component: AboutUs
-  },
-  {
-    path: '/firsttime',
-    name: 'firsttime',
-    component: FirstTime
   },
   {
     path: '/:id',
