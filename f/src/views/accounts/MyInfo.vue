@@ -27,7 +27,7 @@ export default {
     getuserinfo() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
-
+      
       axios({
           method: 'get',
           url: `${API_URL}/accounts/${now_user_id}`,

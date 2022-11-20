@@ -6,6 +6,7 @@ import Signup from '@/views/accounts/Signup'
 import AboutUs from '@/views/AboutUs'
 import Detail from '@/views/Detail'
 import UserInfo from '@/views/accounts/UserInfo'
+import MyInfo from '@/views/accounts/MyInfo'
 
 
 Vue.use(VueRouter)
