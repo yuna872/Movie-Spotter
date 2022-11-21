@@ -11,9 +11,11 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only_fields = ('user', 'movie', 'like_users',)
 
 class GenreSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Genre
         fields = '__all__'
+
 
 class MovieSerializer(serializers.ModelSerializer):
     genres = GenreSerializer(many=True)

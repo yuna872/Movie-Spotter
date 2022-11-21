@@ -3,7 +3,13 @@
     <h3>로그인된 사용자에게 보여질 영화 추천 컴포넌트</h3>
     <div class="movie-list-box">
       <MovieItem 
-        v-for="(movie,index) in recommendMovies"
+        v-for="(movie,index) in recommendMoviesByLikes"
+        :key="`r-${index}`"
+        :movie="movie"
+      />
+      <hr>
+      <MovieItem 
+        v-for="(movie,index) in recommendMoviesByFollowings"
         :key="`r-${index}`"
         :movie="movie"
       />
@@ -25,18 +31,19 @@ export default {
   },
   data() {
     return {
-      recommendMovies: null,
+      recommendMoviesByLikes: null,
+      recommendMoviesByFollowings: null,
     }
   },
   methods: {
     // 커뮤니티 기반 추천 알고리즘
     // 컨텐츠 기반 추천 알고리즘
-    getRecommend() {
+    getRecommendByLikes() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
       axios({
           method: 'post',
-          url: `${API_URL}/movies/recommend/`,
+          url: `${API_URL}/movies/recommendbymylikes/`,
           data: {
             user_id: now_user_id,
           },
@@ -45,14 +52,34 @@ export default {
           }
         })
         .then((res)=>{
-          this.recommendMovies = res.data
+          this.recommendMoviesByLikes = res.data
+          console.log(res.data)
+        })
+        .catch((err)=>{console.log(err)})
+    },
+    getRecommendByFollowings() {
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+      axios({
+          method: 'post',
+          url: `${API_URL}/movies/recommendbymyfollowings/`,
+          data: {
+            user_id: now_user_id,
+          },
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        .then((res)=>{
+          this.recommendMoviesByFollowings = res.data
           console.log(res.data)
         })
         .catch((err)=>{console.log(err)})
     }
   },
   created() {
-    this.getRecommend()
+    this.getRecommendByLikes()
+    this.getRecommendByFollowings()
   }
 
 }
