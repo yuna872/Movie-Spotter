@@ -33,6 +33,7 @@
     <Recommend 
       :movies="movies"
     />
+    
     <div class="movies-box">
       <MovieList :movies="movies"/>
     </div>
