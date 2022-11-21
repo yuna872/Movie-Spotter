@@ -41,6 +41,7 @@
   </div>
 </template>
 
+<script src="https://kit.fontawesome.com/059237378d.js" crossorigin="anonymous"></script>
 <script src="lodash.js"></script>
 <script>
 import axios from 'axios';
@@ -117,8 +118,10 @@ export default {
 
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  font-family: 'Noto Sans KR', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center; 

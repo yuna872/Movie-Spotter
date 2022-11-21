@@ -22,9 +22,18 @@
       <!-- 리뷰 리스트  -->
       <div class="review-list-box">
         <div class="review-left-box">
-          <div>{{ rankAverage}}</div>
-          <div></div>
-          <button @click="modalToggle"> 리뷰 작성하기 </button>
+          <div class="review-left-top">
+            <div class="rank-avg"><div>{{ rankAverage? rankAverage : "첫번째 리뷰를 작성해보세요" }}</div></div>
+            <div style="display:flex;flex-direction:column">
+              <div class="star">⭐⭐⭐⭐⭐</div>
+              <div>{{ reviews.length }}개 리뷰</div>
+            </div>
+          </div>
+          <div class="review-left-bottom" @click="modalToggle">
+              <div>{{ movie.title }} 어떠셨나요?</div> 
+              <div>다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
+              <div class="star">⭐⭐⭐⭐⭐</div>
+          </div>
         </div>
         <div class="review-right-box" >
           <ReviewItem
@@ -82,7 +91,7 @@ export default {
     },
     rankAverage(){
       const total = this.reviews?.reduce((total, review) => total + review.rank, 0)
-      return total / this.reviews?.length
+      return Math.round(total / this.reviews?.length, 2).toFixed(1)
     }
   },
   methods: {
@@ -93,7 +102,7 @@ export default {
       })
       .then((res)=>{
         this.movie = res.data
-        console.log(this.movie, '🚍')
+        // console.log(this.movie, '🚍')
       })
       .catch((err)=>{console.log(err)})
     },
@@ -144,29 +153,57 @@ export default {
 
 /* 리뷰 컴포넌트 */
 .review-box {
-  border: solid 2px red;
   width : 100vw;
   height : 100vh;
+  display: flex;
+  align-items: center;
 }
 
 .review-list-box {
   display: flex;
-  border: solid 2px red;
-  width : 90%; 
+  background-color:  #343440;
+  width : 85%; 
+  height: 70%;
   margin : auto;
+  justify-content: space-between;
 }
 
 .review-left-box {
   display: flex;
   flex-direction: column;
   border: solid 2px red;
-  width : 30%;
+  width : 35%;
 }
+
+.review-left-top {
+  border: solid 2px red;
+  display: flex;
+} 
+.review-left-bottom {
+  border: solid 2px red;
+  width : 100%;
+  height : 20%;
+  display: flex;
+  flex-direction: column;
+  margin-top : 4vh;
+  justify-content: flex-start;
+  text-align: left;
+} 
 .review-right-box {
   display: flex;
   flex-direction: column;
   border: solid 2px red;
-  width : 60%;
+  width : 65%;
+}
+
+.rank-avg {
+  font-size: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width : 10vw;
+  height : 6vh;
+  border: solid 2px red;
 }
 
 

@@ -1,12 +1,13 @@
 <template>
   <div class="movie-item" :style="{'backgroundImage':`url(${posterUrl})`}">
-    <div class="item-bg">
+    <div class="item-bg" @click="goDetail">
       {{ movie?.title }}
       {{ movie?.['vote_average'] }}
-      <button @click="movieLike" v-if="isLogin">{{ is_like }}</button>
-      <p>{{ movieinfo?.like_users }}</p>
 
+      <p>{{ movieinfo?.like_users }}</p>
     </div>
+    <button @click="movieLike" class='like-btn' v-if="isLogin">
+      {{ is_like }}</button>
   </div>
 </template>
 
@@ -120,6 +121,14 @@ export default {
     justify-items: center;
     text-align : center;
     border-radius: 10px;
+  }
+
+  .like-btn {
+    position: relative;
+    top : -98%; right : -30%;
+    width : 20px;
+    height : 20px;
+    /* z-index: 3; */
   }
 
 </style>
