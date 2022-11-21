@@ -127,14 +127,14 @@ export default {
 }
 
 .banner::before{
-        content: "";
-        opacity: 0.5;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom : 300vh;
-        background-color: #000;
+  content: "";
+  opacity: 0.5;
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  right: 0px;
+  bottom : 305vh;
+  background-color: #000;
 }
 .banner-items {
   position : absolute;

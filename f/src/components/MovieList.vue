@@ -39,13 +39,11 @@
 
 <script>
 import MovieItem from '@/components/MovieItem';
-// import MovieSlider from '@/components/MovieSlider';
 
 export default {
   name : 'MovieList',
   components: {
     MovieItem,
-    // MovieSlider
   },
   props:{
     movies : Array,

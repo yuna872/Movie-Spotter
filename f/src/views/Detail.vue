@@ -8,9 +8,6 @@
       {{ movie?.['release_date'] }}
       {{ movie?.['original_language'] }}
     </div>
-    <div>
-      {{ movie.genres }}
-    </div>
     <div class="review-box">
       <!-- 리뷰 작성 모달 -->
       <div class="black-bg" v-if="is_show == true" >
@@ -33,7 +30,7 @@
             </div>
           </div>
           <div class="review-left-bottom" @click="modalToggle">
-              <div>{{ movie.title }} 어떠셨나요?</div> 
+              <div>{{ movie?.title }} 어떠셨나요?</div> 
               <div>다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
               <div class="star">⭐⭐⭐⭐⭐</div>
           </div>
@@ -49,6 +46,7 @@
     </div>
     <div class="similar-box">
       <SimilarList :genres="movie?.genres"/>
+      <!-- {{ movie?.genres }} -->
     </div>
   </div>
 </template>

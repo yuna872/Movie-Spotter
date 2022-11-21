@@ -44,6 +44,7 @@
 <script src="https://kit.fontawesome.com/059237378d.js" crossorigin="anonymous"></script>
 <script src="lodash.js"></script>
 <script>
+
 import axios from 'axios';
 import jwt_decode from "jwt-decode"
 
@@ -137,7 +138,7 @@ nav {
   position: absolute;
   z-index: 2;
   width : 100%;
-  height : 50px;
+  height : 5vh;
   display: flex;
   justify-content: space-between;
   background-color: #343440;

@@ -1,86 +1,34 @@
 <template>
-  <div class="slider-container" >
-    슬라이더
-    <!-- width : 16vw;
-  height : 24vw; -->
-    <button @click="pre" v-bind:class="{ hidden: currentNumber == 0 }">이전</button>
-    <div class="slider" :style="{'transform': 'translate(-' + (currentNumber-1)*80 + 'vw, 0px)'}">
-      <MovieItem
-      v-for="(movie,index) in movies"
-      :key="`q-${index}`"
-      :movie="movie"
-    />
-    </div>
-    <button @click="next" v-bind:class="{ hidden: currentNumber == length }">다음</button>
-  </div>
+  <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
+    <!-- slides -->
+    <swiper-slide>I'm Slide 1</swiper-slide>
+    <swiper-slide>I'm Slide 2</swiper-slide>
+    <swiper-slide>I'm Slide 3</swiper-slide>
+    <swiper-slide>I'm Slide 4</swiper-slide>
+    <swiper-slide>I'm Slide 5</swiper-slide>
+    <swiper-slide>I'm Slide 6</swiper-slide>
+    <swiper-slide>I'm Slide 7</swiper-slide>
+    <!-- Optional controls -->
+    <div class="swiper-pagination"  slot="pagination"></div>
+    <div class="swiper-button-prev" slot="button-prev"></div>
+    <div class="swiper-button-next" slot="button-next"></div>
+    <div class="swiper-scrollbar"   slot="scrollbar"></div>
+  </swiper>
 </template>
 
 <script>
-import MovieItem from '@/components/MovieItem';
+// css의 경우, 전역으로 불러오시는 것이 편합니다
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
-  name : 'MovieSlider',
   components: {
-    MovieItem
-  },
-  props: {
-    movies : Array,
-  },
-  data() {
-    return {
-      length : this.movies?.length,
-      currentNumber : 0,
-    }
-  },
-  methods: {
-    next() {
-      if (this.currentNumber == this.length) {
-        this.currentNumber = 0;
-      } else {
-        this.currentNumber = this.currentNumber + 5;
-      }
-      console.log(this.currentNumber);
-    },
-    pre() {
-      if (this.currentNumber == 0) {
-        this.currentNumber = this.length;
-      } else {
-        this.currentNumber = this.currentNumber - 5;
-      }
-      console.log(this.currentNumber);
-    }
+    swiper,
+    swiperSlide
   }
 }
 </script>
 
 <style>
-.slider-container {
-  width : 100%;
-  display: flex;
-  border : solid 2px blue;
-  overflow: hidden;
-}
-.slider {
-  width : 100%;
-  display: flex;
-  border : solid 2px blue;
-}
-
-.pre {
-  position: absolute;
-  left: 5px;
-  top: 50%;
-  cursor: pointer;
-}
-.next {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  cursor: pointer;
-}
-
-.hidden {
-  display: hidden;
-}
 
 </style>

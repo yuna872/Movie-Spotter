@@ -44,11 +44,17 @@ export default {
           return b['vote_average'] - a['vote_average']
         })
 
+
         this.similarList = movieAll.filter((movie)=>{
           for (const genre of this.genres) {
-            return movie.genres.includes(genre)
+            const movieGenres = movie.genres.map((genre)=>{
+              return genre.id
+            }) 
+            return movieGenres.includes(genre.id)
           }
         })
+
+        console.log(this.similarList)
 
         if (this.similarList.length <= 20) {
           return this.similarList.slice(0, this.similarList.length)

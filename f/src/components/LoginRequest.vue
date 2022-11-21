@@ -38,14 +38,25 @@ export default {
 }
 
 .login-request::before{
-        content: "";
-        opacity: 0.5;
-        position: absolute;
-        top: 100vh;
-        left: 0px;
-        right: 0px;
-        bottom : 200vh;
-        background-color: #000;
+  content: "";
+  opacity: 0.5;
+  position: absolute;
+  top: 100vh;
+  left: 0px;
+  right: 0px;
+  bottom : 205vh;
+  background-color: #000;
+}
+
+.login-request-box {
+  position : absolute;
+  z-index : 2;
+  right :0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width : 70%;
+  margin : 30vh auto;
 }
 
 </style>
