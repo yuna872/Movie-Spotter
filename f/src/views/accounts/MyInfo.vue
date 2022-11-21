@@ -1,8 +1,11 @@
 <template>
   <div class="user-info">
-    <p>{{ userinfo?.username }}님의 마이 페이지</p>
+    <div class="user-info-box">
+      <p>{{ userinfo?.username }}님의 마이 페이지</p>
     <p>제 닉네임은 {{ userinfo?.nickname }} 입니다.</p>
     <p>팔로워: {{ userinfo?.followers.length }} | 팔로잉: {{ userinfo?.followings.length }}</p>
+    </div>
+    
   </div>
 </template>
 
@@ -48,5 +51,10 @@ export default {
 </script>
 
 <style>
+
+.user-info-box {
+  margin : 100px auto;
+
+}
 
 </style>

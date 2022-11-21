@@ -39,14 +39,14 @@ const routes = [
 
   },
   {
-    path: '/accounts/:id',
-    name: 'userinfo',
-    component: UserInfo
-  },
-  {
     path: '/accounts/myinfo',
     name: 'myinfo',
     component: MyInfo
+  },
+  {
+    path: '/accounts/:id',
+    name: 'userinfo',
+    component: UserInfo
   },
 
  

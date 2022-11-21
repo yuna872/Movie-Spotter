@@ -10,7 +10,7 @@
         <router-link :to="{ name : 'login' }" v-if="!isLogin">Login</router-link>
         <router-link :to="{ name : 'signup' }" v-if="!isLogin">Signup</router-link>
         <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
-        <router-link :to="{ name : 'userinfo', params: { id: user_id } }">My Page</router-link>
+        <router-link :to="{ name : 'myinfo' }" v-if="isLogin">My Page</router-link>
         <button @click='logout' v-if="isLogin">logout</button>
       </div>
     </nav>
@@ -50,7 +50,8 @@ export default {
       const token = localStorage.getItem('jwt')
       if (token) {
         localStorage.removeItem('jwt')
-        this.$router.push({ name: 'login' })
+        this.isLogin = false
+        this.$router.push({ name: 'movies' })
       }
     },
   },

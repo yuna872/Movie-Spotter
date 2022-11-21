@@ -1,9 +1,11 @@
 <template>
   <div class="user-info">
-    <p>{{ userinfo?.username }}님의 페이지</p>
-    <p>이분의 닉네임은 {{ userinfo?.nickname }} 입니다.</p>
-    <p>팔로워: {{ userinfo?.followers.length }} | 팔로잉: {{ userinfo?.followings.length }}</p>
-    <button @click='follow'>{{ is_follow }}</button>
+    <div class="user-info-box">
+      <p>{{ userinfo?.username }}님의 페이지</p>
+      <p>이분의 닉네임은 {{ userinfo?.nickname }} 입니다.</p>
+      <p>팔로워: {{ userinfo?.followers.length }} | 팔로잉: {{ userinfo?.followings.length }}</p>
+      <button @click='follow'>{{ is_follow }}</button>
+    </div>
   </div>
 </template>
 
@@ -63,16 +65,16 @@ export default {
             'Authorization' : `Bearer ${token}`
           }
         })
-        .then((res)=>{
-          this.userinfo = res.data
-          if (this.userinfo.followers.includes(now_user_id)) {
-            this.is_follow = 'UnFollow'
-          } else {
-            this.is_follow = 'Follow'
-          }
-          console.log(this.userinfo)
-        })
-        .catch((err)=>{console.log(err)})
+          .then((res)=>{
+            this.userinfo = res.data
+            if (this.userinfo.followers.includes(now_user_id)) {
+              this.is_follow = 'UnFollow'
+            } else {
+              this.is_follow = 'Follow'
+            }
+            console.log(this.userinfo)
+          })
+          .catch((err)=>{console.log(err)})
       }
       
     }
