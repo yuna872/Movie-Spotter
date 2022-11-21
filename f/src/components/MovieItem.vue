@@ -3,8 +3,13 @@
     <div class="item-bg">
       {{ movie?.title }}
       {{ movie?.['vote_average'] }}
+<<<<<<< HEAD
       <button @click="movieLike" v-if="isLogin">{{ is_like }}</button>
       <p>{{ movieinfo?.like_users }}</p>
+=======
+      <button @click="movieLike">{{ is_like }}</button>
+      <p>{{ movieinfo?.like_users.length }}</p>
+>>>>>>> 64524e7f133ce043f0004a2fceeea9c71fc03a00
     </div>
   </div>
 </template>
