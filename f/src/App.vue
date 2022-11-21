@@ -11,11 +11,28 @@
         <router-link :to="{ name : 'signup' }" v-if="!isLogin">Signup</router-link>
         <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
         <router-link :to="{ name : 'myinfo' }" v-if="isLogin">My Page</router-link>
-        <button @click='logout' v-if="isLogin">logout</button>
+        <a @click='logout' v-if="isLogin">logout</a>
       </div>
     </nav>
-    <router-view class="router-view" @login="login" :isLogin="isLogin"/>
+    <router-view class="router-view" @first-time="getFirstTime" @login="login" :isLogin="isLogin"/>
     <div class="about-us-btn" @click="toAboutUs"></div>
+    <!-- 모달 -->
+    <div class="black-bg" v-if="firstTime" >
+      <div class="firsttime-modal">
+        <div>앗, Movie Spotter가 처음이시군요?</div>
+        <div class="firsttime-box">
+          <div 
+            v-for="(movie,index) in randomMovies"
+            :key="`rr-${index}`"
+            class="firsttime-items"
+            :style="{'backgroundImage':`url('https://image.tmdb.org/t/p/original/${movie?.poster_path}')`}"
+          ></div>
+        </div>
+        <button>제출하기</button>
+      </div>
+    </div>
+    
+    <!-- 마우스 스크롤 이벤트 -->
     <div class="scroll-downs">
       <div class="mousey">
         <div class="scroller"></div>
@@ -26,17 +43,41 @@
 
 <script src="lodash.js"></script>
 <script>
+import axios from 'axios';
 import jwt_decode from "jwt-decode"
+
+import MovieItem from '@/components/MovieItem'
+
+const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'App',
   data: function () {
     return {
       isLogin : localStorage.getItem('jwt') ? true : false,
-      user_id : null
+      user_id : null,
+      firstTime : false,
+      randomMovies : [],
     }
   },
+  components: {
+    MovieItem,
+  },
   methods: {
+    getRandomMovies() {
+      axios({
+        method: 'get',
+        url: `${API_URL}/movies/`
+      })
+      .then((res)=>{
+        // 평점을 기준으로 모든 영화에 대하여 내림차순 정렬
+        this.randomMovies = _.sampleSize(res.data.sort(function (a, b){
+          return b['vote_count'] - a['vote_count']
+        }), 30)
+        console.log(this.randomMovies)
+      })
+      .catch((err)=>{console.log(err)})
+    },
     login() {
       this.isLogin = true
     },
@@ -51,9 +92,19 @@ export default {
       if (token) {
         localStorage.removeItem('jwt')
         this.isLogin = false
-        this.$router.push({ name: 'movies' })
+        this.$router.push({ name: 'movies' }).catch(()=>{})
       }
     },
+    getFirstTime() {
+      console.log('😎')
+      this.firstTime = true
+      console.log(this.firstTime ,'😎')
+    }
+  },
+  watch: {
+    firstTime: function() {
+      this.getRandomMovies()
+    }
   },
   created() {
     if (this.isLogin == true) {
@@ -135,9 +186,50 @@ nav a {
   z-index: 5;
 }
 
+/* 정보 수집 모달 */
+.firsttime-modal {
+  width : 80%;
+  margin : auto;
+  background: #343440; 
+  border-radius: 5px;
+  padding : 15px 0;
+  position: fixed;  
+  top : 10vh; bottom: 0;
+  left : 0; right: 0;
+  /* position: absolute;
+  top: 40vh; left: 20vw; */
+  z-index: 4;
+}
+
+.black-bg {
+  position: fixed;    
+  height: 100%;
+  top : 0; bottom: 0;
+  left : 0; right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 3;
+}
+.firsttime-box {
+  width : 90%;
+  margin : auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.firsttime-items {
+  width : 13vw;
+  height : 19vw;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top : 10px;
+  border-radius: 10px;
+}
+
 /* 마우스 아이콘 */
 .scroll-downs {
-  position: fixed;
+  position: relative;
   bottom : 4vh;
   margin : 0 auto;
   left: 0;

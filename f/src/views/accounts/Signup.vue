@@ -76,6 +76,7 @@ export default {
         .then(() => {
           // login 메서드 넣고싶어여
           this.logIn()
+          this.$emit('first-time')
         })
         .catch((err)=> {
           console.log(err)
