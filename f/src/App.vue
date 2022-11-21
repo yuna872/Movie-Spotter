@@ -142,9 +142,16 @@ nav {
   height : 5vh;
   display: flex;
   justify-content: space-between;
-  background-color: #343440;
   color : white;
   cursor: pointer;
+  background: linear-gradient(
+    to top,
+      rgba(20, 20, 20, 0) 0%,
+      rgba(20, 20, 20, 0.25) 25%,
+      rgba(20, 20, 20, 0.5) 50%,
+      rgba(20, 20, 20, 0.75) 75%,
+      rgba(20, 20, 20, 1) 100%
+  );
 }
 
 nav a {

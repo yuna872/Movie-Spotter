@@ -4,7 +4,9 @@
     <!-- {{ backdropUrl }} -->
     <div class="banner" :style="{'backgroundImage':`url(${backdropUrl})`}">
       <div class="banner-items">
-        <div class="banner-title">MOVIE SPOTTER</div>
+        <div class="banner-title">
+          <img src="@/assets/logo.png" style="width:6vw;height:6vh"/>&nbsp;MOVIE SPOTTER.
+        </div>
         <!-- {{ backdropUrl }} -->
         <form class="banner-form" @submit.prevent="searchInputData">
           <input
@@ -117,24 +119,38 @@ export default {
 <style>
 /* 배너 & 검색 페이지 */
 .banner {
-  /* background-color: rgba(0, 0, 0, 0.6); */
   width : 100vw - 50px;
   height : 100vh;
   border: solid 2px pink;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
-  /* background-color: rgba(0, 0, 0, 0.6); */
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+  25% {
+		opacity: 0.25;
+	}
+  50% {
+		opacity: 0.5;
+	}
+  70% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 .banner::before{
   content: "";
   opacity: 0.5;
   position: absolute;
-  top: 50px;
-  left: 0px;
-  right: 0px;
-  bottom : 305vh;
+  top: 0; right:0;left:0;
+  height : 100vh;
   background-color: #000;
 }
 .banner-items {
@@ -146,11 +162,34 @@ export default {
   flex-direction: column;
   width : 70%;
   margin : 30vh auto;
+  animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 1s;
 }
 
 .banner-title {
   font-family: 'Secular One', sans-serif;
   font-size : 6em;
+  width: 15ch;
+  animation: typing 2s steps(15), blink .5s step-end infinite alternate;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+}
+    
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
 }
 
 .banner-input{

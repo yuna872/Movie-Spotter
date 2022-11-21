@@ -38,6 +38,7 @@ export default {
   background-position: center;
 }
 
+
 .login-request::before{
   content: "";
   opacity: 0.5;
@@ -45,7 +46,7 @@ export default {
   top: 100vh;
   left: 0px;
   right: 0px;
-  bottom : 205vh;
+  height : 100vh;
   background-color: #000;
 }
 
@@ -60,15 +61,42 @@ export default {
   text-align: left;
   width : 70%;
   margin : 30vh auto;
+  
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+  25% {
+		opacity: 0.25;
+	}
+  50% {
+		opacity: 0.5;
+	}
+  70% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 .login-request-title {
   font-size : 3em;
   margin-bottom : 25px;
+  animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 3s;
 }
 
 .login-request-content {
   font-size : 1.8em;
+  animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 3s;
 }
 
 .login-request-btn {
@@ -78,6 +106,12 @@ export default {
   border-radius : 50px;
   margin-top : 3vh;
   font-size : 1.2em;
+  /* box-shadow: 0 5px 4px rgba(79, 74, 49, 0.6); */
+}
+
+.login-request-btn:hover{
+    transform: translate(0, -10%);
+    scale: 1.02;
 }
 
 </style>

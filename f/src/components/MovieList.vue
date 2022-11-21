@@ -95,7 +95,11 @@ export default {
           navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
-          }
+          },
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false
+          },
         }
     }
   },  
@@ -194,7 +198,7 @@ export default {
 .swiper {
   width : 100%;
   /* border: solid 2px red; */
-  height : 30vh;
+  height : 10%;
   padding : 3vh;
 }
 
