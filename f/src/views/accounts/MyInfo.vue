@@ -5,6 +5,7 @@
       <p>제 닉네임은 {{ userinfo?.nickname }} 입니다.</p>
       <p>팔로워: {{ userinfo?.followers.length }} | 팔로잉: {{ userinfo?.followings.length }}</p>
       <p>내가 좋아요한 영화는 {{ userinfo?.like_movies }}</p>
+      <p>내가 쓴 리뷰 {{ reviewinfo }}</p>
     </div>
   </div>
 </template>
@@ -20,10 +21,12 @@ export default {
   data() {
     return {
       userinfo : null,
+      reviewinfo : null,
     }
   },
   created() {
     this.getuserinfo()
+    this.getuserreviews()
   },
   methods: {
     getuserinfo() {
@@ -42,7 +45,23 @@ export default {
           console.log(this.userinfo)
         })
         .catch((err)=>{console.log(err)})
-    }
+    },
+    getuserreviews() {
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+      
+      axios({
+          method: 'get',
+          url: `${API_URL}/movies/reviews/${now_user_id}`,
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        .then((res)=>{
+          this.reviewinfo = res.data
+        })
+        .catch((err)=>{console.log(err)})
+    },
   },
 }
   

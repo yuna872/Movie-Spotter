@@ -13,20 +13,12 @@ from .models import Movie, Review
 from django.contrib.auth import get_user_model
 
 
-
 @api_view(['GET'])
 def movie_list(request):
     if request.method == 'GET':
         movies = get_list_or_404(Movie)
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
-
-    # elif request.method == 'POST':
-    #     serializer = MovieSerializer(data=request.data)
-    #     if serializer.is_valid(raise_exception=True):
-    #         # serializer.save()
-    #         serializer.save(user=request.user)
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET'])
@@ -35,17 +27,6 @@ def movie_detail(request, movie_pk):
     if request.method == 'GET':
         serializer = MovieSerializer(movie)
         return Response(serializer.data)
-    
-    
-    # elif request.method == 'DELETE':
-    #     movie.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-
-    # elif request.method == 'PUT':
-    #     serializer = MovieSerializer(movie, data=request.data)
-    #     if serializer.is_valid(raise_exception=True):
-    #         serializer.save()
-    #         return Response(serializer.data)
 
 
 @api_view(['GET','POST'])
@@ -66,12 +47,6 @@ def reviews(request, movie_pk):
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=user, movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-
-# @api_view(['POST'])
-# # @permission_classes([IsAuthenticated])
-# def review_create(request, movie_pk):
     
 
 @api_view(['GET', 'DELETE', 'PUT'])
@@ -81,12 +56,7 @@ def review_detail(request, review_pk):
         serializer = ReviewSerializer(review)
         return Response(serializer.data)
 
-    # 삭제 및 수정 기능
-    # 로그인이 상태며
-    # if request.user.is_authenticated:
-        # 리뷰를 쓴 사람이면
-        # if request.user == review.user:
-    if request.method == 'DELETE':
+    elif request.method == 'DELETE':
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -96,13 +66,6 @@ def review_detail(request, review_pk):
             serializer.save()
             return Response(serializer.data)
 
-    #     else:
-    #         print('')
-    #         # 작성자만 수정할 수 있습니다.
-    # else:
-    #     print('')
-    #     # 로그인을 해주세요
-        
 
 # 내가 쓴 리뷰들을 반환하는 함수
 @api_view(['GET'])
@@ -113,30 +76,6 @@ def my_reviews(request, user_pk):
         return Response(serializer.data)
 
 
-
-
-
-
-# @require_POST
-# def likes(request, article_pk):
-#     if request.user.is_authenticated:
-#         article = Article.objects.get(pk=article_pk)
-
-#         # 좋아요 추가할지 취소할지 무슨 기준으로 if문을 작성할까?
-#         # 현재 게시글에 좋아요를 누른 유저 목록에 현재 좋아요를 요청하는 유저가 있는지 없는지를 확인
-#         # if request.user in article.like_users.all():
-        
-#         # 현재 게시글에 좋아요를 누른 유저중에 현재 좋아요를 요청하는 유저를 검색해서 존재하는지를 확인 
-#         if article.like_users.filter(pk=request.user.pk).exists():
-#             # 좋아요 취소 (remove)
-#             article.like_users.remove(request.user)
-#         else:
-#             # 좋아요 추가 (add)
-#             article.like_users.add(request.user)
-#         return redirect('articles:index')
-#     return redirect('accounts:login')
-    
-
 @api_view(['POST'])
 # title=movie_title로 해야하나?
 def movie_likes(request, movie_pk):
@@ -144,13 +83,13 @@ def movie_likes(request, movie_pk):
   me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
   if me.like_movies.filter(pk=movie.pk).exists():
       me.like_movies.remove(movie.pk)
-      is_like = False
-      
+      is_like = False 
   else:
       me.like_movies.add(movie.pk)
       is_like = True
   
   return Response(is_like)
+
 
 @api_view(['POST'])
 def review_likes(request, review_pk):
@@ -166,4 +105,54 @@ def review_likes(request, review_pk):
   
   return Response(is_like)
 
-# Response로 True or False를 보내는게 맞는지? 고민
+
+
+@api_view(['POST'])
+def recommend(request):
+    # 내가 좋아요 한 영화들의 장르 비율 해시를 구하는 함수
+    me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
+    my_genre_rate = {}
+    my_like_movie = me.like_movies.all()
+    total_my_like_movie = 0
+    
+    # 좋아하는 영화별
+    for movie in my_like_movie:
+        # 장르별 개수 구하기
+        for g in movie.genres.all():
+            total_my_like_movie += 1
+            tmp = g.id
+            if tmp not in my_genre_rate:
+                my_genre_rate[tmp] = 1
+            else:
+                my_genre_rate[tmp] += 1
+    # 비율 계산
+    for i in my_genre_rate:
+        my_genre_rate[i] = round(my_genre_rate[i]/total_my_like_movie,2)
+
+    result = []
+    # 비율이 높은 3개의 장르를 반환
+    for key,value in sorted(my_genre_rate.items(), key=lambda x: x[1], reverse=True)[:3]:
+        result.append(key)
+    
+    print(result)
+    # 3개의 장르를 포함하는 영화들을 반환하는 함수
+    recommend_movie = []
+    all_movies = Movie.objects.all()
+
+    for movie in all_movies:
+        genres = movie.genres.all()
+        is_valid = 1
+
+        genre_set = []
+        for g in genres:
+            genre_set.append(g.id)
+
+        for check in result:
+            if check not in genre_set:
+                is_valid = 0
+                break
+        
+        if is_valid:
+            recommend_movie.append(movie)
+            
+    print(recommend_movie)
