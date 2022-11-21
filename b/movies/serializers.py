@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Movie, Review
+from .models import Movie, Review, Genre
 
 
 
@@ -10,10 +10,13 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('user', 'movie', 'like_users',)
 
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
+        fields = '__all__'
 
 class MovieSerializer(serializers.ModelSerializer):
-    # review_set = ReviewSerializer(many=True, read_only=True)
-    # review_count = serializers.IntegerField(source='review_set.count', read_only=True)
+    genres = GenreSerializer(many=True)
 
     class Meta:
         model = Movie

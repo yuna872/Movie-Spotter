@@ -6,6 +6,10 @@
 
 <script>
 import MovieItem from '@/components/MovieItem';
+import axios from 'axios'
+import jwt_decode from "jwt-decode"
+
+const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'Recommend',
@@ -18,6 +22,28 @@ export default {
   methods: {
     // 커뮤니티 기반 추천 알고리즘
     // 컨텐츠 기반 추천 알고리즘
+    getRecommend() {
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+      axios({
+          method: 'post',
+          url: `${API_URL}/movies/recommend/`,
+          data: {
+            user_id: now_user_id,
+            movies: this.movies
+          },
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        .then((res)=>{
+          console.log(res)
+        })
+        .catch((err)=>{console.log(err)})
+    }
+  },
+  created() {
+    this.getRecommend()
   }
 
 }

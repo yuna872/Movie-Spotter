@@ -8,6 +8,9 @@
       {{ movie?.['release_date'] }}
       {{ movie?.['original_language'] }}
     </div>
+    <div>
+      {{ movie.genres }}
+    </div>
     <div class="review-box">
       <!-- 리뷰 작성 모달 -->
       <div class="black-bg" v-if="is_show == true" >
@@ -91,11 +94,11 @@ export default {
         method : 'get',
         url : `${API_URL}/movies/${this.movie_id}`
       })
-      .then((res)=>{
-        this.movie = res.data
-        console.log(this.movie, '🚍')
-      })
-      .catch((err)=>{console.log(err)})
+        .then((res)=>{
+          this.movie = res.data
+          console.log(this.movie, '🚍')
+        })
+        .catch((err)=>{console.log(err)})
     },
     getReviews() {
       this.movie_id = this.$route.params.id
@@ -103,10 +106,10 @@ export default {
         method: 'get',
         url: `${API_URL}/movies/${this.movie_id}/reviews/`
       })
-      .then((res)=>{
-        this.reviews = res.data
-      })
-      .catch((err)=>{console.log(err)})
+        .then((res)=>{
+          this.reviews = res.data
+        })
+        .catch((err)=>{console.log(err)})
     },
     modalToggle() {
       this.is_show = !this.is_show
