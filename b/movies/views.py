@@ -98,7 +98,7 @@ def review_likes(request, review_pk):
   if me.like_reviews.filter(pk=review.pk).exists():
       me.like_reviews.remove(review.pk)
       is_like = False
-      
+      ['id']
   else:
       me.like_reviews.add(review.pk)
       is_like = True
