@@ -3,7 +3,7 @@
     <div class="item-bg">
       {{ movie?.title }}
       {{ movie?.['vote_average'] }}
-      <button @click="movieLike">{{ is_like }}</button>
+      <button @click="movieLike" v-if="isLogin">{{ is_like }}</button>
       <p>{{ movieinfo?.like_users }}</p>
     </div>
   </div>
@@ -22,6 +22,7 @@ export default {
   },
   data() {
     return {
+      isLogin : localStorage.getItem('jwt') ? true : false,
       is_like: null,
       movieinfo : null,
     }
@@ -87,9 +88,6 @@ export default {
         .catch((err)=>{console.log(err)})
     }
   },
-  created() {
-    this.getMovieLikeInfo()
-  }
 }
 </script>
 
