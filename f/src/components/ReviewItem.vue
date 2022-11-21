@@ -7,8 +7,8 @@
     <div class="review-item-right">
       <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a>님 작성</div>
       <div class="review-content">{{ review.content }}</div>
-      <div class="review-submit-btn" @click="reviewLike">
-        <div><i class="fa-solid fa-thumbs-up"></i></div>
+      <div class="review-submit-btn" @click="reviewLike" :class="{'review-like-btn': !is_like}">
+        <div :class="{ 'review-like-thumbs': !is_like }"><i class="fa-solid fa-thumbs-up"></i></div>
         <div>도움이 돼요 {{ reviewinfo?.like_users.length }}</div>
       </div>
     </div>
@@ -113,6 +113,16 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.review-like-btn {
+  border: solid 3px #F6BE00;
+  color: #F6BE00;
+}
+
+.review-like-thumbs {
+  transform: scale( 1.4 ) skewX( 10deg );
+  transition: 0.2s;
 }
 
 .review-content {
