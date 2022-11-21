@@ -10,6 +10,7 @@
 <hr>
 
 ## 업무분담
+[전체 일정](https://www.notion.so/a-k-a-a5ea666ed3c948caaaaaf72b41db66ec)
 <br>
 
 ## 목표 서비스
