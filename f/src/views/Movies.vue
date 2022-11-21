@@ -4,20 +4,22 @@
     <!-- {{ backdropUrl }} -->
     <div class="banner" :style="{'backgroundImage':`url(${backdropUrl})`}">
       <div class="banner-items">
-        <h3>MOVE SPOTTER</h3>
+        <div class="banner-title">MOVIE SPOTTER</div>
         <!-- {{ backdropUrl }} -->
-        <form @submit.prevent="searchInputData">
-          <input 
+        <form class="banner-form" @submit.prevent="searchInputData">
+          <input
+            class="banner-input" 
             type="text"  
             @input="inputData=$event.target.value" 
             placeholder="영화 제목으로 검색하세요.">
-          <button>검색하기</button>
-          <div class="display-array-container">
+          <!-- <div class="banner-btn">영화 찾기</div> -->
+          <div class="display-array-container" v-if="displayArray.length">
             <div class="display-array-box">
             <MovieItem
               v-for="(movie, index) in displayArray"
               :key="`d-${index}`"
               :movie="movie"
+              style="margin:10px auto;"
             /> 
           </div> 
           </div>
@@ -114,21 +116,26 @@ export default {
 <style>
 /* 배너 & 검색 페이지 */
 .banner {
+  /* background-color: rgba(0, 0, 0, 0.6); */
   width : 100vw - 50px;
   height : 100vh;
   border: solid 2px pink;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
+  /* background-color: rgba(0, 0, 0, 0.6); */
 }
 
-/* .container::after {
-  width: 100%;
-  height: 100%;
-  content: "";
-  background: url("./images/sunrise.jpg");
-} */
-
+.banner::before{
+        content: "";
+        opacity: 0.5;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom : 300vh;
+        background-color: #000;
+}
 .banner-items {
   position : absolute;
   z-index : 2;
@@ -137,19 +144,60 @@ export default {
   display: flex;
   flex-direction: column;
   width : 70%;
-  margin : 20vh auto;
-  border: solid 2px red;
+  margin : 30vh auto;
+}
+
+.banner-title {
+  font-family: 'Secular One', sans-serif;
+  font-size : 6em;
+}
+
+.banner-input{
+  border: none;
+  width : 70%;
+  height: 55px;
+  margin :auto;
+  background-color: #343440;
+  padding-left: 2vw;
+  font-size: 1.3em;
+  color: white;
+}
+
+.banner-form {
+  margin-top : 3vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+.banner-btn {
+  width : 25%;
+  background-color: #F6BE00;
+  margin-top : 5vh; 
+  height: 4.5vh;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
 }
 
 .display-array-container {
-  width : 100%;
-  border: solid 2px red;
+  margin-top : 25px;
+  background-color: rgba(0, 0, 0, 0.6);
+  width : 90vw;
+  border-radius: 10px;
+  padding : 20px;
 }
 
 .display-array-box {
-  width : 90%;
-  display: flex;
+  width : 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  /* display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start; */
 }
 
 /* 로그인 제안(?) 페이지 */

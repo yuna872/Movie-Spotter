@@ -118,6 +118,8 @@ export default {
 
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
@@ -164,6 +166,8 @@ nav a {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Secular One', sans-serif;
+  font-size: 1.5em;
 }
 
 .nav-right {

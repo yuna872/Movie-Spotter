@@ -37,4 +37,15 @@ export default {
   background-position: center;
 }
 
+.login-request::before{
+        content: "";
+        opacity: 0.5;
+        position: absolute;
+        top: 100vh;
+        left: 0px;
+        right: 0px;
+        bottom : 200vh;
+        background-color: #000;
+}
+
 </style>
