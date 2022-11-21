@@ -26,7 +26,8 @@
 
                           <div class="form-group mt-2">
                             <input type="password" id="password2" v-model="password2" class="form-style" placeholder="Password Confirmation" autocomplete="off">
-                            <i class="input-icon fas fa-check"></i>
+                            <i class="input-icon fas fa-lock fa-stack-2x"></i>
+                            <i class="input-icon fas fa-check fa-stack-1x" style="color:#343440"></i>
                           </div>
 
                           <div class="form-group mt-2">

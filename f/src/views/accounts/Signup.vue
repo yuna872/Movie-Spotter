@@ -27,7 +27,8 @@
 
                           <div class="form-group mt-2">
                             <input type="password" id="password2" v-model="password2" class="form-style" placeholder="Password Confirmation" autocomplete="off">
-                            <i class="input-icon fas fa-check"></i>
+                            <i class="input-icon fas fa-lock fa-stack-2x"></i>
+                            <i class="input-icon fas fa-check fa-stack-1x" style="color:#343440"></i>
                           </div>
 
                           <div class="form-group mt-2">
@@ -321,7 +322,6 @@ h6 span{
   line-height: 48px;
   text-align: left;
   color: #F6BE00;
-  font-family: FontAwesome;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
   filter: drop-shadow(0px 0px 1.5px)
