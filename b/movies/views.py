@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import MovieSerializer, ReviewSerializer
 from .models import Movie, Review
 from django.contrib.auth import get_user_model
-
+from django.http import HttpResponse 
 
 @api_view(['GET'])
 def movie_list(request):
@@ -155,4 +155,4 @@ def recommend(request):
         if is_valid:
             recommend_movie.append(movie)
             
-    print(recommend_movie)
+    return HttpResponse(recommend_movie)
