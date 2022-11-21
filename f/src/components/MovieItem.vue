@@ -4,7 +4,7 @@
       {{ movie?.title }}
       {{ movie?.['vote_average'] }}
       <button @click="movieLike">{{ is_like }}</button>
-      <p>{{ movieinfo?.like_users }}</p>
+      <p>{{ movieinfo?.like_users.length }}</p>
     </div>
   </div>
 </template>
