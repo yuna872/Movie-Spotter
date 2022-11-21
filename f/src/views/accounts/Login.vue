@@ -15,20 +15,23 @@
                         <h4 class="mb-4 pb-3">Sign Up</h4>
                         <form @submit.prevent="signUp">
                           <div class="form-group">
-                          <input type="text" id="username" v-model="username" class="form-style" placeholder="ID" autocomplete="off"><br>
-                          <i class="input-icon uil uil-at"></i>
+                            <input type="text" id="username" v-model="username" class="form-style" placeholder="ID" autocomplete="off">
+                            <i class="input-icon fas fa-user"></i>
                           </div>
                           
                           <div class="form-group mt-2">
-                            <input type="password" id="password" v-model="password" class="form-style" placeholder="Password" autocomplete="off"><br>
+                            <input type="password" id="password" v-model="password" class="form-style" placeholder="Password" autocomplete="off">
+                            <i class="input-icon fas fa-lock"></i>
                           </div>
 
                           <div class="form-group mt-2">
-                            <input type="password" id="password2" v-model="password2" class="form-style" placeholder="Password Confirmation" autocomplete="off"><br>
+                            <input type="password" id="password2" v-model="password2" class="form-style" placeholder="Password Confirmation" autocomplete="off">
+                            <i class="input-icon fas fa-check"></i>
                           </div>
 
                           <div class="form-group mt-2">
                             <input type="text" id="nickname" v-model="nickname" class="form-style" placeholder="Nickname" autocomplete="off">
+                            <i class="input-icon fa-solid fa-user-pen"></i>
                           </div>
                           <input type="submit" class="btn mt-4" value="SUBMIT">
                         </form>
@@ -42,11 +45,12 @@
                         <form @submit.prevent="logIn">
                           <div class="form-group">
                             <input type="text" id="username" v-model="username" class="form-style" placeholder="Your Username" autocomplete="off">
-                            <i class="input-icon uil uil-user"></i>
+                            <i class="input-icon fas fa-user"></i>
                           </div>
                           
                           <div class="form-group mt-2">
-                            <input type="password" id="password" v-model="password" class="form-style" placeholder="Your Password" autocomplete="off"><br>
+                            <input type="password" id="password" v-model="password" class="form-style" placeholder="Your Password" autocomplete="off">
+                            <i class="input-icon fas fa-lock"></i>
                           </div>
 
                           <input type="submit" class="btn mt-4" value="logIn">
