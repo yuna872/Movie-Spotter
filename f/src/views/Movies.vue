@@ -207,6 +207,8 @@ export default {
 .movies-box{
   width: 100vw;
   height: 200vh;
+  display: flex;
+  align-items: center;
 }
 
 

@@ -96,11 +96,10 @@ export default {
 <style>
 .movie-item {
   width : 16vw;
-  height : 24vw;
+  height : 24vh;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
-  margin-top : 10px;
   border-radius: 10px;
 }
 
@@ -109,7 +108,6 @@ export default {
     opacity: 0.8;
     color : black;
   }
-
 
 .item-bg {
     opacity: 0;

@@ -1,50 +1,104 @@
 <template>
   <!-- 로그인, 비로그인 사용자에게 공통적으로 추천하는 영화들 -->
   <div class="movie-list">
-    <div>따끈따끈 최신작 TOP 20</div>
-    <div class="movie-list-box">
-      <!-- <MovieSlider :movies="newMovies"/> -->
-      <MovieItem 
-        v-for="(movie,index) in newMovies"
-        :key="`n-${index}`"
-        :movie="movie"
-      />
+    <div class="swiper-box">
+      <div class="semi-title">따끈따끈 최신작 TOP 20</div>
+      <div>
+        <md-card>
+          <md-card-media>
+            <!-- swiper -->
+            <swiper class="swiper" :options="swiperOption">
+              <swiper-slide v-for="(movie, index) in newMovies" :key="`n-${index}`">
+                <MovieItem :movie="movie"/>
+              </swiper-slide>
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+            </swiper>
+          </md-card-media>
+        </md-card>
+      </div>
     </div>
-    <div>투표수가 가장 많은</div>
-    <div class="movie-list-box">
-      <MovieItem 
-        v-for="(movie,index) in hotMovies"
-        :key="`h-${index}`"
-        :movie="movie"
-      />
+    <div class="swiper-box">
+      <div class="semi-title">투표수가 가장 많은</div>
+      <div>
+        <md-card>
+          <md-card-media>
+            <!-- swiper -->
+            <swiper class="swiper" :options="swiperOption">
+              <swiper-slide v-for="(movie, index) in hotMovies" :key="`h-${index}`">
+                <MovieItem :movie="movie"/>
+              </swiper-slide>
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+            </swiper>
+          </md-card-media>
+        </md-card>
+      </div>
     </div>
-    <div>국내영화 TOP 20</div>
-    <div class="movie-list-box">
-      <MovieItem 
-        v-for="(movie,index) in koreanMovies"
-        :key="`k-${index}`"
-        :movie="movie"
-      />
+    <div class="swiper-box">
+      <div class="semi-title">국내 영화 TOP 20</div>
+      <div>
+        <md-card>
+          <md-card-media>
+            <!-- swiper -->
+            <swiper class="swiper" :options="swiperOption">
+              <swiper-slide v-for="(movie, index) in koreanMovies" :key="`k-${index}`">
+                <MovieItem :movie="movie"/>
+              </swiper-slide>
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+            </swiper>
+          </md-card-media>
+        </md-card>
+      </div>
     </div>
-    <div>해외영화 TOP 20</div>
-    <div class="movie-list-box">
-      <MovieItem 
-        v-for="(movie,index) in internationalMovies"
-        :key="`i-${index}`"
-        :movie="movie"
-      />
-    </div>
+    <div class="swiper-box">
+      <div class="semi-title">해외 영화 TOP 20</div>
+      <div>
+        <md-card>
+          <md-card-media>
+            <!-- swiper -->
+            <swiper class="swiper" :options="swiperOption">
+              <swiper-slide v-for="(movie, index) in internationalMovies" :key="`i-${index}`">
+                <MovieItem :movie="movie"/>
+              </swiper-slide>
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+            </swiper>
+          </md-card-media>
+        </md-card>
+      </div>
+    </div>  
   </div>
 </template>
 
 <script>
-import MovieItem from '@/components/MovieItem';
+// import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import MovieItem from '@/components/MovieItem.vue'
 
 export default {
   name : 'MovieList',
   components: {
     MovieItem,
+    swiper,
+    swiperSlide
   },
+  data: function() {
+    return {
+      swiperOption: {
+          slidesPerView: 5,
+          spaceBetween: 20,
+          slidesPerGroup: 5,
+          loop: true,
+          loopFillGroupWithBlank: true,
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
+        }
+    }
+  },  
   props:{
     movies : Array,
   },
@@ -109,18 +163,45 @@ export default {
 </script>
 
 <style>
-.movie-list{
-  border : solid 2px blue;
+.movie-list {
+  width : 90%;
+  height : 90%;
+  margin : auto;
   display: flex;
   flex-direction: column;
-  width : 85%;
-  margin: auto;
-}
-
-.movie-list-box{
-  display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
 }
+
+.swiper-box {
+  border-radius: 10px;
+  padding-top : 2vh;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.swiper-box:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  scale : 1.05;
+}
+
+.swiper-slide {
+  width : 16vw;
+  height : 24vh;
+  /* border: solid 2px red; */
+  padding : 0;
+}
+
+.swiper {
+  width : 100%;
+  /* border: solid 2px red; */
+  height : 30vh;
+  padding : 3vh;
+}
+
+.semi-title {
+  font-size : 2em;
+  padding-left : 3vw;
+}
+
 
 </style>

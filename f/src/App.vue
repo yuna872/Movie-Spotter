@@ -44,6 +44,7 @@
 <script src="https://kit.fontawesome.com/059237378d.js" crossorigin="anonymous"></script>
 <script src="lodash.js"></script>
 <script>
+import 'swiper/dist/css/swiper.css'
 
 import axios from 'axios';
 import jwt_decode from "jwt-decode"
