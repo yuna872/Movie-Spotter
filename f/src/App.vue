@@ -31,13 +31,6 @@
         <button>제출하기</button>
       </div>
     </div>
-    
-    <!-- 마우스 스크롤 이벤트 -->
-    <div class="scroll-downs">
-      <div class="mousey">
-        <div class="scroller"></div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -243,40 +236,4 @@ nav a {
   border-radius: 10px;
 }
 
-/* 마우스 아이콘 */
-.scroll-downs {
-  position: relative;
-  bottom : 4vh;
-  margin : 0 auto;
-  left: 0;
-  right : 0;
-  width :30px;
-  height: 50px;
-  /* border : solid 2px blue; */
-}
-.mousey {
-  width: 2px;
-  padding: 9px 10px;
-  height: 20px;
-  border: 2.5px solid #fff;
-  border-radius: 25px;
-  opacity: 0.75;
-  box-sizing: content-box;
-}
-.scroller {
-  width: 3px;
-  height: 6px;
-  margin : 0 auto;
-  border-radius: 25%;
-  background-color: #fff;
-  animation-name: scroll;
-  animation-duration: 2.2s;
-  animation-timing-function: cubic-bezier(.15,.41,.69,.94);
-  animation-iteration-count: infinite;
-}
-@keyframes scroll {
-  0% { opacity: 0; }
-  10% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(15px); opacity: 0;}
-}
 </style>

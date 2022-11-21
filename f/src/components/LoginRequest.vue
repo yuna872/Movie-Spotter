@@ -83,20 +83,18 @@ export default {
 }
 
 .login-request-title {
-  font-size : 3em;
-  margin-bottom : 25px;
-  animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 3s;
+  font-size : 3.5em;
+  animation:ani 2s infinite alternate;
+  margin-bottom : 15px;  
 }
+@keyframes ani{
+   0%{transform:translate(0,0);}
+   100%{transform:translate(0,12px);}
+}  
 
 .login-request-content {
-  font-size : 1.8em;
-  animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 3s;
+  font-size : 2em;
+  animation:ani 2s infinite alternate;  
 }
 
 .login-request-btn {
@@ -106,7 +104,7 @@ export default {
   border-radius : 50px;
   margin-top : 3vh;
   font-size : 1.2em;
-  /* box-shadow: 0 5px 4px rgba(79, 74, 49, 0.6); */
+  animation:ani 2s infinite alternate;  
 }
 
 .login-request-btn:hover{

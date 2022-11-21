@@ -6,6 +6,7 @@
         v-for="(movie, index) in similarList"
         :key="`s-${index}`"
         :movie="movie"
+        class="movie-item2"
       />
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-item" :style="{'backgroundImage':`url(${posterUrl})`}">
+  <div :style="{'backgroundImage':`url(${posterUrl})`}">
     <div class="item-bg" @click="goDetail">
       {{ movie?.title }}
       {{ movie?.['vote_average'] }}
@@ -53,6 +53,10 @@ export default {
       this.$router.push({name: 'detail', params: { id : this.movie.id }})
     },
     movieLike() {
+      if (localStorage.getItem('jwt')===null) {
+        alert('로그인이 필요한 서비스 입니다ㅠ')
+      }
+
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
 
@@ -101,7 +105,7 @@ export default {
 </script>
 
 <style>
-.movie-item {
+.movie-item2 {
   width : 16vw;
   height : 24vh;
   background-size: cover; 

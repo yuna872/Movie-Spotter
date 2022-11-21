@@ -22,6 +22,7 @@
               :key="`d-${index}`"
               :movie="movie"
               style="margin:10px auto;"
+              class="movie-item2"
             /> 
           </div> 
           </div>
@@ -172,12 +173,14 @@ export default {
   font-family: 'Secular One', sans-serif;
   font-size : 6em;
   width: 15ch;
-  animation: typing 2s steps(15), blink .5s step-end infinite alternate;
+  animation-delay: 2s;
+  animation: typing 4s steps(15), blink .5s step-end infinite alternate;
   white-space: nowrap;
   overflow: hidden;
   border-right: 3px solid;
   display: flex;
   align-items: center;
+  margin : auto;
 }
 
 @keyframes typing {

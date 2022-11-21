@@ -9,7 +9,7 @@
             <!-- swiper -->
             <swiper class="swiper" :options="swiperOption">
               <swiper-slide v-for="(movie, index) in newMovies" :key="`n-${index}`">
-                <MovieItem :movie="movie"/>
+                <MovieItem class="movie-item1" :movie="movie"/>
               </swiper-slide>
               <div class="swiper-button-prev" slot="button-prev"></div>
               <div class="swiper-button-next" slot="button-next"></div>
@@ -26,7 +26,7 @@
             <!-- swiper -->
             <swiper class="swiper" :options="swiperOption">
               <swiper-slide v-for="(movie, index) in hotMovies" :key="`h-${index}`">
-                <MovieItem :movie="movie"/>
+                <MovieItem class="movie-item1" :movie="movie"/>
               </swiper-slide>
               <div class="swiper-button-prev" slot="button-prev"></div>
               <div class="swiper-button-next" slot="button-next"></div>
@@ -43,7 +43,7 @@
             <!-- swiper -->
             <swiper class="swiper" :options="swiperOption">
               <swiper-slide v-for="(movie, index) in koreanMovies" :key="`k-${index}`">
-                <MovieItem :movie="movie"/>
+                <MovieItem class="movie-item1" :movie="movie"/>
               </swiper-slide>
               <div class="swiper-button-prev" slot="button-prev"></div>
               <div class="swiper-button-next" slot="button-next"></div>
@@ -60,7 +60,7 @@
             <!-- swiper -->
             <swiper class="swiper" :options="swiperOption">
               <swiper-slide v-for="(movie, index) in internationalMovies" :key="`i-${index}`">
-                <MovieItem :movie="movie"/>
+                <MovieItem class="movie-item1" :movie="movie"/>
               </swiper-slide>
               <div class="swiper-button-prev" slot="button-prev"></div>
               <div class="swiper-button-next" slot="button-next"></div>
@@ -97,7 +97,7 @@ export default {
             prevEl: '.swiper-button-prev'
           },
           autoplay: {
-            delay: 2500,
+            delay: 3000,
             disableOnInteraction: false
           },
         }
@@ -166,7 +166,15 @@ export default {
 }
 </script>
 
+
 <style>
+.movie-item1 {
+  padding-top : 120%;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+}
 .movie-list {
   width : 90%;
   height : 90%;
@@ -185,13 +193,11 @@ export default {
 }
 .swiper-box:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  scale : 1.05;
+  scale : 1.03;
 }
 
 .swiper-slide {
-  width : 16vw;
-  height : 24vh;
-  /* border: solid 2px red; */
+  width : 20%;
   padding : 0;
 }
 
