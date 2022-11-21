@@ -4,10 +4,14 @@
       {{ movie?.title }}
       {{ movie?.['vote_average'] }}
 
-      <p>{{ movieinfo?.like_users }}</p>
+      <p>{{ movieinfo?.like_users.length }}</p>
     </div>
-    <button @click="movieLike" class='like-btn' v-if="isLogin">
-      {{ is_like }}</button>
+    <div v-if="isLogin" class="like-btn-p">
+      <button @click="movieLike" class='like-btn' v-if="!is_like">
+        <i class="fa-solid fa-heart fa-sm" style="color:red"></i></button>
+      <button @click="movieLike" class='like-btn' v-if="is_like">
+        <i class="fa-regular fa-heart fa-sm" style="color:red"></i></button>
+    </div>
   </div>
 </template>
 
@@ -90,6 +94,9 @@ export default {
         .catch((err)=>{console.log(err)})
     }
   },
+  created() {
+    this.getMovieLikeInfo()
+  }
 }
 </script>
 
@@ -121,11 +128,19 @@ export default {
     border-radius: 10px;
   }
 
-  .like-btn {
+.like-btn-p {
     position: relative;
-    top : -98%; right : -30%;
-    width : 20px;
-    height : 20px;
+    top : -98%; right : -2%;
+}
+
+.like-btn {
+    width : 29px;
+    height : 29px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    filter: drop-shadow(0px 0px 2px gray);
+    opacity: 0.75;
     /* z-index: 3; */
   }
 
