@@ -134,7 +134,6 @@ def recommend(request):
     for key,value in sorted(my_genre_rate.items(), key=lambda x: x[1], reverse=True)[:3]:
         result.append(key)
     
-    print(result)
     # 3개의 장르를 포함하는 영화들을 반환하는 함수
     recommend_movie = []
     all_movies = Movie.objects.all()
@@ -153,6 +152,8 @@ def recommend(request):
                 break
         
         if is_valid:
-            recommend_movie.append(movie)
-            
-    return HttpResponse(recommend_movie)
+            movie = get_object_or_404(Movie, pk=movie.pk)
+            serializer = MovieSerializer(movie)
+            recommend_movie.append(serializer.data)
+
+    return Response(recommend_movie)

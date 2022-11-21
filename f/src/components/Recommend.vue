@@ -1,6 +1,13 @@
 <template>
-  <div class="recommend">
+  <div class="movie-list">
     <h3>로그인된 사용자에게 보여질 영화 추천 컴포넌트</h3>
+    <div class="movie-list-box">
+      <MovieItem 
+        v-for="(movie,index) in recommendMovies"
+        :key="`r-${index}`"
+        :movie="movie"
+      />
+    </div>
   </div>
 </template>
 
@@ -16,8 +23,10 @@ export default {
   components: {
     MovieItem,
   },
-  props: {
-    movies: Array,
+  data() {
+    return {
+      recommendMovies: null,
+    }
   },
   methods: {
     // 커뮤니티 기반 추천 알고리즘
@@ -30,14 +39,14 @@ export default {
           url: `${API_URL}/movies/recommend/`,
           data: {
             user_id: now_user_id,
-            movies: this.movies
           },
           headers: {
             'Authorization' : `Bearer ${token}`
           }
         })
         .then((res)=>{
-          console.log(res)
+          this.recommendMovies = res.data
+          console.log(res.data)
         })
         .catch((err)=>{console.log(err)})
     }
