@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release-pro/v4.0.0/css/solid.css">
     <div class="container">
       <div class="row full-height justify-content-center">
         <div class="col-12 text-center align-self-center py-5">
@@ -16,7 +17,7 @@
                         <form @submit.prevent="signUp">
                           <div class="form-group">
                             <input type="text" id="username" v-model="username" class="form-style" placeholder="ID" autocomplete="off"><br>
-                            <i class="input-icon uil uil-at"></i>
+                            <i class="input-icon"></i>
                           </div>
                           
                           <div class="form-group mt-2">
@@ -136,7 +137,7 @@ export default {
 </script>
 
 <style>
-@import url("https://unicons.iconscout.com/release-pro/v4.0.0/css/solid.css");
+/* @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css%27'); */
 
 .section{
   position: relative;
@@ -155,7 +156,7 @@ a:hover {
   color: #c4c3ca;
 }
 .link:hover {
-  color: #ffeba7;
+  color: #F6BE00;
 }
 p {
   font-weight: 500;
@@ -194,7 +195,7 @@ h6 span{
   padding: 0;
   margin: 10px auto;
   cursor: pointer;
-  background-color: #ffeba7;
+  background-color: #F6BE00;
 }
 .checkbox:checked + label:before,
 .checkbox:not(:checked) + label:before{
@@ -203,8 +204,8 @@ h6 span{
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: #ffeba7;
-  background-color: #102770;
+  color: #F6BE00;
+  background-color: #343440;
   font-family: FontAwesome;
   content: "\f060";
   z-index: 20;
@@ -314,7 +315,10 @@ h6 span{
   font-size: 24px;
   line-height: 48px;
   text-align: left;
-  color: #ffeba7;
+  color: #F6BE00;
+  font-family: FontAwesome;
+  content: "\f063";
+  z-index: 100;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
@@ -388,19 +392,19 @@ h6 span{
   -ms-flex-pack: center;
   text-align: center;
   border: none;
-  background-color: #ffeba7;
-  color: #102770;
+  background-color: #F6BE00;
+  color: #343440;
   box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
 }
 .btn:active,
 .btn:focus{  
-  background-color: #102770;
-  color: #ffeba7;
+  background-color: #343440;
+  color: #F6BE00;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 .btn:hover{  
-  background-color: #102770;
-  color: #ffeba7;
+  background-color: #343440;
+  color: #F6BE00;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 
