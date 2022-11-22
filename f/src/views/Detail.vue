@@ -35,11 +35,12 @@
               <div class="star">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
-        <div class="review-right-box" >
+        <div class="review-right-box">
           <ReviewItem
             v-for="(review, index) in reviews"
             :key="index"
             :review="review"
+            @deleted="getReviews"
           />
         </div>
       </div>
@@ -195,6 +196,7 @@ export default {
   flex-direction: column;
   border: solid 2px red;
   width : 65%;
+  overflow-y: scroll;
 }
 
 .rank-avg {

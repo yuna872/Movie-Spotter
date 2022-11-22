@@ -11,6 +11,7 @@
         <div :class="{ 'review-like-thumbs': !is_like }"><i class="fa-solid fa-thumbs-up"></i></div>
         <div>도움이 돼요 {{ reviewinfo?.like_users.length }}</div>
       </div>
+      <button @click="reviewDelete">DELETE</button>
     </div>
   </div>
 </template>
@@ -75,6 +76,22 @@ export default {
           }
         })
         .catch((err)=>{console.log(err)})
+    },
+    reviewDelete() {
+      const token = localStorage.getItem('jwt')
+
+      axios({
+        method: 'delete',
+        url: `${API_URL}/movies/reviews/${this.review.id}/`,
+        headers: {
+            'Authorization' : `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          this.$emit("deleted")
+          console.log(res)
+        })
+        .catch((err)=>{console.log(err)})
     }
   },
   created() {
@@ -86,7 +103,7 @@ export default {
 <style>
 .review-item {
   display: flex;
-  margin : 10vh auto;
+  margin : 1.5vh auto;
   width : 90%;
   border-bottom : solid 1px white;
   padding-bottom : 2vh; 
