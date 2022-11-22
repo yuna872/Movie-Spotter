@@ -1,12 +1,17 @@
 <template>
   <div class="detail">
+    <div class="detail-bg">
+      <div class="detail-content">
+        <div class="detail-title">{{ movie?.title }}</div>
+        <div style="display:flex;align-items:center;">
+          <div class="detail-vote"><i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i>&nbsp;{{ movie?.['vote_average'] }}</div>
+          <div class="detail-adult">{{ movie?.adult ? "청소년 관람 불가" : "청소년 관람 가능" }}</div>
+        </div>
+        <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }}년 {{ movie?.['release_date'].slice(5,7) }}월 {{ movie?.['release_date'].slice(8) }}일</div>
+        <div class="detail-video">{{ movie?.video }}</div>
+      </div>
+    </div>
     <div class="detail-box" :style="{'backgroundImage':`url(${backdropUrl})`}">
-      {{ movie?.title }}
-      {{ movie?.title }}
-      {{ movie?.['vote_average'] }}
-      {{ movie?.adult }}
-      {{ movie?.['release_date'] }}
-      {{ movie?.['original_language'] }}
     </div>
     <div class="review-box">
       <!-- 리뷰 작성 모달 -->
@@ -27,7 +32,7 @@
             <div style="display:flex;flex-direction:column">
               <div class="star">⭐⭐⭐⭐⭐</div>
               <div>{{ reviews.length }}개 리뷰</div>
-            </div>
+        </div>
           </div>
           <div class="review-left-bottom" @click="modalToggle">
               <div>{{ movie?.title }} 어떠셨나요?</div> 
@@ -46,7 +51,7 @@
       </div>
     </div>
     <div class="similar-box">
-      <SimilarList :genres="movie?.genres"/>
+      <SimilarList :genres="movie?.genres" :movieTitle="movie?.title"/>
       <!-- {{ movie?.genres }} -->
     </div>
   </div>
@@ -94,7 +99,10 @@ export default {
     rankAverage(){
       const total = this.reviews?.reduce((total, review) => total + review.rank, 0)
       return Math.round(total / this.reviews?.length, 2).toFixed(1)
-    }
+    },
+    videoUrl() {
+      return `http://www.youtube.com/embed/${this.movie?.video}`
+    },
   },
   methods: {
     getMovieDetail() {
@@ -104,7 +112,6 @@ export default {
       })
       .then((res)=>{
         this.movie = res.data
-        // console.log(this.movie, '🚍')
       })
       .catch((err)=>{console.log(err)})
     },
@@ -114,18 +121,16 @@ export default {
         method: 'get',
         url: `${API_URL}/movies/${this.movie_id}/reviews/`
       })
-        .then((res)=>{
-          this.reviews = res.data
-        })
-        .catch((err)=>{console.log(err)})
+      .then((res)=>{
+        this.reviews = res.data
+      })
+      .catch((err)=>{console.log(err)})
     },
     modalToggle() {
       this.is_show = !this.is_show
-      // console.log(this.is_show)
     },
     onClickOutside() {
       this.is_show = !this.is_show
-      // console.log(this.is_show)
     }
   },
   created() {
@@ -136,22 +141,60 @@ export default {
 </script>
 
 <style>
-/* 영화 세부 정보 */
-.detail-box {
-  width : 100vw;
-  height : 100vh;
+.detail-bg {
+  position : absolute;
+  top:0;right:0;left:0;bottom:200vh;
   background: linear-gradient(
     to left,
       rgba(20, 20, 20, 0) 10%,
       rgba(20, 20, 20, 0.25) 25%,
       rgba(20, 20, 20, 0.5) 50%,
-      rgba(20, 20, 20, 0.75) 75%,
+      rgba(20, 20, 20, 0.9) 75%,
       rgba(20, 20, 20, 1) 100%
   );
+  background: linear-gradient(
+    60deg, rgba(0,0,0,1) 20%, rgba(0,0,0,0.5) 100%
+    );
+
+
+}
+/* 영화 세부 정보 */
+.detail-box {
+  width : 100vw;
+  height : 100vh;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.detail-content {
+  border: solid 2px red;
+  text-align: left;
+  /* width : 30%; */
+  height: 50%;
+  position: absolute;
+  bottom : 20vh;
+  left : 5vw;
+}
+
+.detail-title {
+  font-size:2.5em;
+}
+.detail-vote {
+  font-size:2em;
+}
+.detail-adult {
+  font-size:1.2em;
+  text-decoration-line: underline;
+  margin-left : 20px;
+}
+.detail-date {
+  font-size:1.2em;
+}
+.detail-video {
+
+}
+
 
 /* 리뷰 컴포넌트 */
 .review-box {
@@ -190,7 +233,7 @@ export default {
   margin-top : 4vh;
   justify-content: flex-start;
   text-align: left;
-} 
+}
 .review-right-box {
   display: flex;
   flex-direction: column;
@@ -206,7 +249,7 @@ export default {
   align-items: center;
   width : 10vw;
   height : 6vh;
-  border: solid 2px red;
+  margin-top:20px;
 }
 
 
@@ -220,9 +263,11 @@ export default {
 
 /* 비슷한 콘텐츠 */
 .similar-box {
-  border: solid 2px green;
   width : 100vw;
   height : 100vh;
-  /* padding: auto; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
