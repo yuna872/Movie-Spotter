@@ -1,13 +1,4 @@
-<!-- <template>
-  <div class="user-info">
-    <div class="user-info-box">
-      <p>{{ userinfo?.username }}님의 페이지</p>
-      <p>이분의 닉네임은 {{ userinfo?.nickname }} 입니다.</p>
-      <p>팔로워: {{ userinfo?.followers.length }} | 팔로잉: {{ userinfo?.followings.length }}</p>
-      <button @click='follow'>{{ is_follow }}</button>
-    </div>
-  </div>
-</template> -->
+
 <template>
   <div class="userinfo">
     <div class="userinfo-box">

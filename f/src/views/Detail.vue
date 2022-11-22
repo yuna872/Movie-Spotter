@@ -8,7 +8,13 @@
           <div class="detail-adult">{{ movie?.adult ? "청소년 관람 불가" : "청소년 관람 가능" }}</div>
         </div>
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }}년 {{ movie?.['release_date'].slice(5,7) }}월 {{ movie?.['release_date'].slice(8) }}일</div>
-        <div class="detail-video">{{ movie?.video }}</div>
+        <div class="detail-overview">{{ movie?.overview }}</div>
+        <div class="detail-video">
+          <div>
+            예고편 보러가기
+          </div>
+        </div>
+        {{ movie?.video }}
       </div>
     </div>
     <div class="detail-box" :style="{'backgroundImage':`url(${backdropUrl})`}">
@@ -155,8 +161,6 @@ export default {
   background: linear-gradient(
     60deg, rgba(0,0,0,1) 20%, rgba(0,0,0,0.5) 100%
     );
-
-
 }
 /* 영화 세부 정보 */
 .detail-box {
@@ -168,10 +172,9 @@ export default {
 }
 
 .detail-content {
-  border: solid 2px red;
+  /* border: solid 2px red; */
   text-align: left;
-  /* width : 30%; */
-  height: 50%;
+  height: 40%;
   position: absolute;
   bottom : 20vh;
   left : 5vw;
@@ -191,8 +194,21 @@ export default {
 .detail-date {
   font-size:1.2em;
 }
+.detail-overview {
+  font-size:1.2em;
+  width : 30vw;
+  margin : 30px 0; 
+}
 .detail-video {
-
+  border: 3px solid white;
+  width : 15vw;
+  border-radius: 50px;
+  height : 60px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding : 5px;
 }
 
 
