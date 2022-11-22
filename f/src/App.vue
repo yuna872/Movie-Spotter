@@ -16,6 +16,10 @@
     </nav>
     <router-view class="router-view" @first-time="getFirstTime" @login="login" :isLogin="isLogin"/>
     <div class="about-us-btn" @click="toAboutUs"></div>
+    <!-- 페이지 위로 가는 버튼 -->
+    <button class="top-btn" onclick="window.scrollTo(0,0);">
+      <i class="fa-solid fa-arrow-up fa-lg"></i>
+    </button>
     <!-- 모달 -->
     <div class="black-bg" v-if="firstTime" >
       <div class="firsttime-modal">
@@ -236,4 +240,21 @@ nav a {
   border-radius: 10px;
 }
 
+.top-btn {
+  width : 40px;
+  height : 40px;
+  background-color : white;
+  opacity: 0.6;
+  border-radius: 50%;
+  position: fixed;
+  bottom : 20px;
+  left: 20px;
+  z-index: 5;
+  border: none;
+}
+
+.top-btn:hover {
+  transform: scale( 1.05 );
+  filter: drop-shadow(0px 0px 2px black);
+}
 </style>

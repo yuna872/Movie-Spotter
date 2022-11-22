@@ -120,7 +120,7 @@ export default {
   color: #F6BE00;
 }
 
-.review-like-thumbs {
+.review-submit-btn:hover .review-like-thumbs {
   transform: scale( 1.4 ) skewX( 10deg );
   transition: 0.2s;
 }
