@@ -1,8 +1,27 @@
 <template>
   <div class="review-item">
     <div class="review-item-left">
-      ⭐⭐⭐⭐⭐
-      <div>{{ review.rank }}</div>
+      <div v-if="review.rank === 1">
+        <img src="@/assets/star_1.png" style="width : 15px; height : 15px;"></div>
+      <div v-else-if="review.rank === 2">
+        <img src="@/assets/star_2.png" style="width : 15px; height : 15px;"></div>
+      <div v-else-if="review.rank === 3">
+        <img src="@/assets/star_3.png" style="width : 30px; height : 15px;"></div>
+      <div v-else-if="review.rank === 4">
+        <img src="@/assets/star_4.png" style="width : 30px; height : 15px;"></div>
+      <div v-else-if="review.rank === 5">
+        <img src="@/assets/star_5.png" style="width : 45px; height : 15px;"></div>
+      <div v-else-if="review.rank === 6">
+        <img src="@/assets/star_6.png" style="width : 45px; height : 15px;"></div>
+      <div v-else-if="review.rank === 7">
+        <img src="@/assets/star_7.png" style="width : 60px; height : 15px;"></div>
+      <div v-else-if="review.rank === 8">
+        <img src="@/assets/star_8.png" style="width : 60px; height : 15px;"></div>
+      <div v-else-if="review.rank === 9">
+        <img src="@/assets/star_9.png" style="width : 75px; height : 15px;"></div>
+      <div v-else>
+        <img src="@/assets/star_10.png" style="width : 75px; height : 15px;"></div>
+      <div>{{ review.rank }}.0</div>
     </div>
     <div class="review-item-right">
       <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a>님 작성</div>

@@ -38,13 +38,26 @@
             <div class="rank-avg">{{ rankAverage? rankAverage : "첫번째 리뷰를 작성해보세요" }}</div>
             <div class="star-box">
               <div class="star"> <div class="star-div">
-                <star-rating
-                  v-model="star"
-                  :increment="0.5"
-                  :star-size="30"
-                  :clearable="true"
-                  :show-rating="false"
-                />
+                <div v-if="rankAverage < 2">
+                  <img src="@/assets/star_1.png" style="width : 35px; height : 35px;"></div>
+                <div v-else-if="rankAverage < 3">
+                  <img src="@/assets/star_2.png" style="width : 35px; height : 35px;"></div>
+                <div v-else-if="rankAverage < 4">
+                  <img src="@/assets/star_3.png" style="width : 70px; height : 35px;"></div>
+                <div v-else-if="rankAverage < 5">
+                  <img src="@/assets/star_4.png" style="width : 70px; height : 35px;"></div>
+                <div v-else-if="rankAverage < 6">
+                  <img src="@/assets/star_5.png" style="width : 105px; height : 35px;"></div>
+                <div v-else-if="rankAverage < 7">
+                  <img src="@/assets/star_6.png" style="width : 105px; height : 35px;"></div>
+                <div v-else-if="rankAverage < 8">
+                  <img src="@/assets/star_7.png" style="width : 140px; height : 35px;"></div>
+                <div v-else-if="rankAverage < 9">
+                  <img src="@/assets/star_8.png" style="width : 140px; height : 35px;"></div>
+                <div v-else-if="rankAverage < 10">
+                  <img src="@/assets/star_9.png" style="width : 175px; height : 35px;"></div>
+                <div v-else>
+                  <img src="@/assets/star_10.png" style="width : 175px; height : 35px;"></div>
               </div></div>
               <div class="review-count">총 {{ reviews.length }}개의 리뷰</div>
         </div>
@@ -53,13 +66,7 @@
               <div class="content1">{{ movie?.title }} 어떠셨나요?</div> 
               <div class="content2">다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
               <div class="star-div">
-                <star-rating
-                  v-model="star"
-                  :increment="0.5"
-                  :star-size="30"
-                  :clearable="true"
-                  :show-rating="false"
-                />
+                <img src="@/assets/star_10.png" style="width : 175px; height : 35px;">
               </div>
             </div>
         </div>
@@ -83,7 +90,7 @@
 <script>
 import axios from 'axios'
 import vClickOutside from 'v-click-outside'
-import StarRating from 'vue-star-rating'
+// import StarRating from 'vue-star-rating'
 
 import ReviewForm from '@/components/ReviewForm';
 import ReviewItem from '@/components/ReviewItem';
@@ -98,7 +105,7 @@ export default {
     ReviewForm,
     ReviewItem,
     SimilarList,
-    StarRating,
+    // StarRating,
   },
   data() {
     return {
