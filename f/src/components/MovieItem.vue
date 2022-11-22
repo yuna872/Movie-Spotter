@@ -57,6 +57,11 @@ export default {
       this.$router.push({name: 'detail', params: { id : this.movie.id }})
     },
     movieLike() {
+
+      if (!localStorage.getItem('jwt')) {
+        alert('로그인이 필요한 서비스 입니다!')
+        return
+      }
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
 

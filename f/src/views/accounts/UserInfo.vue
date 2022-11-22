@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="user-info">
     <div class="user-info-box">
       <p>{{ userinfo?.username }}님의 페이지</p>
@@ -6,6 +6,22 @@
       <p>팔로워: {{ userinfo?.followers.length }} | 팔로잉: {{ userinfo?.followings.length }}</p>
       <button @click='follow'>{{ is_follow }}</button>
     </div>
+  </div>
+</template> -->
+<template>
+  <div class="userinfo">
+    <div class="userinfo-box">
+    <div class="userinfo-top">
+      <!-- 상세정보 -->
+      <div class="userinfo-top-top flex-div" >
+        <p class="info-id">{{ userinfo?.username }}님의 페이지</p>
+        <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
+        <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings: {{ userinfo?.followings.length }}</p>
+        <div @click='follow' class="info-follow-btn">
+          <div>{{ is_follow }}</div></div>
+      </div>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -85,5 +101,20 @@ export default {
 </script>
 
 <style>
+.info-follow-btn {
+  width : 20%;
+  height : 50px;
+  border : 3px solid white;
+  margin: 20px auto;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+
+.flex-div {
+  display: flex;
+  flex-direction: column;
+}
 </style>

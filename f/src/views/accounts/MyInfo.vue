@@ -7,16 +7,24 @@
         <p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
         <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
         <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings: {{ userinfo?.followings.length }}</p>
-        <p style="font-size : 1.1em;">내가 쓴 리뷰 📑</p>
+        <p style="font-size : 1.4em;margin-top:20px;">내가 쓴 리뷰 📑</p>
         <div class="myreview-list scroll-div">
+          
           <div 
             v-for="(review, index) in reviewinfo" 
-            :key="index">
-              {{ review.content }}
-              {{ review.rank }}
+            :key="index"
+            class="info-div"  
+          > 
+            <div> <i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i> 
+              &nbsp;{{ review.rank }}점
+            </div>
+           <p>
+            <!-- {{ movies.id }} -->
+           </p>
+           <p>{{ review.content }}</p>
             <p>
               <i class="fa-solid fa-thumbs-up"></i>&nbsp;
-              {{ review.like_users.length }}
+              {{ review.like_users.length }}&nbsp;likes
             </p>
           </div>
         </div>
@@ -93,7 +101,8 @@ export default {
           if (likeMovies.includes(movie.id)) {
             return movie
           }
-      })})
+        }
+      )})
       .catch((err)=>{console.log(err)})
     },
     getuserinfo() {
@@ -153,6 +162,7 @@ export default {
   flex-direction: column;
   justify-content: space-evenly;
 
+
 }
 .userinfo-top-top {
   height : 40%;
@@ -161,6 +171,8 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   margin : auto;
+  /* border : solid 2px red; */
+
 }
 
 .userinfo-top-top p {
@@ -168,6 +180,20 @@ export default {
   margin-bottom: 5px;
 }
 
+.info-div {
+  display: flex;
+  justify-content: space-evenly;
+  font-size : 1.1em;
+  align-items: center;
+  border-bottom: solid 2px white;
+  padding-bottom : 10px;
+  width : 90%;
+  margin : auto;
+}
+
+.info-div p {
+  font-size : 1.1em;
+}
 .info-id {
   font-size : 2.5em;
 }
@@ -186,7 +212,7 @@ export default {
 .myreview-list {
   /* border : solid 2px red; */
   height : 50%;
-  width : 90%;
+  width : 60%;
   margin : auto;
   overflow-y: scroll;
 }
