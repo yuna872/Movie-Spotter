@@ -57,10 +57,6 @@ export default {
       this.$router.push({name: 'detail', params: { id : this.movie.id }})
     },
     movieLike() {
-      if (localStorage.getItem('jwt')===null) {
-        alert('로그인이 필요한 서비스 입니다ㅠ')
-      }
-
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
 
@@ -116,18 +112,15 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 10px;
-  /* width:100%;
-  height:100%; */
   border: none;
   opacity: 0.8;
   color : black;
-
 }
 
 .movie-item2 {
   position: relative;
   width : 16vw;
-  height : 24vh;
+  padding-bottom :150%;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
@@ -156,6 +149,7 @@ export default {
     justify-items: center;
     text-align : center;
   }
+
 .like-btn-p {
   position: absolute;
   top:5px;bottom:0;left:0;
@@ -170,7 +164,7 @@ export default {
     opacity: 0.75;
     position: absolute;
     top: 1; right: 1;
-    z-index: 3;
+    z-index: 1;
   }
 
 </style>

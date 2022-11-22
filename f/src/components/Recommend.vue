@@ -1,26 +1,46 @@
 <template>
   <div class="movie-list">
-    <h3>로그인된 사용자에게 보여질 영화 추천 컴포넌트</h3>
-    <div class="movie-list-box">
-      <MovieItem 
-        v-for="(movie,index) in recommendMoviesByLikes"
-        :key="`r-${index}`"
-        :movie="movie"
-        class="movie-item2"
-      />
-      <hr>
-      <MovieItem 
-        v-for="(movie,index) in recommendMoviesByFollowings"
-        :key="`r-${index}`"
-        :movie="movie"
-        class="movie-item2"
+    <div class="swiper-box">
+      <!-- {{ recommendMoviesByFollowings }} -->
 
-      />
+      <div class="semi-title">{{ userinfo?.nickname }}님이 좋아할 만한 컨텐츠</div>
+      <div>
+        <swiper class="swiper" :options="swiperOption">
+          <swiper-slide class="swiper-slide" v-for="(movie, index) in recommendMoviesByLikes" :key="`n-${index}`">
+            <MovieItem class="movie-item1" :movie="movie"/>
+          </swiper-slide>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
+      </div>
     </div>
-  </div>
+    <div class="swiper-box"  v-if="recommendMoviesByFollowings">
+      <div class="semi-title">{{ userinfo?.nickname }}님의 친구들은 이 영화!</div>
+      <div>
+        <swiper class="swiper" :options="swiperOption">
+          <swiper-slide class="swiper-slide" v-for="(movie, index) in recommendMoviesByFollowings" :key="`n-${index}`">
+            <MovieItem class="movie-item1" :movie="movie"/>
+          </swiper-slide>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
+      </div>
+    </div>
+    <div class="swiper-box" v-if="!recommendMoviesByFollowings">
+      <div class="semi-title">{{ userinfo?.nickname }}님의 친구들은 이 영화!</div>
+      <div>
+        <swiper class="swiper" :options="swiperOption" >
+          <swiper-slide class="swiper-slide">slide</swiper-slide>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
+      </div>
+    </div>
+    </div>
 </template>
 
 <script>
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import MovieItem from '@/components/MovieItem';
 import axios from 'axios'
 import jwt_decode from "jwt-decode"
@@ -31,19 +51,53 @@ export default {
   name: 'Recommend',
   components: {
     MovieItem,
+    swiper,
+    swiperSlide,
   },
   data() {
     return {
+      userinfo:null,
       recommendMoviesByLikes: null,
       recommendMoviesByFollowings: null,
+      swiperOption: {
+          slidesPerView: 5,
+          spaceBetween: 20,
+          slidesPerGroup: 5,
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          },
+          autoplay: {
+            delay: 3500,
+            disableOnInteraction: false
+          },
+        }
     }
   },
   methods: {
     // 커뮤니티 기반 추천 알고리즘
     // 컨텐츠 기반 추천 알고리즘
+    getuserinfo() {
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+      
+      axios({
+          method: 'get',
+          url: `${API_URL}/accounts/${now_user_id}`,
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        .then((res)=>{
+          this.userinfo = res.data
+          console.log(this.userinfo)
+        })
+        .catch((err)=>{console.log(err)})
+    },
     getRecommendByLikes() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
+      
       axios({
           method: 'post',
           url: `${API_URL}/movies/recommendbymylikes/`,
@@ -83,16 +137,14 @@ export default {
   created() {
     this.getRecommendByLikes()
     this.getRecommendByFollowings()
+    if (localStorage.getItem('jwt')) {
+      this.getuserinfo()
+    }
   }
 
 }
 </script>
 
 <style>
-.recommend {
-  width : 100vw;
-  height : 100vh;
-  border : solid 2px green;
-}
 
 </style>

@@ -23,16 +23,16 @@
     <!-- 모달 -->
     <div class="black-bg" v-if="firstTime" >
       <div class="firsttime-modal">
-        <div>앗, Movie Spotter가 처음이시군요?</div>
-        <div class="firsttime-box">
-          <div 
+        <div class="firsttime-title">앗, Movie Spotter가 처음이시군요?</div>
+        <div class="firsttime-box scroll-div">
+          <!-- {{ randomMovies}} -->
+          <MovieItem2
             v-for="(movie,index) in randomMovies"
             :key="`rr-${index}`"
-            class="firsttime-items"
-            :style="{'backgroundImage':`url('https://image.tmdb.org/t/p/original/${movie?.poster_path}')`}"
-          ></div>
+          />
         </div>
-        <button>제출하기</button>
+        <div class="firsttime-btn">
+          <div>제출하기</div></div>
       </div>
     </div>
   </div>
@@ -47,6 +47,7 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode"
 
 import MovieItem from '@/components/MovieItem'
+import MovieItem2 from '@/components/MovieItem2'
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -58,12 +59,21 @@ export default {
       user_id : null,
       firstTime : false,
       randomMovies : [],
+      likeMovies : [],
     }
   },
   components: {
     MovieItem,
+    MovieItem2
   },
   methods: {
+    pushLikeItem(movie) {
+      if (this.likeMovies.includes(movie)) {
+        this.likeMovies.remove(movie)
+      } else {
+        this.likeMovies.push(movie)
+      }
+    },
     getRandomMovies() {
       axios({
         method: 'get',
@@ -99,7 +109,8 @@ export default {
       console.log('😎')
       this.firstTime = true
       console.log(this.firstTime ,'😎')
-    }
+    },
+
   },
   watch: {
     firstTime: function() {
@@ -111,6 +122,7 @@ export default {
       const token = localStorage.getItem('jwt')
       this.user_id = jwt_decode(token).user_id
     }
+    this.getRandomMovies()
   }
 }
 </script>
@@ -128,8 +140,21 @@ export default {
   text-align: center; 
 }
 
-/* nav a.router-link-exact-active {
-} */
+.scroll-div::-webkit-scrollbar { 
+width: 10px; /*스크롤바의 너비*/ } 
+
+.scroll-div::-webkit-scrollbar-thumb { 
+background-color: rgba(255,255,255,0.7); /*스크롤바의 색상*/ 
+border-radius: 10px; /*스크롤바 라운드*/
+} 
+
+.scroll-div::-webkit-scrollbar-track { 
+background-color: rgba(0,0,0,0.6); /*스크롤바 트랙 색상*/ 
+border-radius: 10px; /*스크롤바 트랙 라운드*/ 
+box-shadow: inset 0px 0px 5px rgba(0,0,0,0.2); /*스크롤바 트랙 안쪽 그림자*/}
+
+
+
 
 /* 네비게이션 */
 nav {
@@ -201,17 +226,19 @@ nav a {
 
 /* 정보 수집 모달 */
 .firsttime-modal {
-  width : 80%;
+  width : 80vw;
+  height : 90vh;
   margin : auto;
   background: #343440; 
   border-radius: 5px;
   padding : 15px 0;
   position: fixed;  
-  top : 10vh; bottom: 0;
+  top :1vh; bottom: 0;
   left : 0; right: 0;
-  /* position: absolute;
-  top: 40vh; left: 20vw; */
   z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .black-bg {
@@ -224,10 +251,15 @@ nav a {
 }
 .firsttime-box {
   width : 90%;
+  height : 85%;
   margin : auto;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   justify-content: space-between;
+  overflow-y: scroll;
+}
+.firsttime-title {
+  font-size: 2em;
 }
 
 .firsttime-items {
@@ -236,8 +268,34 @@ nav a {
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
-  margin-top : 10px;
+  margin-top : 20px;
   border-radius: 10px;
+  display: inline;
+}
+
+.firsttime-items:hover {
+  scale: 1.02;
+}
+
+.shadow-light {
+  padding: 1rem;
+  color: rgb(36, 255, 102);
+  filter: drop-shadow(0 0 2px rgba(36, 255, 102, 0.7))
+    drop-shadow(0 0 5px rgba(36, 255, 102, 0.7))
+    drop-shadow(0 0 15px rgba(36, 255, 102, 0.7));
+}
+
+.firsttime-btn {
+  width : 20%;
+  padding :7px;
+  margin : auto;
+  color: #FFD23C;
+  border : #FFD23C 3px solid;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
 }
 
 .top-btn {

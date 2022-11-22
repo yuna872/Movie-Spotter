@@ -31,10 +31,14 @@
       
     </div>
     <!-- 비로그인 사용자에게 보여줄 페이지 -->
-    <LoginRequest :randomMovie="randomMovie[1]"/>
+    <LoginRequest 
+      :randomMovie="randomMovie[1]" 
+      v-if="!isLogin"/>
     <!-- 로그인된 사용자에게 보여줄 페이지 -->
     <Recommend 
       :movies="movies"
+      class="recommend"
+      v-if="isLogin"
     />
     
     <div class="movies-box">
@@ -69,6 +73,7 @@ export default {
       bannerImageUrl : null,
       displayArray : [],
       randomMovie : [],
+      isLogin : localStorage.getItem('jwt') ? true : false
     }
   },
   computed: {
@@ -122,7 +127,6 @@ export default {
 .banner {
   width : 100vw - 50px;
   height : 100vh;
-  border: solid 2px pink;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
@@ -245,6 +249,10 @@ export default {
 
 /* 로그인 제안(?) 페이지 */
 /* 추천 알고리즘 페이지 */
+.recommend {
+  width : 90vw;
+  height: 100vh;
+}
 /* 공통 추천 영화 페이지 */
 .movies-box{
   width: 100vw;

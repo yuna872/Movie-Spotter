@@ -5,7 +5,6 @@
         <div class="flip-card">
           <!-- 앞면 -->
           <div class="front">
-            
           </div>
           <!-- 뒷면 -->
           <div class="back">
@@ -110,7 +109,7 @@ export default {
 }
 
 .link-btn {
-  width : 
+
 }
 
 </style>
