@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      star : null,
+      star: null,
       content : null,
       modal: false,
     }
@@ -114,6 +114,9 @@ export default {
   right: 10px;
   top: 20px;
 }
+.x-btn:hover {
+  color : #F6BE00
+}
 
 .review-text {
   margin-top: 2rem;
@@ -144,5 +147,9 @@ export default {
   color : #25252e;
   height : 50px;
   font-size : 1.2em;
+}
+
+.review-submit:hover {
+  scale : 1.02;
 }
 </style>

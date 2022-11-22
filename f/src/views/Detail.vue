@@ -28,21 +28,30 @@
           @add-review="getReviews" 
           :movie="movie"
           v-click-outside="onClickOutside"
+          :star="star"
         />
       </div>
       <!-- 리뷰 리스트  -->
       <div class="review-list-box">
         <div class="review-left-box">
           <div class="review-left-top">
-            <div class="rank-avg"><div>{{ rankAverage? rankAverage : "첫번째 리뷰를 작성해보세요" }}</div></div>
-            <div style="display:flex;flex-direction:column">
-              <div class="star">⭐⭐⭐⭐⭐</div>
-              <div>{{ reviews.length }}개 리뷰</div>
+            <div class="rank-avg">{{ rankAverage? rankAverage : "첫번째 리뷰를 작성해보세요" }}</div>
+            <div class="star-box">
+              <div class="star"> <div class="star-div">
+                <star-rating
+                  v-model="star"
+                  :increment="0.5"
+                  :star-size="30"
+                  :clearable="true"
+                  :show-rating="false"
+                />
+              </div></div>
+              <div class="review-count">총 {{ reviews.length }}개의 리뷰</div>
         </div>
           </div>
           <div class="review-left-bottom" @click="modalToggle">
-              <div>{{ movie?.title }} 어떠셨나요?</div> 
-              <div>다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
+              <div class="content1">{{ movie?.title }} 어떠셨나요?</div> 
+              <div class="content2">다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
               <div class="star-div">
                 <star-rating
                   v-model="star"
@@ -54,7 +63,7 @@
               </div>
             </div>
         </div>
-        <div class="review-right-box">
+        <div class="review-right-box scroll-div">
           <ReviewItem
             v-for="(review, index) in reviews"
             :key="index"
@@ -145,6 +154,7 @@ export default {
     },
     modalToggle() {
       this.is_show = !this.is_show
+      this.star = null
     },
     onClickOutside() {
       this.is_show = !this.is_show
@@ -183,7 +193,6 @@ export default {
 }
 
 .detail-content {
-  /* border: solid 2px red; */
   text-align: left;
   height: 40%;
   position: absolute;
@@ -243,42 +252,67 @@ export default {
 .review-left-box {
   display: flex;
   flex-direction: column;
-  border: solid 2px red;
   width : 35%;
+  margin : 5%
 }
 
 .review-left-top {
-  border: solid 2px red;
   display: flex;
 } 
 .review-left-bottom {
-  border: solid 2px red;
+  border: solid 1px white;
   width : 100%;
-  height : 20%;
+  margin : auto;
   display: flex;
   flex-direction: column;
   margin-top : 4vh;
   justify-content: flex-start;
-  text-align: left;
+  text-align: center;
+  padding : 10%;
+}
+.content1 {
+  width : 90%;
+  margin : 10px auto;
+  font-size : 1.2em;
+}
+.content2 {
+  width : 90%;
+  margin : 10px auto;
+  font-size : 1.1em;
 }
 .review-right-box {
   display: flex;
   flex-direction: column;
-  border: solid 2px red;
-  width : 65%;
+  width : 55%;
+  margin : 5%;
   overflow-y: scroll;
 }
 
 .rank-avg {
   font-size: 5em;
+  width : 50%;
+  height : 100%;
+}
+
+.star-box {
+  width : 50%;
+  display:flex;
+  flex-direction:column;
+}
+
+
+.star {
+  height : 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width : 10vw;
-  height : 6vh;
-  margin-top:20px;
 }
 
+.review-count {
+  height : 50%;
+  font-size: 1.3em;
+  padding : 10px;
+}
 
 /* 모달 클릭시 배경 어둡게 */
 .black-bg {
