@@ -175,7 +175,6 @@ export default {
 }
 
 .swiper-slide {
-
   padding : 0;
   margin : 5px;
   border-radius: 15px;

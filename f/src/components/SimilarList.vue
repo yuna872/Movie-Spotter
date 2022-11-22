@@ -1,18 +1,19 @@
 <template>
   <div class="similar-list">
-    <h3>비슷한 콘텐츠 컴포넌트</h3>
+    <div class="semi-title">"{{ movieTitle }}"와(과) 비슷한 컨텐츠</div>
     <div class="similar-list-box">
       <MovieItem
         v-for="(movie, index) in similarList"
         :key="`s-${index}`"
         :movie="movie"
-        class="movie-item2"
+        class="movie-item3"
       />
     </div>
   </div>
 </template>
  
 <script>
+import _ from 'lodash';
 import axios from 'axios';
 
 import MovieItem from '@/components/MovieItem';
@@ -26,6 +27,7 @@ export default {
   },
   props: {
     genres:Array,
+    movieTitle: String,
   },
   data() {
     return {
@@ -34,7 +36,6 @@ export default {
   },
   methods: {
     getSimilarList() {
-      // console.log(this.genres)
       axios({
         method: 'get',
         url: `${API_URL}/movies/`
@@ -55,12 +56,10 @@ export default {
           }
         })
 
-        console.log(this.similarList)
-
-        if (this.similarList.length <= 20) {
+        if (this.similarList.length <= 10) {
           return this.similarList.slice(0, this.similarList.length)
         } else {
-          return this.similarList.slice(0, 20)
+          this.similarList = _.sampleSize(this.similarList, 10)
         }
       })
       .catch((err)=>{console.log(err)})
@@ -79,10 +78,22 @@ export default {
   text-align: left;
 }
 .similar-list-box{
-  width : 85vw;
+  width : 90vw;
   margin : auto;
+  margin-top : 20px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  border: solid 2px red;
+}
+
+.movie-item3 {
+  position: relative;
+  width : 15vw;
+  padding-bottom :130%;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  border-radius: 10px;
+  margin-bottom : 1vh;
 }
 </style>

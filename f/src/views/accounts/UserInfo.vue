@@ -1,13 +1,4 @@
-<!-- <template>
-  <div class="user-info">
-    <div class="user-info-box">
-      <p>{{ userinfo?.username }}님의 페이지</p>
-      <p>이분의 닉네임은 {{ userinfo?.nickname }} 입니다.</p>
-      <p>팔로워: {{ userinfo?.followers.length }} | 팔로잉: {{ userinfo?.followings.length }}</p>
-      <button @click='follow'>{{ is_follow }}</button>
-    </div>
-  </div>
-</template> -->
+
 <template>
   <div class="userinfo">
     <div class="userinfo-box">
@@ -16,7 +7,7 @@
       <div class="userinfo-top-top flex-div" >
         <p class="info-id">{{ userinfo?.username }}님의 페이지</p>
         <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
-        <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings: {{ userinfo?.followings.length }}</p>
+        <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p>
         <div @click='follow' class="info-follow-btn">
           <div>{{ is_follow }}</div></div>
       </div>
