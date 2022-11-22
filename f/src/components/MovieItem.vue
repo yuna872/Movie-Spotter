@@ -1,17 +1,19 @@
 <template>
   <div :style="{'backgroundImage':`url(${posterUrl})`}">
-    <div class="item-bg" @click="goDetail">
-      {{ movie?.title }}
-      {{ movie?.['vote_average'] }}
-
-      <p>{{ movieinfo?.like_users.length }}</p>
-    </div>
+    <!-- 좋아요 버튼 -->
     <div v-if="isLogin" class="like-btn-p">
       <button @click="movieLike" class='like-btn' v-if="!is_like">
-        <i class="fa-solid fa-heart fa-sm" style="color:red"></i></button>
+        <i class="fa-solid fa-heart" style="color:red"></i></button>
       <button @click="movieLike" class='like-btn' v-if="is_like">
-        <i class="fa-regular fa-heart fa-sm" style="color:red"></i></button>
+        <i class="fa-regular fa-heart" style="color:red"></i></button>
     </div>
+    <!-- 아이템 배경 -->
+    <div @click="goDetail" class="item-bg">
+      {{ movie?.title }}
+      {{ movie?.['vote_average'] }}
+      <p>{{ movieinfo?.like_users.length }}</p>
+    </div>
+    
   </div>
 </template>
 
@@ -105,25 +107,39 @@ export default {
 </script>
 
 <style>
+.movie-item1 {
+  /* position: relative; */
+  padding-top : 150%;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+  /* width:100%;
+  height:100%; */
+  border: none;
+}
+
 .movie-item2 {
+  /* position: relative; */
   width : 16vw;
   height : 24vh;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
+  border: none;
   border-radius: 10px;
 }
 
-.movie-item:hover .item-bg{
+.item-bg:hover {
     background-color : white;
     opacity: 0.8;
     color : black;
   }
 
 .item-bg {
+    position: absolute;
+    top:0;bottom:0;right:0;left:0;
     opacity: 0;
-    width : 100%;
-    height : 100%;
     display: flex;
     flex-direction : column;
     justify-content: center;
@@ -131,21 +147,21 @@ export default {
     text-align : center;
     border-radius: 10px;
   }
-
 .like-btn-p {
-    position: relative;
-    top : -98%; right : -2%;
+  position: absolute;
+  top:5px;bottom:0;left:0;
 }
-
 .like-btn {
-    width : 29px;
-    height : 29px;
+    width :40px;
+    height : 40px;
     border-radius: 50%;
     background-color: white;
     border: none;
     filter: drop-shadow(0px 0px 2px gray);
     opacity: 0.75;
-    /* z-index: 3; */
+    position: absolute;
+    top: 1; right: 1;
+    z-index: 3;
   }
 
 </style>

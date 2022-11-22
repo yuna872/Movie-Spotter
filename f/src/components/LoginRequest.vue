@@ -84,32 +84,34 @@ export default {
 
 .login-request-title {
   font-size : 3.5em;
-  animation:ani 2s infinite alternate;
+  animation:ani 1.6s infinite alternate;
   margin-bottom : 15px;  
 }
 @keyframes ani{
    0%{transform:translate(0,0);}
-   100%{transform:translate(0,12px);}
+   100%{transform:translate(0,17px);}
 }  
 
 .login-request-content {
   font-size : 2em;
-  animation:ani 2s infinite alternate;  
+  animation:ani 1.6s infinite alternate;  
 }
 
 .login-request-btn {
   width : 25%;
   height : 60px;
   background-color: #F6BE00;
+  border : none;
   border-radius : 50px;
-  margin-top : 3vh;
+  margin-top : 5vh;
   font-size : 1.2em;
-  animation:ani 2s infinite alternate;  
+  /* animation:ani 2s infinite alternate;   */
 }
 
 .login-request-btn:hover{
     transform: translate(0, -10%);
     scale: 1.02;
+    box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.7);
 }
 
 </style>

@@ -4,69 +4,53 @@
     <div class="swiper-box">
       <div class="semi-title">따끈따끈 최신작 TOP 20</div>
       <div>
-        <md-card>
-          <md-card-media>
-            <!-- swiper -->
-            <swiper class="swiper" :options="swiperOption">
-              <swiper-slide v-for="(movie, index) in newMovies" :key="`n-${index}`">
-                <MovieItem class="movie-item1" :movie="movie"/>
-              </swiper-slide>
-              <div class="swiper-button-prev" slot="button-prev"></div>
-              <div class="swiper-button-next" slot="button-next"></div>
-            </swiper>
-          </md-card-media>
-        </md-card>
+        <!-- swiper -->
+        <swiper class="swiper" :options="swiperOption">
+          <swiper-slide class="swiper-slide" v-for="(movie, index) in newMovies" :key="`n-${index}`">
+            <MovieItem class="movie-item1" :movie="movie"/>
+          </swiper-slide>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
       </div>
     </div>
     <div class="swiper-box">
       <div class="semi-title">투표수가 가장 많은</div>
       <div>
-        <md-card>
-          <md-card-media>
-            <!-- swiper -->
-            <swiper class="swiper" :options="swiperOption">
-              <swiper-slide v-for="(movie, index) in hotMovies" :key="`h-${index}`">
-                <MovieItem class="movie-item1" :movie="movie"/>
-              </swiper-slide>
-              <div class="swiper-button-prev" slot="button-prev"></div>
-              <div class="swiper-button-next" slot="button-next"></div>
-            </swiper>
-          </md-card-media>
-        </md-card>
+          <!-- swiper -->
+          <swiper class="swiper" :options="swiperOption">
+            <swiper-slide class="swiper-slide" v-for="(movie, index) in hotMovies" :key="`h-${index}`">
+              <MovieItem class="movie-item1" :movie="movie"/>
+            </swiper-slide>
+            <div class="swiper-button-prev" slot="button-prev"></div>
+            <div class="swiper-button-next" slot="button-next"></div>
+          </swiper>
       </div>
     </div>
     <div class="swiper-box">
       <div class="semi-title">국내 영화 TOP 20</div>
       <div>
-        <md-card>
-          <md-card-media>
-            <!-- swiper -->
-            <swiper class="swiper" :options="swiperOption">
-              <swiper-slide v-for="(movie, index) in koreanMovies" :key="`k-${index}`">
-                <MovieItem class="movie-item1" :movie="movie"/>
-              </swiper-slide>
-              <div class="swiper-button-prev" slot="button-prev"></div>
-              <div class="swiper-button-next" slot="button-next"></div>
-            </swiper>
-          </md-card-media>
-        </md-card>
+          <!-- swiper -->
+          <swiper class="swiper" :options="swiperOption">
+            <swiper-slide class="swiper-slide" v-for="(movie, index) in koreanMovies" :key="`k-${index}`">
+              <MovieItem class="movie-item1" :movie="movie"/>
+            </swiper-slide>
+            <div class="swiper-button-prev" slot="button-prev"></div>
+            <div class="swiper-button-next" slot="button-next"></div>
+          </swiper>
       </div>
     </div>
     <div class="swiper-box">
       <div class="semi-title">해외 영화 TOP 20</div>
       <div>
-        <md-card>
-          <md-card-media>
-            <!-- swiper -->
-            <swiper class="swiper" :options="swiperOption">
-              <swiper-slide v-for="(movie, index) in internationalMovies" :key="`i-${index}`">
-                <MovieItem class="movie-item1" :movie="movie"/>
-              </swiper-slide>
-              <div class="swiper-button-prev" slot="button-prev"></div>
-              <div class="swiper-button-next" slot="button-next"></div>
-            </swiper>
-          </md-card-media>
-        </md-card>
+        <!-- swiper -->
+        <swiper class="swiper" :options="swiperOption">
+          <swiper-slide class="swiper-slide" v-for="(movie, index) in internationalMovies" :key="`i-${index}`">
+            <MovieItem class="movie-item1" :movie="movie"/>
+          </swiper-slide>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
       </div>
     </div>  
   </div>
@@ -90,8 +74,6 @@ export default {
           slidesPerView: 5,
           spaceBetween: 20,
           slidesPerGroup: 5,
-          loop: true,
-          loopFillGroupWithBlank: true,
           navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
@@ -168,13 +150,6 @@ export default {
 
 
 <style>
-.movie-item1 {
-  padding-top : 120%;
-  background-size: cover; 
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 10px;
-}
 .movie-list {
   width : 90%;
   height : 90%;
@@ -185,32 +160,37 @@ export default {
 }
 
 .swiper-box {
-  border-radius: 10px;
-  padding-top : 2vh;
+  border-radius: 20px;
+  padding : 0.5vh;
+  margin : 0.5vh;
   text-align: left;
+  /* border: solid 2px red; */
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 .swiper-box:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  scale : 1.03;
+  scale : 1.01;
+  border-radius: 15px;
 }
 
 .swiper-slide {
-  width : 20%;
+
   padding : 0;
+  margin : 5px;
+  border-radius: 15px;
 }
 
 .swiper {
-  width : 100%;
-  /* border: solid 2px red; */
-  height : 10%;
+
+  width :100%;
+  height:100%;
   padding : 3vh;
+  margin : 5px;
 }
 
 .semi-title {
   font-size : 2em;
-  padding-left : 3vw;
 }
 
 

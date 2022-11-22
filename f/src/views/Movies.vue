@@ -5,7 +5,7 @@
     <div class="banner" :style="{'backgroundImage':`url(${backdropUrl})`}">
       <div class="banner-items">
         <div class="banner-title">
-          <img src="@/assets/logo.png" style="width:6vw;height:6vh"/>&nbsp;MOVIE SPOTTER.
+          <img src="@/assets/logo.png" style="width:80px;height:80px"/>&nbsp;MOVIE SPOTTER.
         </div>
         <!-- {{ backdropUrl }} -->
         <form class="banner-form" @submit.prevent="searchInputData">
@@ -174,7 +174,7 @@ export default {
   font-size : 6em;
   width: 15ch;
   animation-delay: 2s;
-  animation: typing 4s steps(15), blink .5s step-end infinite alternate;
+  animation: typing 3.5s steps(15), blink .4s step-end infinite alternate;
   white-space: nowrap;
   overflow: hidden;
   border-right: 3px solid;
