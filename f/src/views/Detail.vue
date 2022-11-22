@@ -43,8 +43,16 @@
           <div class="review-left-bottom" @click="modalToggle">
               <div>{{ movie?.title }} 어떠셨나요?</div> 
               <div>다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
-              <div class="star">⭐⭐⭐⭐⭐</div>
-          </div>
+              <div class="star-div">
+                <star-rating
+                  v-model="star"
+                  :increment="0.5"
+                  :star-size="30"
+                  :clearable="true"
+                  :show-rating="false"
+                />
+              </div>
+            </div>
         </div>
         <div class="review-right-box">
           <ReviewItem
@@ -66,6 +74,7 @@
 <script>
 import axios from 'axios'
 import vClickOutside from 'v-click-outside'
+import StarRating from 'vue-star-rating'
 
 import ReviewForm from '@/components/ReviewForm';
 import ReviewItem from '@/components/ReviewItem';
@@ -80,9 +89,11 @@ export default {
     ReviewForm,
     ReviewItem,
     SimilarList,
+    StarRating,
   },
   data() {
     return {
+      star : null,
       movie : null,
       movie_id : this.$route.params.id,
       reviews: [],

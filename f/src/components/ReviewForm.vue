@@ -1,6 +1,6 @@
 <template>
   <div class="review-form" >
-      <button @click="modalToggle" class="x-btn">X</button>
+      <i class="fa-solid fa-circle-xmark fa-lg x-btn" @click="modalToggle"></i>
       <div class="review-text">이 영화, 어떠셨나요?</div>
       <form @submit.prevent="postReview" class="form">
         <div class="star-div">
@@ -12,7 +12,7 @@
             :show-rating="false"
           />
         </div>
-        <input class="review-content1" type="text" @input="content=$event.target.value" maxlength='200' placeholder="영화 리뷰를 작성해주세요.">
+        <textarea rows="30" class="review-content1 scroll-div" type="text" @input="content=$event.target.value" maxlength='200' placeholder="영화 리뷰를 작성해주세요."/>
         <button class="review-submit">리뷰 등록</button>
       </form>
   </div>
@@ -88,48 +88,61 @@ export default {
 /* 모달창 */
 
  .review-form{
-  width : 60%;
-  height: 50%;
+  width : 50vw;
+  /* height: 40vw; */
   margin : auto;
   background: #343440; 
   border-radius: 5px;
   padding : 15px 0;
   position: absolute;
-  top: 40vh; left: 20vw;
+  top: 20vh; left: 20vw;
   z-index: 4;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  width : 80%;
+  width : 100%;
   /* height : 80%; */
-  margin : auto;
+  margin : 30px auto;
   justify-content: space-between;
+  /* border : 2px solid red; */
 }
 
 .x-btn {
   position: absolute;
   right: 10px;
+  top: 20px;
 }
 
 .review-text {
   margin-top: 2rem;
   margin-bottom: 1rem;
+  font-size : 1.8em;
 }
+
 
 .star-div{
   margin: auto;
 }
 
 .review-content1 {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  height: 9rem;
+  margin: 20px auto;
+  height: 13rem;
+  background-color: #25252e;
+  color : white;
+  width : 70%;
+  overflow-y: scroll;
+  font-size : 1.3em;
 }
 
 .review-submit {
-  width: 30%;
+  width: 25%;
   margin: auto;
+  border-radius: 50px;
+  border : none;
+  color : #25252e;
+  height : 50px;
+  font-size : 1.2em;
 }
 </style>

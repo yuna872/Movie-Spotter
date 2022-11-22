@@ -256,7 +256,7 @@ export default {
 /* 공통 추천 영화 페이지 */
 .movies-box{
   width: 100vw;
-  height: 200vh;
+  /* height: 25000vh; */
   display: flex;
   align-items: center;
 }

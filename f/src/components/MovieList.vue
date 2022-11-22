@@ -162,7 +162,7 @@ export default {
 .swiper-box {
   border-radius: 20px;
   padding : 0.5vh;
-  margin : 0.5vh;
+  margin : 3vh;
   text-align: left;
   /* border: solid 2px red; */
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
