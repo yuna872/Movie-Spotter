@@ -1,4 +1,4 @@
-
+import heapq
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 # Authentication Decorators
@@ -107,9 +107,57 @@ def review_likes(request, review_pk):
 
 
 @api_view(['POST'])
-def recommendbymylikes(request):
-    # 내가 좋아요 한 영화들의 장르 비율 해시를 구하는 함수
+def recommend(request):
+    # by followings
     me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
+    my_followings = me.followings.all()
+    my_like_movies = me.like_movies.all()
+
+    following_tier_movie_list = []
+    # 팔로잉 유저별
+    for following in my_followings:
+        # 좋아하는 영화가 겹치는 수
+        same_cnt = 0
+        # 팔로잉 유저는 좋아요를 눌렀지만, 나는 좋아요를 누르지 않은 영화를 담는 리스트
+        not_same_movies = []
+        following_like_movies = following.like_movies.all()
+        # 팔로잉 유저가 좋아요를 누른 영화들 중
+        for following_like_movie in following_like_movies:
+            # 내가 좋아요를 누른 영화들과 같은 게 있나요?
+            is_same = 0
+            for my_like_movie in my_like_movies:
+                # 있다면
+                if following_like_movie.id == my_like_movie.id:
+                    is_same = 1
+                    break
+            # 겹치는 수 + 1
+            if is_same:
+                same_cnt += 1
+            # 없다면, 
+            else:
+                not_same_movies.append(following_like_movie)
+        
+        # 겹치는 좋아요 수가 큰 순으로
+        # 팔로잉 유저가 좋아요 누른 영화들 중 나는 좋아요를 누르지 않은 영화를 정렬 
+        tmp = (-same_cnt, not_same_movies)
+        following_tier_movie_list.append(tmp)
+        heapq.heappush(following_tier_movie_list, tmp)
+    # following_tier_movie_list.sort()
+
+    result = []
+    for tier in following_tier_movie_list:
+        for movie in tier[1]:
+            movie = get_object_or_404(Movie, pk=movie.pk)
+            serializer = MovieSerializer(movie)
+            result.append(serializer.data)
+            if len(result) == 20:
+                break
+        
+        if len(result) == 20:
+            break
+
+    # recommendbymylike
+    # 내가 좋아요 한 영화들의 장르 비율 해시를 구하는 함수
     my_genre_rate = {}
     my_like_movie = me.like_movies.all()
     total_genres = 0
@@ -127,14 +175,19 @@ def recommendbymylikes(request):
     # 비율 계산
     for i in my_genre_rate:
         my_genre_rate[i] = round(my_genre_rate[i]/total_genres,2)
+    two_genre =[]
 
-    result = []
-    # 비율이 높은 3개의 장르를 반환
-    for key,value in sorted(my_genre_rate.items(), key=lambda x: x[1], reverse=True)[:3]:
-        result.append(key)
+    # 비율이 높은 2개의 장르를 반환
+    cnt = 2
+    # 장르가 하나면 하나만..
+    if len(my_genre_rate) < 2:
+        cnt = 1
+        
+    for key,value in sorted(my_genre_rate.items(), key=lambda x: x[1], reverse=True)[:cnt]:
+        two_genre.append(key)
     
     # 3개의 장르를 포함하는 영화들을 반환하는 함수
-    recommend_movie = []
+  
     all_movies = Movie.objects.all()
     for movie in all_movies:
         genres = movie.genres.all()
@@ -144,7 +197,7 @@ def recommendbymylikes(request):
         for g in genres:
             genre_set.append(g.id)
 
-        for check in result:
+        for check in two_genre:
             if check not in genre_set:
                 is_valid = 0
                 break
@@ -152,50 +205,55 @@ def recommendbymylikes(request):
         if is_valid:
             movie = get_object_or_404(Movie, pk=movie.pk)
             serializer = MovieSerializer(movie)
-            recommend_movie.append(serializer.data)
-    return Response(recommend_movie)
-
-
-@api_view(['POST'])
-def recommendbymyfollowings(request):
-    me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
-    my_followings = me.followings.all()
-    my_like_movies = me.like_movies.all()
-
-    recommend_movie = []
-    max_cnt = 0
-    # 팔로잉 유저별
-    for following in my_followings:
-        # 좋아하는 영화가 겹치는 수
-        same_cnt = 0
-        # 팔로잉 유저는 좋아요를 눌렀지만, 나는 좋아요를 누르지 않은 영화를 담는 리스트
-        not_same_movies = []
-        following_like_movies = following.like_movies.all()
-        # 팔로잉 유저가 좋아요를 누른 영화들 중
-        for following_like_movie in following_like_movies:
-            # 내가 좋아요를 누른 영화들과 같은 게 있나요?
-            is_same = 0
-            for my_like_movie in my_like_movies:
-                # 있다면
-                if following_like_movie.id == my_like_movie.id:
-                    is_same = 1
-            # 겹치는 수 + 1
-            if is_same:
-                same_cnt += 1
-            # 없다면, 
-            else:
-                not_same_movies.append(following_like_movie)
+            result.append(serializer.data)
         
-        # 겹치는 좋아요 수가 최댓값인 팔로잉 유저가 좋아요 누른 영화들중
-        if same_cnt > max_cnt:
-            max_cnt = same_cnt
-            # 나는 좋아요를 누르지 않은 영화를 추천!
-            recommend_movie = not_same_movies
-
-    result = []     
-    for movie in recommend_movie:
-        movie = get_object_or_404(Movie, pk=movie.pk)
-        serializer = MovieSerializer(movie)
-        result.append(serializer.data)
+        if len(result) == 40:
+            break
     
     return Response(result)
+
+
+
+# @api_view(['POST'])
+# def recommendbymyfollowings(request):
+#     me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
+#     my_followings = me.followings.all()
+#     my_like_movies = me.like_movies.all()
+
+#     recommend_movie = []
+#     max_cnt = 0
+#     # 팔로잉 유저별
+#     for following in my_followings:
+#         # 좋아하는 영화가 겹치는 수
+#         same_cnt = 0
+#         # 팔로잉 유저는 좋아요를 눌렀지만, 나는 좋아요를 누르지 않은 영화를 담는 리스트
+#         not_same_movies = []
+#         following_like_movies = following.like_movies.all()
+#         # 팔로잉 유저가 좋아요를 누른 영화들 중
+#         for following_like_movie in following_like_movies:
+#             # 내가 좋아요를 누른 영화들과 같은 게 있나요?
+#             is_same = 0
+#             for my_like_movie in my_like_movies:
+#                 # 있다면
+#                 if following_like_movie.id == my_like_movie.id:
+#                     is_same = 1
+#             # 겹치는 수 + 1
+#             if is_same:
+#                 same_cnt += 1
+#             # 없다면, 
+#             else:
+#                 not_same_movies.append(following_like_movie)
+        
+#         # 겹치는 좋아요 수가 최댓값인 팔로잉 유저가 좋아요 누른 영화들중
+#         if same_cnt > max_cnt:
+#             max_cnt = same_cnt
+#             # 나는 좋아요를 누르지 않은 영화를 추천!
+#             recommend_movie = not_same_movies
+
+#     result = []     
+#     for movie in recommend_movie:
+#         movie = get_object_or_404(Movie, pk=movie.pk)
+#         serializer = MovieSerializer(movie)
+#         result.append(serializer.data)
+    
+#     return Response(result)
