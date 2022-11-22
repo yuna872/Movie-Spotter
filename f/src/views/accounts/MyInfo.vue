@@ -6,7 +6,7 @@
       <div class="userinfo-top-top">
         <p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
         <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
-        <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings: {{ userinfo?.followings.length }}</p>
+        <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p>
         <p style="font-size : 1.4em;margin-top:20px;">내가 쓴 리뷰 📑</p>
         <div class="myreview-list scroll-div">
           
