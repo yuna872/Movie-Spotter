@@ -1,4 +1,4 @@
-import heapq
+import heapq, math
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 # Authentication Decorators
@@ -107,7 +107,7 @@ def review_likes(request, review_pk):
 
 
 @api_view(['POST'])
-def recommend(request):
+def recommendbymyfollowings(request):
     # by followings
     me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
     my_followings = me.followings.all()
@@ -147,25 +147,33 @@ def recommend(request):
     result = []
     for tier in following_tier_movie_list:
         for movie in tier[1]:
-            movie = get_object_or_404(Movie, pk=movie.pk)
-            serializer = MovieSerializer(movie)
-            result.append(serializer.data)
+            if movie.pk not in result:
+                result.append(movie.pk)
+            
             if len(result) == 20:
                 break
         
         if len(result) == 20:
             break
 
-    # recommendbymylike
+    recommend = []
+    for movie_pk in result:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        recommend.append(serializer.data)
+    return Response(recommend)    
+    
+@api_view(['POST'])
+def recommendbymylikes(request):
     # 내가 좋아요 한 영화들의 장르 비율 해시를 구하는 함수
     my_genre_rate = {}
+    me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
     my_like_movie = me.like_movies.all()
     
     
     # 좋아하는 영화별
     for movie in my_like_movie:
         # 장르별 개수 구하기
-        # 장르가 여러개면, 첫번째걸 장르로 지정
         genre = movie.genres.all()
         for g in genre:
             tmp = g.id
@@ -174,9 +182,10 @@ def recommend(request):
             else:
                 my_genre_rate[tmp] += 1
     # 비율 계산
-    print(min(my_genre_rate.values()))
-    for i in my_genre_rate:
-        my_genre_rate[i] = round(my_genre_rate[i]/min(my_genre_rate.values()))
+    tmp = 20/sum(my_genre_rate.values())
+    print(my_genre_rate)
+    for key in my_genre_rate:
+        my_genre_rate[key] = math.ceil(my_genre_rate[key]*tmp)
 
     print(my_genre_rate)
 
@@ -200,18 +209,30 @@ def recommend(request):
     # 평점들의 평균, 투표수의 평균
     for movie in all_movies:
         if movie.vote_average >= my_vote_average_avg - 1:
-            if my_vote_average_avg*0.8 <= movie.vote_count <= my_vote_average_avg*1.2:
+            if my_vote_count_avg*0.8 <= movie.vote_count <= my_vote_count_avg*1.2:
                 movie_sub.append(movie)
+
     for movie in movie_sub:
-        for genre_id in movie.genre:
-            if genre_id in my_genre_rate:
+        for genre in movie.genres.all():
+            if genre.id in my_genre_rate:
                 result.append(movie)
-                my_genre_rate[genre_id] -= 1
-                if my_genre_rate[genre_id] == 0:
-                    del(my_genre_rate[genre_id])
+                my_genre_rate[genre.id] -= 1
+                if my_genre_rate[genre.id] == 0:
+                    my_genre_rate.pop(genre.id)
+                break
+
+        if len(my_genre_rate) == 0:
+            recommend = []     
+            for movie in result:
+                movie = get_object_or_404(Movie, pk=movie.pk)
+                serializer = MovieSerializer(movie)
+                recommend.append(serializer.data)
+            
+            return Response(recommend)     
+                
                 
             
-    return Response(result)
+    
 
 
 

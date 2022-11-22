@@ -12,8 +12,8 @@ urlpatterns = [
     path('reviews/<int:user_pk>', views.my_reviews),
     path("<int:movie_pk>/movielikes/", views.movie_likes, name="movie_likes"),
     path("<int:review_pk>/reviewlikes/", views.review_likes, name="review_likes"),
-    path("recommend/", views.recommend, name="movie_recommend"),
-    # path("recommendbymyfollowings/", views.recommendbymyfollowings, name="movie_recommendbymyfollowings"),
+    path("recommendbymylikes/", views.recommendbymylikes, name="movie_recommendbymylikes"),
+    path("recommendbymyfollowings/", views.recommendbymyfollowings, name="movie_recommendbymyfollowings"),
 
 
     # # 필수 작성
