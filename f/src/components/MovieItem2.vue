@@ -1,8 +1,8 @@
 <template>
   <div
-    @click="firstLike"
+    @click="modalLike"
     class="firsttime-items"
-    :class="{'shadow-light': !is_like}"
+    :class="{'shadow-light': is_like}"
     :style="{'backgroundImage':`url(${posterUrl})`}">
   </div>
 </template>
@@ -20,8 +20,7 @@ export default {
   },
   data() {
     return {
-      is_like : true,
-      movieinfo: null,
+      is_like : false,
     }
   },
   computed:{
@@ -35,7 +34,7 @@ export default {
     }
   },
   methods: {
-    firstLike() {
+    modalLike() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
 
@@ -51,28 +50,7 @@ export default {
         })
         .then((res)=>{
           this.is_like = res.data
-          this.getMovieLikeInfo()
-        })
-        .catch((err)=>{console.log(err)})
-    },
-    getMovieLikeInfo() {
-      const token = localStorage.getItem('jwt')
-      const now_user_id = jwt_decode(token).user_id
-
-      axios({
-        method: 'get',
-        url: `${API_URL}/movies/${this.movie.id}/`,
-        headers: {
-            'Authorization' : `Bearer ${token}`
-        }
-      })
-        .then((res) => {
-          this.movieinfo = res.data
-          if (this.movieinfo.like_users.includes(now_user_id)) {
-            this.is_like = false
-          } else {
-            this.is_like = true
-          }
+          this.$emit('modal-like')
         })
         .catch((err)=>{console.log(err)})
     },

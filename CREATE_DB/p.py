@@ -19,10 +19,11 @@ def GET_CREDIT_VIDEO(movie_id):
 
 movie_id =965080
 def VIDEO(movie_id):
-    Get_Video = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=633fd9754acba9ddc40773b19c562ed9&language=ko').json()
+    Get_Video = requests.get(f'https://api.themoviedb.org/3/configuration/languages?api_key=633fd9754acba9ddc40773b19c562ed9&language=ko').json()
     print(Get_Video)
     # return Get_Video['results'][0]['key']
 
+Get_Video = requests.get(f'https://api.themoviedb.org/3/configuration/languages?api_key=633fd9754acba9ddc40773b19c562ed9&language=ko').json()
 
-print(VIDEO(965080))
+print(Get_Video)
    

@@ -28,7 +28,9 @@
           <MovieItem2
             v-for="(movie, index) in randomMovies"
             :key="`rr-${index}`"
-            :movie="movie"/>
+            :movie="movie"
+            @modal-like='getuserinfo'
+            />
           </div>
         <div class="firsttime-btn" @click="exitModal">
           <div>제출하기</div>
@@ -59,7 +61,7 @@ export default {
       user_id : null,
       firstTime : false,
       randomMovies : [],
-      userinfo: null,
+      modalPicks: null,
     }
   },
   components: {
@@ -93,15 +95,12 @@ export default {
           }
         })
         .then((res)=>{
-          this.userinfo = res.data
-          // console.log(this.userinfo)
+          this.modalPicks = res.data.like_movies.length
         })
         .catch((err)=>{console.log(err)})
     },
     exitModal() {
-      this.getuserinfo()
-      console.log(this.userinfo.like_movies)
-      if (this.userinfo.like_movies.length) {
+      if (this.modalPicks) {
         this.firstTime = false
       } else {
         alert('영화를 선택하세요!')
@@ -140,8 +139,7 @@ export default {
       this.user_id = jwt_decode(token).user_id
     }
     this.getRandomMovies()
-    this.getuserinfo()
-  }
+    }
 }
 </script>
 

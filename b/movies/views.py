@@ -160,56 +160,57 @@ def recommend(request):
     # 내가 좋아요 한 영화들의 장르 비율 해시를 구하는 함수
     my_genre_rate = {}
     my_like_movie = me.like_movies.all()
-    total_genres = 0
+    
     
     # 좋아하는 영화별
     for movie in my_like_movie:
         # 장르별 개수 구하기
-        for g in movie.genres.all():
-            total_genres += 1
+        # 장르가 여러개면, 첫번째걸 장르로 지정
+        genre = movie.genres.all()
+        for g in genre:
             tmp = g.id
             if tmp not in my_genre_rate:
                 my_genre_rate[tmp] = 1
             else:
                 my_genre_rate[tmp] += 1
     # 비율 계산
+    print(min(my_genre_rate.values()))
     for i in my_genre_rate:
-        my_genre_rate[i] = round(my_genre_rate[i]/total_genres,2)
-    two_genre =[]
+        my_genre_rate[i] = round(my_genre_rate[i]/min(my_genre_rate.values()))
 
-    # 비율이 높은 2개의 장르를 반환
-    cnt = 2
-    # 장르가 하나면 하나만..
-    if len(my_genre_rate) < 2:
-        cnt = 1
-        
-    for key,value in sorted(my_genre_rate.items(), key=lambda x: x[1], reverse=True)[:cnt]:
-        two_genre.append(key)
+    print(my_genre_rate)
+
     
-    # 3개의 장르를 포함하는 영화들을 반환하는 함수
-  
+    # 장르를 포함하는 영화들을 반환하는 함수
     all_movies = Movie.objects.all()
+    my_like_movies = me.like_movies.all()
+    my_vote_count_avg = 0
+    my_vote_average_avg = 0
+
+    for movie in my_like_movies:
+        my_vote_count_avg += movie.vote_count
+        my_vote_average_avg += movie.vote_average
+    # 내가 좋아요한 영화들의 투표수 평균
+    my_vote_count_avg /= len(my_like_movies)
+    # 내가 좋아요한 영화들의 평점 평균
+    my_vote_average_avg /= len(my_like_movies)
+
+    result = []
+    movie_sub = []
+    # 평점들의 평균, 투표수의 평균
     for movie in all_movies:
-        genres = movie.genres.all()
-        is_valid = 1
-
-        genre_set = []
-        for g in genres:
-            genre_set.append(g.id)
-
-        for check in two_genre:
-            if check not in genre_set:
-                is_valid = 0
-                break
-        
-        if is_valid:
-            movie = get_object_or_404(Movie, pk=movie.pk)
-            serializer = MovieSerializer(movie)
-            result.append(serializer.data)
-        
-        if len(result) == 40:
-            break
-    
+        if movie.vote_average >= my_vote_average_avg - 1:
+            if my_vote_average_avg*0.8 <= movie.vote_count <= my_vote_average_avg*1.2:
+                movie_sub.append(movie)
+    for movie in movie_sub:
+        for genre_id in movie.genre:
+            if genre_id in my_genre_rate:
+                result.append(movie)
+                my_genre_rate[genre_id] -= 1
+                if my_genre_rate[genre_id] == 0:
+                    del(my_genre_rate[genre_id])
+                
+            
     return Response(result)
 
 
