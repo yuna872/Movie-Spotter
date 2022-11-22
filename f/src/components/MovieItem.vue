@@ -8,10 +8,12 @@
         <i class="fa-regular fa-heart" style="color:red"></i></button>
     </div>
     <!-- 아이템 배경 -->
-    <div @click="goDetail" class="item-bg">
-      {{ movie?.title }}
-      {{ movie?.['vote_average'] }}
-      <p>{{ movieinfo?.like_users.length }}</p>
+    <div @click="goDetail" class="item-hover">
+      <div style="font-weight:bold">{{ movie?.title }}</div>
+      <div>
+        <i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i> {{ movie?.['vote_average'] }}
+      </div>
+      <p><i class="fa-solid fa-thumbs-up"></i> {{ movieinfo?.like_users.length }} likes</p>
     </div>
     
   </div>
@@ -108,7 +110,7 @@ export default {
 
 <style>
 .movie-item1 {
-  /* position: relative; */
+  position: relative;
   padding-top : 150%;
   background-size: cover; 
   background-repeat: no-repeat;
@@ -117,10 +119,13 @@ export default {
   /* width:100%;
   height:100%; */
   border: none;
+  opacity: 0.8;
+  color : black;
+
 }
 
 .movie-item2 {
-  /* position: relative; */
+  position: relative;
   width : 16vw;
   height : 24vh;
   background-size: cover; 
@@ -128,24 +133,28 @@ export default {
   background-position: center;
   border: none;
   border-radius: 10px;
+  margin-bottom : 1vh;
 }
 
-.item-bg:hover {
+.item-hover:hover {
     background-color : white;
     opacity: 0.8;
     color : black;
   }
 
-.item-bg {
+.item-hover {
+    border-radius: 10px;
     position: absolute;
-    top:0;bottom:0;right:0;left:0;
+    top:0;
+    right:0;
+    left :0;
+    bottom :0;
     opacity: 0;
     display: flex;
     flex-direction : column;
     justify-content: center;
     justify-items: center;
     text-align : center;
-    border-radius: 10px;
   }
 .like-btn-p {
   position: absolute;

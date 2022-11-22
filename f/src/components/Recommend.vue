@@ -6,12 +6,15 @@
         v-for="(movie,index) in recommendMoviesByLikes"
         :key="`r-${index}`"
         :movie="movie"
+        class="movie-item2"
       />
       <hr>
       <MovieItem 
         v-for="(movie,index) in recommendMoviesByFollowings"
         :key="`r-${index}`"
         :movie="movie"
+        class="movie-item2"
+
       />
     </div>
   </div>

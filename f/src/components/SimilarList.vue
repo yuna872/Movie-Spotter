@@ -73,10 +73,16 @@ export default {
 </script>
 
 <style>
+.similar-list {
+  margin : auto;
+  width : 90%;
+  text-align: left;
+}
 .similar-list-box{
   width : 85vw;
   margin : auto;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  border: solid 2px red;
 }
 </style>
