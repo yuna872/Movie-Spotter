@@ -25,14 +25,14 @@
       <div class="firsttime-modal">
         <div class="firsttime-title">앗, Movie Spotter가 처음이시군요?</div>
         <div class="firsttime-box scroll-div">
-          <!-- {{ randomMovies}} -->
           <MovieItem2
-            v-for="(movie,index) in randomMovies"
+            v-for="(movie, index) in randomMovies"
             :key="`rr-${index}`"
-          />
+            :movie="movie"/>
+          </div>
+        <div class="firsttime-btn" @click="exitModal">
+          <div>제출하기</div>
         </div>
-        <div class="firsttime-btn">
-          <div>제출하기</div></div>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@ export default {
       user_id : null,
       firstTime : false,
       randomMovies : [],
-      likeMovies : [],
+      userinfo: null,
     }
   },
   components: {
@@ -67,13 +67,6 @@ export default {
     MovieItem2
   },
   methods: {
-    pushLikeItem(movie) {
-      if (this.likeMovies.includes(movie)) {
-        this.likeMovies.remove(movie)
-      } else {
-        this.likeMovies.push(movie)
-      }
-    },
     getRandomMovies() {
       axios({
         method: 'get',
@@ -87,6 +80,32 @@ export default {
         console.log(this.randomMovies)
       })
       .catch((err)=>{console.log(err)})
+    },
+    getuserinfo() {
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+      
+      axios({
+          method: 'get',
+          url: `${API_URL}/accounts/${now_user_id}`,
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        .then((res)=>{
+          this.userinfo = res.data
+          // console.log(this.userinfo)
+        })
+        .catch((err)=>{console.log(err)})
+    },
+    exitModal() {
+      this.getuserinfo()
+      console.log(this.userinfo.like_movies)
+      if (this.userinfo.like_movies.length) {
+        this.firstTime = false
+      } else {
+        alert('영화를 선택하세요!')
+      }
     },
     login() {
       this.isLogin = true
@@ -106,10 +125,9 @@ export default {
       }
     },
     getFirstTime() {
-      console.log('😎')
       this.firstTime = true
-      console.log(this.firstTime ,'😎')
     },
+
   },
   watch: {
     firstTime: function() {
@@ -122,6 +140,7 @@ export default {
       this.user_id = jwt_decode(token).user_id
     }
     this.getRandomMovies()
+    this.getuserinfo()
   }
 }
 </script>
