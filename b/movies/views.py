@@ -1,4 +1,4 @@
-import heapq, math
+import heapq, math, random
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 # Authentication Decorators
@@ -163,6 +163,7 @@ def recommendbymyfollowings(request):
         recommend.append(serializer.data)
     return Response(recommend)    
     
+
 @api_view(['POST'])
 def recommendbymylikes(request):
     # 내가 좋아요 한 영화들의 장르 비율 해시를 구하는 함수
@@ -187,8 +188,6 @@ def recommendbymylikes(request):
     for key in my_genre_rate:
         my_genre_rate[key] = math.ceil(my_genre_rate[key]*tmp)
 
-    print(my_genre_rate)
-
     
     # 장르를 포함하는 영화들을 반환하는 함수
     all_movies = Movie.objects.all()
@@ -210,9 +209,11 @@ def recommendbymylikes(request):
     for movie in all_movies:
         if movie.vote_average >= my_vote_average_avg - 1:
             if my_vote_count_avg*0.8 <= movie.vote_count <= my_vote_count_avg*1.2:
-                movie_sub.append(movie)
+                movie_sub.append(movie.pk)
 
-    for movie in movie_sub:
+    random.shuffle(movie_sub)
+    for movie_pk in movie_sub:
+        movie = get_object_or_404(Movie, pk=movie_pk)
         for genre in movie.genres.all():
             if genre.id in my_genre_rate:
                 result.append(movie)
