@@ -3,7 +3,15 @@
       <button @click="modalToggle" class="x-btn">X</button>
       <div class="review-text">이 영화, 어떠셨나요?</div>
       <form @submit.prevent="postReview" class="form">
-        <input type="number" v-model="star">
+        <div class="star-div">
+          <star-rating
+            v-model="star"
+            :increment="0.5"
+            :star-size="30"
+            :clearable="true"
+            :show-rating="false"
+          />
+        </div>
         <input class="review-content1" type="text" @input="content=$event.target.value" maxlength='200' placeholder="영화 리뷰를 작성해주세요.">
         <button class="review-submit">리뷰 등록</button>
       </form>
@@ -14,12 +22,15 @@
 <script>
 import axios from 'axios'
 import jwt_decode from "jwt-decode"
-
+import StarRating from 'vue-star-rating'
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
-  name : 'ReviewForm', 
+  name : 'ReviewForm',
+  components: {
+    StarRating,
+  },
   data() {
     return {
       star : null,
@@ -51,7 +62,7 @@ export default {
         method: 'post',
         url: `${API_URL}/movies/${this.movie?.id}/reviews/`,
         data: {
-          rank: this.star,
+          rank: (this.star)*2,
           content: this.content,
           user_id: now_user_id
         }
@@ -105,6 +116,10 @@ export default {
 .review-text {
   margin-top: 2rem;
   margin-bottom: 1rem;
+}
+
+.star-div{
+  margin: auto;
 }
 
 .review-content1 {

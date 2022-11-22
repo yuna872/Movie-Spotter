@@ -100,7 +100,7 @@ export default {
     },
     exitModal() {
       this.getuserinfo()
-      console.log(this.userinfo.like_movies)
+      console.log('😀', this.userinfo.like_movies)
       if (this.userinfo.like_movies.length) {
         this.firstTime = false
       } else {
