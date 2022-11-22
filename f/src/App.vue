@@ -110,7 +110,6 @@ export default {
       this.firstTime = true
       console.log(this.firstTime ,'😎')
     },
-
   },
   watch: {
     firstTime: function() {

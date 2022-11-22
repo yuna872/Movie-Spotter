@@ -6,7 +6,7 @@
       <div class="semi-title">{{ userinfo?.nickname }}님이 좋아할 만한 컨텐츠</div>
       <div>
         <swiper class="swiper" :options="swiperOption">
-          <swiper-slide class="swiper-slide" v-for="(movie, index) in recommendMoviesByLikes" :key="`n-${index}`">
+          <swiper-slide class="swiper-slide" v-for="(movie, index) in recommendMovies?.slice(20,40)" :key="`n-${index}`">
             <MovieItem class="movie-item1" :movie="movie"/>
           </swiper-slide>
           <div class="swiper-button-prev" slot="button-prev"></div>
@@ -14,23 +14,13 @@
         </swiper>
       </div>
     </div>
-    <div class="swiper-box"  v-if="recommendMoviesByFollowings">
+    <div class="swiper-box"  v-if="recommendMovies">
       <div class="semi-title">{{ userinfo?.nickname }}님의 친구들은 이 영화!</div>
       <div>
         <swiper class="swiper" :options="swiperOption">
-          <swiper-slide class="swiper-slide" v-for="(movie, index) in recommendMoviesByFollowings" :key="`n-${index}`">
+          <swiper-slide class="swiper-slide" v-for="(movie, index) in recommendMovies?.slice(0,20)" :key="`n-${index}`">
             <MovieItem class="movie-item1" :movie="movie"/>
           </swiper-slide>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
-      </div>
-    </div>
-    <div class="swiper-box" v-if="!recommendMoviesByFollowings">
-      <div class="semi-title">{{ userinfo?.nickname }}님의 친구들은 이 영화!</div>
-      <div>
-        <swiper class="swiper" :options="swiperOption" >
-          <swiper-slide class="swiper-slide">slide</swiper-slide>
           <div class="swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
@@ -57,8 +47,7 @@ export default {
   data() {
     return {
       userinfo:null,
-      recommendMoviesByLikes: null,
-      recommendMoviesByFollowings: null,
+      recommendMovies: null,
       swiperOption: {
           slidesPerView: 5,
           spaceBetween: 20,
@@ -94,13 +83,13 @@ export default {
         })
         .catch((err)=>{console.log(err)})
     },
-    getRecommendByLikes() {
+    getRecommend() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
       
       axios({
           method: 'post',
-          url: `${API_URL}/movies/recommendbymylikes/`,
+          url: `${API_URL}/movies/recommend/`,
           data: {
             user_id: now_user_id,
           },
@@ -109,34 +98,14 @@ export default {
           }
         })
         .then((res)=>{
-          this.recommendMoviesByLikes = res.data
+          this.recommendMovies = res.data
           console.log(res.data)
         })
         .catch((err)=>{console.log(err)})
     },
-    getRecommendByFollowings() {
-      const token = localStorage.getItem('jwt')
-      const now_user_id = jwt_decode(token).user_id
-      axios({
-          method: 'post',
-          url: `${API_URL}/movies/recommendbymyfollowings/`,
-          data: {
-            user_id: now_user_id,
-          },
-          headers: {
-            'Authorization' : `Bearer ${token}`
-          }
-        })
-        .then((res)=>{
-          this.recommendMoviesByFollowings = res.data
-          console.log(res.data)
-        })
-        .catch((err)=>{console.log(err)})
-    }
   },
   created() {
-    this.getRecommendByLikes()
-    this.getRecommendByFollowings()
+    this.getRecommend()
     if (localStorage.getItem('jwt')) {
       this.getuserinfo()
     }
