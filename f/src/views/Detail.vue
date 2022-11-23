@@ -15,23 +15,29 @@
           </div>
         </div>
         <!-- {{ movie?.actors }} -->
-        <div
-          v-for="(actor,index) in movie?.actors"
-          :key="index">
+        <!-- 감독, 배우 출력 -->
+        <div class="people">
+        <div>
           <div class="detail-actor-div">
-            <div v-if="index === 0">
-              <div v-if="actor.image === null" class="actor-null"></div>
-              <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${actor.image})`}"></div>
-              <i class="fa-solid fa-clapperboard"></i> {{ actor.name }}</div>
-            <div v-if="index > 0">
-              <div v-if="actor.image === null" class="actor-null"></div>
-              <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${actor.image})`}"></div>
-                {{ actor.name }}</div>
+            <div v-if="director?.image === null" class="actor-null"></div>
+            <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${director?.image})`}"></div>
+            <i class="fa-solid fa-clapperboard"></i> {{ director?.name }}
           </div>
         </div>
-        <!-- {{ movie?.id}}
-        {{ movie?.backdrop_path }}
-        {{ movie?.video }} -->
+        <div class="actors">
+        <div
+          v-for="(actor,index) in actors"
+          :key="index">
+          <div class="detail-actor-div">
+            <div v-if="actor.role === 'Actor'">
+              <div v-if="actor.image === null" class="actor-null"></div>
+              <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${actor.image})`}"></div>
+              {{ actor.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
       </div>
     </div>
     <div class="detail-box" :style="{'backgroundImage':`url(${backdropUrl})`}">
@@ -131,6 +137,8 @@ export default {
       movie_id : this.$route.params.id,
       reviews: [],
       is_show : false,
+      director : null,
+      actors : []
     }
   },
   beforeRouteUpdate(to, from, next){
@@ -175,6 +183,7 @@ export default {
       })
       .then((res)=>{
         this.movie = res.data
+        this.getActors()
       })
       .catch((err)=>{console.log(err)})
     },
@@ -199,7 +208,17 @@ export default {
     onClickVideo() {
       var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
       window.open(this.youtubeLink, '얍', options)
+    },
+    getActors() {
+      this.actors = this.movie?.actors.filter((actor)=>{
+          if (actor.role === 'Actor') {
+            return actor
+          } else {
+            this.director = actor
+          }
+      })
     }
+
   },
   created() {
       this.getMovieDetail()
@@ -274,7 +293,6 @@ export default {
 }
 .detail-actor-div {
   width: 90px;
-  float: left;
   padding-right: 25px;
 }
 .detail-actor {
@@ -288,6 +306,15 @@ export default {
   border-radius: 100%;
   background-size: cover;
   background-image:url('@/assets/null.png')
+}
+
+.people {
+  display: flex;
+  flex-direction: column;
+}
+
+.actors {
+  display: flex;
 }
 
 /* 리뷰 컴포넌트 */
