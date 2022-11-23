@@ -15,11 +15,13 @@
       </div>
     </nav>
     <router-view class="router-view" @first-time="getFirstTime" @login="login" :isLogin="isLogin"/>
-    <div class="about-us-btn" @click="toAboutUs"></div>
+    <!-- 개발자 소개 페이지 버튼 -->
+    <div class="about-us-btn" @click="toAboutUs">👨‍👧‍👧</div>
+    
     <!-- 페이지 위로 가는 버튼 -->
     <button class="top-btn" onclick="window.scrollTo(0,0);">
-      <i class="fa-solid fa-arrow-up fa-lg"></i>
     </button>
+    
     <!-- 모달 -->
     <div class="black-bg" v-if="firstTime" >
       <div class="firsttime-modal">
@@ -312,6 +314,7 @@ nav a {
   align-items: center;
   justify-content: center;
   font-size: 1em;
+  cursor: pointer;
 }
 
 .top-btn {
