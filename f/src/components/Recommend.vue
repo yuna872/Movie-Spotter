@@ -1,5 +1,8 @@
 <template>
   <div class="movie-list">
+    <div class="recommend-title">
+      <p>Only For Movie Spotters</p>
+      <div><i class="fa-solid fa-arrow-down fa-3x"></i></div></div>
     <div class="recommend1">
       <div class="comment1">
         <p>{{ userinfo?.nickname }}님의 취향저격</p>
@@ -38,9 +41,7 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-      </div>
-      
-      
+      </div>      
     </div>
         
 
@@ -198,10 +199,25 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Secular+One&display=swap');
 .movie-list {
   width : 100%;
   height : 100%;
 }
+.recommend-title {
+  padding-top : 5vh;
+  background-color: black;
+  
+  display: flex;
+  flex-direction: column;
+  /* font-family: 'Secular One', sans-serif; */
+}
+
+.recommend-title p {
+  font-size: 3em;
+  font-family: 'Libre Baskerville', serif;
+}
+
 
 .recommend1 {
   display: flex;

@@ -315,6 +315,7 @@ export default {
   width: 100vw;
   display: flex;
   align-items: center;
+  margin-top :10vh;
 }
 
 
