@@ -7,7 +7,7 @@ class Genre(models.Model):
 
 class Actor(models.Model):
     name = models.CharField(max_length=50)
-    image = models.CharField(max_length=200)
+    image = models.CharField(max_length=200,null=True, blank=True)
     popularity = models.FloatField()
     
 class Movie(models.Model):

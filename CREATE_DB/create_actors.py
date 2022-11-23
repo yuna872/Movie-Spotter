@@ -28,6 +28,7 @@ TMDB_API_KEY = '633fd9754acba9ddc40773b19c562ed9'
 
 def get_movie_datas():
     total_data = []
+    total_actor_data = []
 
     # 1페이지부터 500페이지까지 (페이지당 20개, 총 10,000개)
     for i in range(1, 500):
@@ -40,14 +41,39 @@ def get_movie_datas():
                 movie_id = movie['id']
                 Get_Credit = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=633fd9754acba9ddc40773b19c562ed9&language=ko').json()
                 
+                actors_data_list = []
                 actors = []
                 for i in Get_Credit['crew']:
                     if i['known_for_department'] == 'Directing':
-                        actors.append(i['name'])
+                        actors.append(i['id'])
+                        actors_fields = {
+                            'name' : i['name'],
+                            'popularity' : i['popularity'],
+                            'image' : i['profile_path']
+                        }
+                        actors_data = {
+                            "pk": i['id'],
+                            "model": "movies.actor",
+                            "fields": actors_fields
+                        }
+                        actors_data_list.append(actors_data)
                         break
-                for i in Get_Credit['cast']:
-                    actors.append(i['name'])
-                    if len(actors) == 4:
+
+                casts = sorted(Get_Credit['cast'], key=lambda x: x['popularity'], reverse=True)
+                for i in casts:
+                    actors.append(i['id'])
+                    actors_fields = {
+                        'name' : i['name'],
+                        'popularity' : i['popularity'],
+                        'image' : i['profile_path']
+                    }
+                    actors_data = {
+                        "pk": i['id'],
+                        "model": "movies.actor",
+                        "fields": actors_fields
+                    }
+                    actors_data_list.append(actors_data)
+                    if len(actors) == 5:
                         break
                 
                 video = ''
@@ -59,10 +85,12 @@ def get_movie_datas():
 
 
 
-                if len(actors) < 4 or video == 'novideo':
+                if len(actors) < 5 or video == 'novideo':
                     continue
 
-
+                for i in actors_data_list:
+                    if i not in total_actor_data:
+                        total_actor_data.append(i)
                 fields = {
                     'title': movie['title'],
                     'release_date': movie['release_date'],
@@ -74,10 +102,7 @@ def get_movie_datas():
                     'genres': movie['genre_ids'],
                     'original_language': movie['original_language'],
                     'vote_count': movie['vote_count'],
-                    'director' : actors[0],
-                    'first_actor' : actors[1],
-                    'second_actor' : actors[2],
-                    'third_actor' : actors[3],                    
+                    'actors' : actors,                    
                     'video' : video,
                 }
 
@@ -88,7 +113,6 @@ def get_movie_datas():
                 }
 
                 
-
                 total_data.append(data)
                 if len(total_data)%30 == 0:
                     time.sleep(2)
@@ -97,6 +121,8 @@ def get_movie_datas():
                 
     with open('movies.json', 'w', encoding='UTF-8') as file:
         file.write(json.dumps(total_data, ensure_ascii=False))
+    with open('actors.json', 'w', encoding='UTF-8') as file:
+        file.write(json.dumps(total_actor_data, ensure_ascii=False))
     return
 
 
