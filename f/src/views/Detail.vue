@@ -14,6 +14,7 @@
             예고편 보러가기
           </div>
         </div>
+        
         <!-- 감독, 배우 출력 -->
         <div class="people">
         <div>
@@ -162,7 +163,7 @@ export default {
       return Math.round(total / this.reviews?.length, 2).toFixed(1)
     },
     videoUrl() {
-      return `http://www.youtube.com/embed/${this.movie?.video}`
+      return `http://www.youtube.com/watch_popup?v=${this.movie?.video}`
     },
     movieOverview() {
       if (this.movie?.overview.length >= 200) {
@@ -171,9 +172,6 @@ export default {
         return this.movie?.overview
       }
     },
-    youtubeLink() {
-      return `https://www.youtube.com/embed/${this.movie?.video}`
-    }
   },
   methods: {
     getMovieDetail() {
@@ -207,8 +205,8 @@ export default {
       this.is_show = !this.is_show
     },
     onClickVideo() {
-      var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
-      window.open(this.youtubeLink, '얍', fullscreen)
+      var options = 'top=10, left=10, width=1200, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+      window.open(this.videoUrl, '얍', options)
     },
     getActors() {
       this.actors = this.movie?.actors.filter((actor)=>{
