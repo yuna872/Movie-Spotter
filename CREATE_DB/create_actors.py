@@ -49,7 +49,8 @@ def get_movie_datas():
                         actors_fields = {
                             'name' : i['name'],
                             'popularity' : i['popularity'],
-                            'image' : i['profile_path']
+                            'image' : i['profile_path'],
+                            'role' : 'Directing',
                         }
                         actors_data = {
                             "pk": i['id'],
@@ -65,7 +66,8 @@ def get_movie_datas():
                     actors_fields = {
                         'name' : i['name'],
                         'popularity' : i['popularity'],
-                        'image' : i['profile_path']
+                        'image' : i['profile_path'],
+                        'role' : 'Actor',
                     }
                     actors_data = {
                         "pk": i['id'],

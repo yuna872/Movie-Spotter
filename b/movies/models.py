@@ -9,7 +9,8 @@ class Actor(models.Model):
     name = models.CharField(max_length=50)
     image = models.CharField(max_length=200,null=True, blank=True)
     popularity = models.FloatField()
-    
+    role = models.CharField(max_length=50)
+
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     overview = models.TextField()

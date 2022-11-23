@@ -26,12 +26,12 @@
     <div class="black-bg" v-if="firstTime" >
       <div class="firsttime-modal">
         <div class="firsttime-title">앗, Movie Spotter가 처음이시군요?</div>
-        <div class="firsttime-box scroll-div">
-          <MovieItem2
-            v-for="(movie, index) in randomMovies"
-            :key="`rr-${index}`"
-            :movie="movie"
-            @modal-like='getuserinfo'
+          <div class="firsttime-box scroll-div">
+            <MovieItem2
+              v-for="(movie, index) in randomMovies"
+              :key="`rr-${index}`"
+              :movie="movie"
+              @modal-like='getuserinfo'
             />
           </div>
         <div class="firsttime-btn" @click="exitModal">
@@ -104,6 +104,7 @@ export default {
     exitModal() {
       if (this.modalPicks) {
         this.firstTime = false
+        this.refreshAll()
       } else {
         alert('영화를 선택하세요!')
       }
@@ -128,6 +129,9 @@ export default {
     getFirstTime() {
       this.firstTime = true
     },
+    refreshAll() {
+      this.$router.go();
+    }
 
   },
   watch: {
@@ -140,7 +144,7 @@ export default {
       const token = localStorage.getItem('jwt')
       this.user_id = jwt_decode(token).user_id
     }
-    this.getRandomMovies()
+    // this.getRandomMovies()
     }
 }
 </script>
