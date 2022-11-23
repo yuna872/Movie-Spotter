@@ -33,7 +33,7 @@
       v-if="!isLogin"/>
 
     <!-- 로그인된 사용자에게 보여줄 페이지 -->
-    <div class="onlyMS" style="border:4px solid green">
+    <div class="onlyMS">
       <Recommend 
         :movies="movies"
         class="recommend"

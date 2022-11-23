@@ -241,7 +241,7 @@ nav a {
   /* width : 50px; */
   /* height : 50px; */
   text-align: center;
-  font-size : 40px;
+  font-size : 50px;
   /* background-color : #F6BE00; */
   position: fixed;
   bottom : 20px;
@@ -250,7 +250,7 @@ nav a {
 }
 
 .about-us-btn:hover  {
-  font-size : 45px;
+  font-size : 55px;
   cursor: pointer;
 }
 

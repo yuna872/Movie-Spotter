@@ -2,7 +2,6 @@
   <div class="movie-list">
     <div class="recommend1">
       <div class="comment1">
-        
         <p>{{ userinfo?.nickname }}님의 취향저격</p>
         
 
@@ -18,16 +17,16 @@
           <span><i class="fa-regular fa-thumbs-up"></i></span>
         </div>
       </div>
-      
+
       <div id="carouselExampleInterval" class="carousel slide container by-likes" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item active inner-container" data-bs-interval="1000">
+          <div @click ='goDetail(recommendMoviesByMyLikes?.[0])' class="carousel-item active inner-container" data-bs-interval="1000">
             <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[0].poster_path }`" class="poster" >
           </div>
-          <div class="carousel-item" data-bs-interval="1000">
-            <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[1].poster_path }`" class="poster" >
+          <div class="carousel-item" data-bs-interval="2000">
+            <img @click ='goDetail(recommendMoviesByMyLikes?.[1])' :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[1].poster_path }`" class="poster" >
           </div>
-          <div class="carousel-item" v-for="(movie,index) in recommendMoviesByMyLikes?.slice(2)" :key="`n-${index}`">
+          <div  @click ='goDetail(movie)' class="carousel-item" v-for="(movie,index) in recommendMoviesByMyLikes?.slice(2)" :key="`n-${index}`">
             <img :src="`https://image.tmdb.org/t/p/original/${ movie?.poster_path }`" class="poster" >
           </div>
         </div>
@@ -40,6 +39,8 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
+      
+      
     </div>
         
 
@@ -59,23 +60,27 @@
         </div>
       </div>
     
-      <div id="carouselExampleInterval" class="carousel slide container by-follower" data-bs-ride="carousel">
+      <div v-if="recommendMoviesByMyFollowings" id="carousel2Interval" class="carousel slide container by-follower" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item active inner-container" data-bs-interval="1000">
-            <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[0].poster_path }`" class="poster" >
+          <div 
+            @click ='goDetail(recommendMoviesByMyFollowings?.[0])'
+            class="carousel-item active inner-container" 
+            data-bs-interval="1000"
+            >
+            <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyFollowings?.[0].poster_path }`" class="poster" >
           </div>
-          <div class="carousel-item" data-bs-interval="1000">
-            <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[1].poster_path }`" class="poster" >
+          <div @click ='goDetail(recommendMoviesByMyFollowings?.[1])' class="carousel-item" data-bs-interval="1000">
+            <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyFollowings?.[1].poster_path }`" class="poster" >
           </div>
-          <div class="carousel-item" v-for="(movie,index) in recommendMoviesByMyLikes?.slice(2)" :key="`n-${index}`">
+          <div @click ='goDetail(movie)' class="carousel-item" v-for="(movie,index) in recommendMoviesByMyFollowings?.slice(2)" :key="`n-${index}`">
             <img :src="`https://image.tmdb.org/t/p/original/${ movie?.poster_path }`" class="poster" >
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel2Interval" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel2Interval" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
@@ -86,7 +91,6 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import MovieItem from '@/components/MovieItem';
 import axios from 'axios'
 import jwt_decode from "jwt-decode"
@@ -97,8 +101,6 @@ export default {
   name: 'Recommend',
   components: {
     MovieItem,
-    swiper,
-    swiperSlide,
   },
   data() {
     return {
@@ -123,6 +125,9 @@ export default {
   methods: {
     // 커뮤니티 기반 추천 알고리즘
     // 컨텐츠 기반 추천 알고리즘
+    goDetail(movie) {
+      this.$router.push({name: 'detail', params: { id : movie.id }})
+    },
     getuserinfo() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
@@ -227,6 +232,10 @@ export default {
   border-radius: 20px;
   height:60vh;
   /* padding-bottom : 10%; */
+}
+
+.poster:hover {
+  cursor: pointer;
 }
 
 .poster-div {
