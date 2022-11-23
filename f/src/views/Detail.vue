@@ -14,7 +14,7 @@
             예고편 보러가기
           </div>
         </div>
-        {{ movie?.actors }}
+        <!-- {{ movie?.actors }} -->
         <div
           v-for="(actor,index) in movie?.actors"
           :key="index">
@@ -287,7 +287,7 @@ export default {
   padding-bottom: 100%;
   border-radius: 100%;
   background-size: cover;
-  background-image:url('@/assets/logo.png')
+  background-image:url('@/assets/null.png')
 }
 
 /* 리뷰 컴포넌트 */
