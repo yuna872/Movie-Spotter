@@ -12,7 +12,7 @@
             :show-rating="false"
           />
         </div>
-        <textarea rows="30" class="review-content1 scroll-div" type="text" @input="content=$event.target.value" maxlength='200' placeholder="영화 리뷰를 작성해주세요."/>
+        <textarea rows="30" class="review-content1 scroll-div" type="text" @input="content=$event.target.value" maxlength='200' placeholder="영화 리뷰를 작성해주세요."></textarea>
         <button class="review-submit">리뷰 등록</button>
       </form>
   </div>
@@ -65,6 +65,9 @@ export default {
           rank: this.star,
           content: this.content,
           user_id: now_user_id
+        },
+        headers: {
+          'Authorization' : `Bearer ${token}`
         }
       })
       .then(()=>{
