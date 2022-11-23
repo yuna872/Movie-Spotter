@@ -1,30 +1,34 @@
 <template>
   <div class="movie-list">
-    <div class="swiper-box">
-      <!-- {{ recommendMoviesByFollowings }} -->
-      <div class="semi-title">{{ userinfo?.nickname }}님이 좋아할 만한 컨텐츠</div>
-      <div>
-        <swiper class="swiper" :options="swiperOption">
-          <swiper-slide class="swiper-slide" v-for="(movie, index) in recommendMoviesByMyLikes" :key="`n-${index}`">
-            <MovieItem class="movie-item1" :movie="movie"/>
-          </swiper-slide>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
+
+
+
+   
+
+
+        <div id="carouselExampleInterval" class="carousel slide container" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active inner-container" data-bs-interval="1000">
+          <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[0].poster_path }`" class="w-50 poster" >
+        </div>
+        <div class="carousel-item" data-bs-interval="1000">
+          <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[1].poster_path }`" class=" w-50 poster" >
+        </div>
+        <div class="carousel-item" v-for="(movie,index) in recommendMoviesByMyLikes?.slice(2)" :key="`n-${index}`">
+          <img :src="`https://image.tmdb.org/t/p/original/${ movie?.poster_path }`" class=" w-50 poster" >
+        </div>
+    
       </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <div class="swiper-box">
-      <div class="semi-title">{{ userinfo?.nickname }}님의 친구들은 이 영화!</div>
-      <div>
-        <swiper class="swiper" :options="swiperOption">
-          <swiper-slide class="swiper-slide" v-for="(movie, index) in recommendMoviesByMyFollowings" :key="`n-${index}`">
-            <MovieItem class="movie-item1" :movie="movie"/>
-          </swiper-slide>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
-      </div>
-    </div>
+
     </div>
 </template>
 
@@ -136,5 +140,20 @@ export default {
 </script>
 
 <style>
+.movie-list {
+  /* height : 90vh; */
+  margin-top: 3vh;
+  width : 30vw;
+  border : 2px solid blue
+}
+.swiper-box {
+  border : 2px solid red;
+}
+.poster {
+  border-radius: 20px;
+}
 
+.container {
+  border : 3px solid pink;
+}
 </style>

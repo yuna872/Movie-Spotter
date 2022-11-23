@@ -1,20 +1,17 @@
 <template>
   <div class="movies">
     <div class="banner-bg"></div>
-    <!-- {{ backdropUrl }} -->
     <div class="banner" :style="{'backgroundImage':`url('https://image.tmdb.org/t/p/original/${backdropUrls[0]?.backdrop_path}')`}">
       <div class="banner-items">
         <div class="banner-title">
           <img src="@/assets/logo.png" style="width:80px;height:80px"/>&nbsp;MOVIE SPOTTER.
         </div>
-        <!-- {{ backdropUrl }} -->
         <form class="banner-form" @submit.prevent="searchInputData">
           <input
             class="banner-input" 
             type="text"  
             @input="inputData=$event.target.value" 
             placeholder="영화 제목으로 검색하세요.">
-          <!-- <div class="banner-btn">영화 찾기</div> -->
           <div class="display-array-container" v-if="displayArray.length">
             <div class="display-array-box">
             <MovieItem
@@ -28,18 +25,23 @@
           </div>
         </form>
       </div>
-      
     </div>
+
     <!-- 비로그인 사용자에게 보여줄 페이지 -->
     <LoginRequest 
       :backdrop="backdropUrls[1]" 
       v-if="!isLogin"/>
+
     <!-- 로그인된 사용자에게 보여줄 페이지 -->
-    <Recommend 
-      :movies="movies"
-      class="recommend"
-      v-if="isLogin"
-    />
+    <div class="onlyMS" style="width:100vh;border:4px solid green">
+      <p class="only-title">오직 Movie Spotter 에서만~</p>
+      <Recommend 
+        :movies="movies"
+        class="recommend"
+        v-if="isLogin"
+      />
+    </div>
+    
     
     <div class="movies-box">
       <MovieList :movies="movies"/>
@@ -299,6 +301,14 @@ export default {
 }
 
 /* 추천 알고리즘 페이지 */
+.container {
+  width : 50vw;
+  border : 3px solid pink;
+}
+
+.only-title {
+  font-size : 3em;
+}
 .recommend {
   width : 90vw;
 }
