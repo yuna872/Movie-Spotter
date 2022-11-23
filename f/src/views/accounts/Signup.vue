@@ -35,9 +35,7 @@
                           <div class="form-group mt-2">
                             <input type="text" id="nickname" v-model="nickname" class="form-style" placeholder="닉네임" autocomplete="off">
                             <i class="input-icon fa-solid fa-user-pen"></i>
-                          </div>
-                          <p v-show="valid.nickname">닉네임을 정확히 입력해 주세요</p>
-                          
+                          </div>                          
                           <input type="submit" class="btn mt-4" value="SUBMIT">
                         </form>
                       </div>
@@ -137,6 +135,7 @@ export default {
           this.$emit('login')
         })
         .catch((err) => {
+          alert('아이디 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해주세요.')
           console.log(err)
         })
     },
