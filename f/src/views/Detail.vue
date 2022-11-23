@@ -289,7 +289,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding : 5px;
-  margin-bottom: 10px
+  margin-bottom: 20px
 }
 .detail-actor-div {
   width: 90px;

@@ -238,13 +238,20 @@ nav a {
 
 /* AboutUs 버튼 */
 .about-us-btn{
-  width : 50px;
-  height : 50px;
-  background-color : #F6BE00;
+  /* width : 50px; */
+  /* height : 50px; */
+  text-align: center;
+  font-size : 40px;
+  /* background-color : #F6BE00; */
   position: fixed;
   bottom : 20px;
   right: 20px;
   z-index: 5;
+}
+
+.about-us-btn:hover  {
+  font-size : 45px;
+  cursor: pointer;
 }
 
 /* 정보 수집 모달 */

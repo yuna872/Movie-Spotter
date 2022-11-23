@@ -152,6 +152,7 @@ export default {
   -o-animation: fadein 4s;
 }
 
+/* 페이드인 애니메이션 */
 @keyframes fadein {
     from {
         opacity: 0;
@@ -295,21 +296,15 @@ export default {
   width : 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  /* display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start; */
 }
 
-/* 로그인 제안(?) 페이지 */
 /* 추천 알고리즘 페이지 */
 .recommend {
   width : 90vw;
-  height: 100vh;
 }
 /* 공통 추천 영화 페이지 */
 .movies-box{
   width: 100vw;
-  /* height: 25000vh; */
   display: flex;
   align-items: center;
 }

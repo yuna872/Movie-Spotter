@@ -62,27 +62,24 @@ export default {
     getuserinfo() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
-      if (now_user_id === this.$route.params.id) {
-        this.$router.push({ name: 'myinfo' })
-      } else {
-        axios({
-          method: 'get',
-          url: `${API_URL}/accounts/${this.$route.params.id}`,
-          headers: {
-            'Authorization' : `Bearer ${token}`
+     
+      axios({
+        method: 'get',
+        url: `${API_URL}/accounts/${this.$route.params.id}`,
+        headers: {
+          'Authorization' : `Bearer ${token}`
+        }
+      })
+        .then((res)=>{
+          this.userinfo = res.data
+          if (this.userinfo.followers.includes(now_user_id)) {
+            this.is_follow = 'UnFollow'
+          } else {
+            this.is_follow = 'Follow'
           }
+          console.log(this.userinfo)
         })
-          .then((res)=>{
-            this.userinfo = res.data
-            if (this.userinfo.followers.includes(now_user_id)) {
-              this.is_follow = 'UnFollow'
-            } else {
-              this.is_follow = 'Follow'
-            }
-            console.log(this.userinfo)
-          })
-          .catch((err)=>{console.log(err)})
-      }
+        .catch((err)=>{console.log(err)})
       
     }
   },
@@ -101,6 +98,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 
