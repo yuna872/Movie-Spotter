@@ -122,18 +122,30 @@ export default {
     reviewUpdate() {
       const token = localStorage.getItem('jwt')
 
+      if (this.star===null) {
+        alert('별점을 입력하세요!')
+        return
+      } else if (this.content===null) {
+        alert('내용을 입력하세요!')
+        return
+      }
+
       axios({
-        method: 'put',
-        url: `${API_URL}/movies/reviews/${this.review.id}/`,
-        headers: {
-            'Authorization' : `Bearer ${token}`
+        method: 'post',
+        url: `${API_URL}/movies/${this.movie?.id}/reviews/`,
+        data: {
+          rank: this.star,
+          content: this.content,
         }
       })
-        .then((res) => {
-          this.$emit("deleted")
-          console.log(res)
-        })
-        .catch((err)=>{console.log(err)})
+      .then(()=>{
+        this.$emit('update-review')
+        this.star = null
+        this.content = null
+        this.$emit('modal-toggle')
+        return
+      })
+      .catch((err)=>{console.log(err)})
     }
   },
   created() {
@@ -172,6 +184,7 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  cursor:pointer;
 }
 
 .review-like-btn {

@@ -241,7 +241,7 @@ def recommendbymylikes(request):
             movie = get_object_or_404(Movie, pk=movie_pk)
             serializer = MovieSerializer(movie)
             recommend.append(serializer.data)
-                
+        return Response(recommend)
                 
             
     

@@ -10,7 +10,7 @@
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }}년 {{ movie?.['release_date'].slice(5,7) }}월 {{ movie?.['release_date'].slice(8) }}일</div>
         <div class="detail-overview">{{ movieOverview }}</div>
         <div class="detail-video">
-          <div>
+          <div @click="onClickVideo" style="cursor:pointer">
             예고편 보러가기
           </div>
         </div>
@@ -147,6 +147,9 @@ export default {
       } else {
         return this.movie?.overview
       }
+    },
+    youtubeLink() {
+      return `https://www.youtube.com/watch?v=${this.movie?.video}`
     }
   },
   methods: {
@@ -177,6 +180,10 @@ export default {
     },
     onClickOutside() {
       this.is_show = !this.is_show
+    },
+    onClickVideo() {
+      var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+      window.open(this.youtubeLink, '얍', options)
     }
   },
   created() {
