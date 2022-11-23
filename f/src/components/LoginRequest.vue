@@ -13,16 +13,16 @@
 export default {
   name : 'LoginRequest',
   props: {
-    randomMovie : Object,
-  },
-  computed: {
-    backdropUrl() {
-      return `https://image.tmdb.org/t/p/original/${this.randomMovie?.backdrop_path}`
-    }
+    backdrop : Object,
   },
   methods: {
     goSignup() {
       this.$router.push({name : 'signup'})
+    }
+  },
+  computed: {
+    backdropUrl() {
+      return 'https://image.tmdb.org/t/p/original/' + this.backdrop?.backdrop_path
     }
   }
 }
@@ -32,7 +32,6 @@ export default {
 .login-request {
   width : 100vw;
   height : 100vh;
-  border : solid 2px blue;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;

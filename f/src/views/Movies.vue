@@ -2,7 +2,7 @@
   <div class="movies">
     <div class="banner-bg"></div>
     <!-- {{ backdropUrl }} -->
-    <div class="banner" :style="{'backgroundImage':`url(${backdropUrl})`}">
+    <div class="banner" :style="{'backgroundImage':`url('https://image.tmdb.org/t/p/original/${backdropUrls[0]?.backdrop_path}')`}">
       <div class="banner-items">
         <div class="banner-title">
           <img src="@/assets/logo.png" style="width:80px;height:80px"/>&nbsp;MOVIE SPOTTER.
@@ -32,7 +32,7 @@
     </div>
     <!-- 비로그인 사용자에게 보여줄 페이지 -->
     <LoginRequest 
-      :randomMovie="randomMovie[1]" 
+      :backdrop="backdropUrls[1]" 
       v-if="!isLogin"/>
     <!-- 로그인된 사용자에게 보여줄 페이지 -->
     <Recommend 
@@ -72,13 +72,27 @@ export default {
       inputData : null,
       bannerImageUrl : null,
       displayArray : [],
-      randomMovie : [],
-      isLogin : localStorage.getItem('jwt') ? true : false
-    }
-  },
-  computed: {
-    backdropUrl() {
-      return `https://image.tmdb.org/t/p/original/${this.randomMovie[0]?.backdrop_path}`
+      randomBackdrop: [],
+      isLogin : localStorage.getItem('jwt') ? true : false,
+      backdropUrls : [],
+      backdrops : [
+        {'id':597, 'backdrop_path' : '/3WjbxaqYB4vAbdUfdr5vbglD2JZ.jpg'},
+        {'id':619803, 'backdrop_path' : '/kpM7wX8K66bGZkYvfHXIrnXvDRS.jpg'},
+        {'id':568124, 'backdrop_path' : '/3G1Q5xF40HkUBJXxt2DQgQzKTp5.jpg'},
+        {'id':674, 'backdrop_path' : '/5rrGVmRUuCKVbqUu41XIWTXJmNA.jpg'},
+        {'id':354912, 'backdrop_path' : '/askg3SMvhqEl4OL52YuvdtY40Yb.jpg'},
+        {'id':791373, 'backdrop_path' : '/pcDc2WJAYGJTTvRSEIpRZwM3Ola.jpg'},
+        {'id':277834, 'backdrop_path' : '/iYLKMV7PIBtFmtygRrhSiyzcVsF.jpg'},
+        {'id':730823, 'backdrop_path' : '/8Qsr8pvDL3s1jNZQ4HK1d1Xlvnh.jpg'},
+        {'id':936960, 'backdrop_path' : '/odJ4hx6g6vBt4lBWKFD1tI8WS4x.jpg'},
+        {'id':662237, 'backdrop_path' : '/ibKeXahq4JD63z6uWQphqoJLvNw.jpg'},
+        {'id':299534, 'backdrop_path' : '/qJeU7KM4nT2C1WpOrwPcSDGFUWE.jpg'},
+        {'id':570503, 'backdrop_path' : '/v648cPRS5xPCiaSqgTlMiVzDm6o.jpg'},
+        {'id':313369, 'backdrop_path' : '/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg'},
+        {'id':345940, 'backdrop_path' : '/63xBsC6u54uJggUd7mntwB6RuaN.jpg'},
+        {'id':361743, 'backdrop_path' : '/1ZnbzMbxgSqKuCh9aOQCvv1mAyN.jpg'},
+        {'id':259316, 'backdrop_path' : '/y82LoNF9Vu4Hb2ZNh20pE4Ip4XL.jpg'},
+      ]
     }
   },
   methods: {
@@ -89,12 +103,12 @@ export default {
       })
       .then((res)=>{
         // 평점을 기준으로 모든 영화에 대하여 내림차순 정렬
+        console.log('얍')
+        console.log(res.data)
         this.movies = res.data.sort(function (a, b){
           return b['vote_average'] - a['vote_average']
         })
-
-        this.randomMovie = _.sampleSize(this.movies, 2)
-        console.log(this.randomMovie)
+        this.getRandomBackdrop()
       })
       .catch((err)=>{console.log(err)})
     },
@@ -103,6 +117,9 @@ export default {
         return movie.title.includes(this.inputData) 
       }) 
     },
+    getRandomBackdrop() {
+      this.backdropUrls =  _.sampleSize(this.backdrops, 2)
+    }
   },
   watch: {
     inputData: function() {
@@ -117,7 +134,6 @@ export default {
   },
   created() {
     this.getMovies()
-    // this.getBannerImage()
   }
 }
 </script>
