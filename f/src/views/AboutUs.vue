@@ -6,7 +6,7 @@
           <!-- 앞면 -->
           <div class="front">
             <div class="profile">
-            <div class="profile-img1"></div>
+             <div class="profile-img1"></div>
             </div>
             <div class="profile-name">김팀장</div>
             <div class="profile-part">Full Stack :)</div>

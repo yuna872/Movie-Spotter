@@ -5,7 +5,7 @@
         <div class="detail-title">{{ movie?.title }}</div>
         <div style="display:flex;align-items:center;">
           <div class="detail-vote"><i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i>&nbsp;{{ movie?.['vote_average'] }}</div>
-          <div class="detail-adult">{{ movie?.adult ? "청소년 관람 불가" : "청소년 관람 가능" }}</div>
+          <!-- <div class="detail-adult">{{ movie?.adult ? "청소년 관람 불가" : "청소년 관람 가능" }}</div> -->
         </div>
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }}년 {{ movie?.['release_date'].slice(5,7) }}월 {{ movie?.['release_date'].slice(8) }}일</div>
         <div class="detail-overview">{{ movieOverview }}</div>
@@ -14,9 +14,24 @@
             예고편 보러가기
           </div>
         </div>
-        {{ movie?.id}}
+        {{ movie?.actors }}
+        <div
+          v-for="(actor,index) in movie?.actors"
+          :key="index">
+          <div class="detail-actor-div">
+            <div v-if="index === 0">
+              <div v-if="actor.image === null" class="actor-null"></div>
+              <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${actor.image})`}"></div>
+              <i class="fa-solid fa-clapperboard"></i> {{ actor.name }}</div>
+            <div v-if="index > 0">
+              <div v-if="actor.image === null" class="actor-null"></div>
+              <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${actor.image})`}"></div>
+                {{ actor.name }}</div>
+          </div>
+        </div>
+        <!-- {{ movie?.id}}
         {{ movie?.backdrop_path }}
-        {{ movie?.video }}
+        {{ movie?.video }} -->
       </div>
     </div>
     <div class="detail-box" :style="{'backgroundImage':`url(${backdropUrl})`}">
@@ -255,8 +270,25 @@ export default {
   align-items: center;
   justify-content: center;
   padding : 5px;
+  margin-bottom: 10px
+}
+.detail-actor-div {
+  width: 90px;
+  float: left;
+  padding-right: 25px;
+}
+.detail-actor {
+  padding-bottom: 100%;
+  border-radius: 100%;
+  background-size: cover;
 }
 
+.actor-null {
+  padding-bottom: 100%;
+  border-radius: 100%;
+  background-size: cover;
+  background-image:url('@/assets/logo.png')
+}
 
 /* 리뷰 컴포넌트 */
 .review-box {
