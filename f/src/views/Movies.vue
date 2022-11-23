@@ -108,7 +108,6 @@ export default {
         this.movies = res.data.sort(function (a, b){
           return b['vote_average'] - a['vote_average']
         })
-        this.getRandomBackdrop()
       })
       .catch((err)=>{console.log(err)})
     },
@@ -133,6 +132,7 @@ export default {
 
   },
   created() {
+    this.getRandomBackdrop()
     this.getMovies()
   }
 }
@@ -146,6 +146,43 @@ export default {
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
+  animation: fadein 4s;
+  -moz-animation: fadein 4s; 
+  -webkit-animation: fadein 4s; 
+  -o-animation: fadein 4s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-moz-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadein { 
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-o-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeInOpacity {
@@ -194,7 +231,7 @@ export default {
   font-size : 6em;
   width: 15ch;
   animation-delay: 2s;
-  animation: typing 3.5s steps(15), blink .4s step-end infinite alternate;
+  animation: typing 2.5s steps(15), blink .4s step-end infinite alternate;
   white-space: nowrap;
   overflow: hidden;
   border-right: 3px solid;

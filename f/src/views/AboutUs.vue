@@ -3,28 +3,25 @@
     <div class="about-us-box">
       <div class="flip">  
         <div class="flip-card">
-          <!-- 앞면 -->
           <div class="front">
             <div class="profile">
-            <div class="profile-img1"></div>
+             <div class="profile-img1"></div>
             </div>
             <div class="profile-name">김팀장</div>
             <div class="profile-part">Full Stack :)</div>
           </div>
-          <!-- 뒷면 -->
           <div class="back">
-            <p class="profile-comment-title">comment</p>
+            <p class="profile-comment-title">유나's comment</p>
             <p class="profile-comment">안녕하세요! 김팀장 인사 올려드립니다 꾸벅. 모두모두 건강하세요</p>
-            <div>
-              <div class="link-btn"><i class="fa-brands fa-github fa-5x"></i></div>
-              <div class="link-btn"></div>
+            <div class="profile-btn-box">
+              <div class="link-git" @click="goToLink('https://github.com/yuna872')"><i class="fa-brands fa-github fa-3x"></i></div>
+              <div class="link-tistory" @click="goToLink('https://yunae.tistory.com/')"><div class="tistory-logo"></div></div>
             </div>
           </div>
       </div>
      </div>
      <div class="flip">  
         <div class="flip-card">
-          <!-- 앞면 -->
           <div class="front">
             <div class="profile">
             <div class="profile-img2"></div>
@@ -33,13 +30,18 @@
             <div class="profile-part">Full Stack :)</div>
 
           </div>
-          <!-- 뒷면 -->
-          <div class="back"></div>
+          <div class="back">
+            <p class="profile-comment-title">지우's comment</p>
+            <p class="profile-comment">안녕하세요! 최팀장 인사 올려드립니다 꾸벅. 모두모두 건강하세요</p>
+            <div class="profile-btn-box">
+              <div class="link-git" @click="goToLink('https://github.com/choizlor')"><i class="fa-brands fa-github fa-3x"></i></div>
+              <div class="link-tistory" @click="goToLink('https://choizlor.tistory.com/')"><div class="tistory-logo"></div></div>
+            </div>
+          </div>
       </div>
      </div>
      <div class="flip">  
         <div class="flip-card">
-          <!-- 앞면 -->
           <div class="front">
             <div class="profile">
             <div class="profile-img3"></div>
@@ -47,8 +49,13 @@
             <div class="profile-name">박팀장</div>
             <div class="profile-part">git pull Stack :)</div>
           </div>
-          <!-- 뒷면 -->
-          <div class="back"></div>
+          <div class="back">
+            <p class="profile-comment-title">시형's comment</p>
+            <p class="profile-comment">안녕하세요! 박팀장 인사 올려드립니다 꾸벅. 모두모두 건강하세요</p>
+            <div class="profile-btn-box">
+              <div class="link-git" @click="goToLink('https://github.com/psihyeong')"><i class="fa-brands fa-github fa-3x"></i></div>
+            </div>
+          </div>
       </div>
      </div>
     </div>
@@ -59,6 +66,11 @@
 <script>
 export default {
   name: 'AboutUs',
+  methods: {
+    goToLink(link) {
+      window.open(link)
+    }
+  }
 }
 </script>
 
@@ -145,20 +157,26 @@ export default {
 
 .profile-comment-title {
   font-family: 'Jost', sans-serif;
-  font-size : 1.3em;
+  font-size : 1.5em;
+  margin-bottom: 10%;
 }
 
 .profile-comment {
   width : 80%;
+  height: 40%;
   font-size : 1.5em;
   border-bottom : 2px solid white;
-  padding-bottom: 30px;
+  padding-bottom: 10%;
 }
 
 .back { 
   background : #343440;
   /* background: royalblue;  */
   transform: rotateY(180deg);
+}
+
+.profile-btn-box {
+  display: flex;
 }
 
 
@@ -170,8 +188,17 @@ export default {
   background: #F6BE00; 
 }
 
-.link-btn {
-
+.link-git {
+  margin : 10px;
 }
+.link-tistory {
+  margin : 10px;
+  border-radius: 50%;
+  width : 50px;
+  height : 50px;
+  background-image: url('@/assets/tis_logo.png');
+  background-size : cover;
+}
+
 
 </style>

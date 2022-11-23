@@ -20,6 +20,7 @@
     
     <!-- 페이지 위로 가는 버튼 -->
     <button class="top-btn" onclick="window.scrollTo(0,0);">
+      <i class="fa-solid fa-arrow-up fa-lg"></i>
     </button>
     
     <!-- 모달 -->
