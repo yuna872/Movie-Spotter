@@ -131,7 +131,6 @@ export default {
   background-position: center;
   border: none;
   border-radius: 10px;
-  margin-bottom : 1vh;
 }
 
 .item-hover:hover {
