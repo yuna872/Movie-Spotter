@@ -33,8 +33,7 @@
       v-if="!isLogin"/>
 
     <!-- 로그인된 사용자에게 보여줄 페이지 -->
-    <div class="onlyMS" style="width:100vh;border:4px solid green">
-      <p class="only-title">오직 Movie Spotter 에서만~</p>
+    <div class="onlyMS" style="border:4px solid green">
       <Recommend 
         :movies="movies"
         class="recommend"
@@ -141,6 +140,9 @@ export default {
 </script>
 
 <style>
+.movies {
+  width : 100vw;
+}
 /* 배너 & 검색 페이지 */
 .banner {
   width : 100vw - 50px;
@@ -301,17 +303,13 @@ export default {
 }
 
 /* 추천 알고리즘 페이지 */
-.container {
-  width : 50vw;
-  border : 3px solid pink;
+.onlyMS {
+  width : 100vw;
 }
-
 .only-title {
   font-size : 3em;
 }
-.recommend {
-  width : 90vw;
-}
+
 /* 공통 추천 영화 페이지 */
 .movies-box{
   width: 100vw;
