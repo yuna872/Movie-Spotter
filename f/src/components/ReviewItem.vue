@@ -1,32 +1,33 @@
 <template>
   <div class="review-item">
     <div class="review-item-left">
-      <div v-if="review.rank === 1">
+      <div v-if="review.rank === 0.5">
         <img src="@/assets/star_1.png" style="width : 15px; height : 15px;"></div>
-      <div v-else-if="review.rank === 2">
+      <div v-else-if="review.rank === 1">
         <img src="@/assets/star_2.png" style="width : 15px; height : 15px;"></div>
-      <div v-else-if="review.rank === 3">
+      <div v-else-if="review.rank === 1.5">
         <img src="@/assets/star_3.png" style="width : 30px; height : 15px;"></div>
-      <div v-else-if="review.rank === 4">
+      <div v-else-if="review.rank === 2">
         <img src="@/assets/star_4.png" style="width : 30px; height : 15px;"></div>
-      <div v-else-if="review.rank === 5">
+      <div v-else-if="review.rank === 2.5">
         <img src="@/assets/star_5.png" style="width : 45px; height : 15px;"></div>
-      <div v-else-if="review.rank === 6">
+      <div v-else-if="review.rank === 3">
         <img src="@/assets/star_6.png" style="width : 45px; height : 15px;"></div>
-      <div v-else-if="review.rank === 7">
+      <div v-else-if="review.rank === 3.5">
         <img src="@/assets/star_7.png" style="width : 60px; height : 15px;"></div>
-      <div v-else-if="review.rank === 8">
+      <div v-else-if="review.rank === 4">
         <img src="@/assets/star_8.png" style="width : 60px; height : 15px;"></div>
-      <div v-else-if="review.rank === 9">
+      <div v-else-if="review.rank === 4.5">
         <img src="@/assets/star_9.png" style="width : 75px; height : 15px;"></div>
       <div v-else>
         <img src="@/assets/star_10.png" style="width : 75px; height : 15px;"></div>
-      <div>{{ review.rank }}.0</div>
+      <div>{{ review.rank }}</div>
     </div>
     <div class="review-item-right">
       <div style="display:flex;justify-content:space-between">
         <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a>님 작성</div>
         <div @click="reviewDelete"><i class="fa-solid fa-trash-can"></i></div>
+        <div @click="reviewUpdate"><i class="fa-solid fa-pen"></i></div>
       </div>
       <div class="review-content">{{ review.content }}</div>
       <div class="review-submit-btn" @click="reviewLike" :class="{'review-like-btn': !is_like}">
@@ -101,12 +102,28 @@ export default {
     reviewDelete() {
       if (!confirm("정말 삭제하시겠습니까??")){    //확인
         return
-  }else{   //취소
-      
+      } else {   //취소
+        const token = localStorage.getItem('jwt')
+
+        axios({
+          method: 'delete',
+          url: `${API_URL}/movies/reviews/${this.review.id}/`,
+          headers: {
+              'Authorization' : `Bearer ${token}`
+          }
+        })
+          .then((res) => {
+            this.$emit("deleted")
+            console.log(res)
+          })
+          .catch((err)=>{console.log(err)})
+     }
+    },
+    reviewUpdate() {
       const token = localStorage.getItem('jwt')
 
       axios({
-        method: 'delete',
+        method: 'put',
         url: `${API_URL}/movies/reviews/${this.review.id}/`,
         headers: {
             'Authorization' : `Bearer ${token}`
@@ -117,7 +134,6 @@ export default {
           console.log(res)
         })
         .catch((err)=>{console.log(err)})
-    }
     }
   },
   created() {

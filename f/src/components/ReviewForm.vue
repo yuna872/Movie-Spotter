@@ -62,7 +62,7 @@ export default {
         method: 'post',
         url: `${API_URL}/movies/${this.movie?.id}/reviews/`,
         data: {
-          rank: (this.star)*2,
+          rank: this.star,
           content: this.content,
           user_id: now_user_id
         }

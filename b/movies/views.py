@@ -192,6 +192,11 @@ def recommendbymylikes(request):
     # 장르를 포함하는 영화들을 반환하는 함수
     all_movies = Movie.objects.all()
     my_like_movies = me.like_movies.all()
+    my_like_movies_id = []
+    for movie in my_like_movies:
+        my_like_movies_id.append(movie.pk)
+
+
     my_vote_count_avg = 0
     my_vote_average_avg = 0
 
@@ -207,16 +212,16 @@ def recommendbymylikes(request):
     movie_sub = []
     # 평점들의 평균, 투표수의 평균
     for movie in all_movies:
-        if movie.vote_average >= my_vote_average_avg - 1:
-            if my_vote_count_avg*0.8 <= movie.vote_count <= my_vote_count_avg*1.2:
+        if movie.vote_average >= my_vote_average_avg - 2:
+            if my_vote_count_avg*0.5 <= movie.vote_count <= my_vote_count_avg*1.5:
                 movie_sub.append(movie.pk)
-
     random.shuffle(movie_sub)
     for movie_pk in movie_sub:
         movie = get_object_or_404(Movie, pk=movie_pk)
         for genre in movie.genres.all():
             if genre.id in my_genre_rate:
-                result.append(movie)
+                if movie.pk not in my_like_movies_id:
+                    result.append(movie.pk)
                 my_genre_rate[genre.id] -= 1
                 if my_genre_rate[genre.id] == 0:
                     my_genre_rate.pop(genre.id)
@@ -224,12 +229,18 @@ def recommendbymylikes(request):
 
         if len(my_genre_rate) == 0:
             recommend = []     
-            for movie in result:
-                movie = get_object_or_404(Movie, pk=movie.pk)
+            for movie_pk in result:
+                movie = get_object_or_404(Movie, pk=movie_pk)
                 serializer = MovieSerializer(movie)
                 recommend.append(serializer.data)
-            
-            return Response(recommend)     
+            return Response(recommend)
+
+    if len(my_genre_rate) != 0:  
+        recommend = []     
+        for movie_pk in result:
+            movie = get_object_or_404(Movie, pk=movie_pk)
+            serializer = MovieSerializer(movie)
+            recommend.append(serializer.data)
                 
                 
             

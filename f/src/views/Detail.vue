@@ -40,23 +40,23 @@
             <div class="rank-avg">{{ rankAverage == NaN?  0.0 : rankAverage  }}</div>
             <div class="star-box">
               <div class="star"> <div class="star-div">
-                <div v-if="rankAverage < 2">
+                <div v-if="rankAverage <= 0.5">
                   <img src="@/assets/star_1.png" style="width : 35px; height : 35px;"></div>
-                <div v-else-if="rankAverage < 3">
+                <div v-else-if="rankAverage <= 1">
                   <img src="@/assets/star_2.png" style="width : 35px; height : 35px;"></div>
-                <div v-else-if="rankAverage < 4">
+                <div v-else-if="rankAverage <= 1.5">
                   <img src="@/assets/star_3.png" style="width : 70px; height : 35px;"></div>
-                <div v-else-if="rankAverage < 5">
+                <div v-else-if="rankAverage <= 2">
                   <img src="@/assets/star_4.png" style="width : 70px; height : 35px;"></div>
-                <div v-else-if="rankAverage < 6">
+                <div v-else-if="rankAverage <= 2.5">
                   <img src="@/assets/star_5.png" style="width : 105px; height : 35px;"></div>
-                <div v-else-if="rankAverage < 7">
+                <div v-else-if="rankAverage <= 3">
                   <img src="@/assets/star_6.png" style="width : 105px; height : 35px;"></div>
-                <div v-else-if="rankAverage < 8">
+                <div v-else-if="rankAverage <= 3.5">
                   <img src="@/assets/star_7.png" style="width : 140px; height : 35px;"></div>
-                <div v-else-if="rankAverage < 9">
+                <div v-else-if="rankAverage <= 4">
                   <img src="@/assets/star_8.png" style="width : 140px; height : 35px;"></div>
-                <div v-else-if="rankAverage < 10">
+                <div v-else-if="rankAverage <= 4.5">
                   <img src="@/assets/star_9.png" style="width : 175px; height : 35px;"></div>
                 <div v-else>
                   <img src="@/assets/star_10.png" style="width : 175px; height : 35px;"></div>
