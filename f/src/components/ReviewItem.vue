@@ -56,7 +56,15 @@ export default {
   },
   methods: {
     goProfile() {
-      this.$router.push({name: 'userinfo', params: {id : this.review.user}})
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+
+      if (this.review.user === now_user_id){
+        this.$router.push({ name: 'myinfo' })
+      } else {
+        this.$router.push({name: 'userinfo', params: {id : this.review.user}})
+      }
+      
     },
     reviewLike() {
       const token = localStorage.getItem('jwt')
