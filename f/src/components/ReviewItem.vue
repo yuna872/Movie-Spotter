@@ -26,8 +26,10 @@
     <div class="review-item-right">
       <div style="display:flex;justify-content:space-between">
         <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a>님 작성</div>
-        <div @click="reviewDelete"><i class="fa-solid fa-trash-can"></i></div>
-        <div @click="modalToggle"><i class="fa-solid fa-pen"></i></div>
+        <div v-if="is_me" class="ud-div">
+          <div @click="modalToggle" style="cursor:pointer" class="u-div"><i class="fa-solid fa-pen"></i></div>
+          <div @click="reviewDelete" style="cursor:pointer"><i class="fa-solid fa-trash-can"></i></div>
+        </div>
         <div class="black-bg" v-if="is_show == true">
           <ReviewUpdateForm 
             @modal-toggle="modalToggle"
@@ -71,6 +73,7 @@ export default {
       is_like: null,
       reviewinfo : null,
       is_show : false,
+      is_me: false,
     }
   },
   directives: {
@@ -126,6 +129,10 @@ export default {
           } else {
             this.is_like = true
           }
+
+          if (this.review.user === now_user_id) {
+            this.is_me = true
+          }
         })
         .catch((err)=>{console.log(err)})
     },
@@ -143,6 +150,7 @@ export default {
           }
         })
           .then((res) => {
+            this.is_me = !this.is_me
             this.$emit("deleted")
             console.log(res)
           })
@@ -212,5 +220,13 @@ export default {
 .review-content {
   font-size: 1.3em;
   margin-top : 5px;
+}
+
+.ud-div {
+  display: flex;
+}
+
+.u-div {
+  margin-right: 15px;
 }
 </style>

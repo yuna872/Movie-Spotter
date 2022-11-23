@@ -160,7 +160,7 @@ export default {
       if (!total) {
         return Math.round(0).toFixed(1)
       }
-      return Math.round(total / this.reviews?.length, 2).toFixed(1)
+      return Math.ceil((total / this.reviews?.length) * 10) / 10
     },
     videoUrl() {
       return `http://www.youtube.com/watch_popup?v=${this.movie?.video}`
