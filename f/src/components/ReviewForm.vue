@@ -46,7 +46,7 @@ export default {
       // 로그인 되어있지 않다면
 
       // 내용이 입력되지 않으면 alert
-      if (this.star===null) {
+      if (this.star===0 || this.star === null) {
         alert('별점을 입력하세요!')
         return
       } else if (this.content===null) {
