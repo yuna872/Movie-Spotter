@@ -85,13 +85,15 @@
               <div class="review-count">총 {{ reviews.length }}개의 리뷰</div>
         </div>
           </div>
-          <div class="review-left-bottom" @click="modalToggle">
-              <div class="content1">{{ movie?.title }} 어떠셨나요?</div> 
-              <div class="content2">다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
-              <div class="star-div">
+          <div class="review-left-bottom">
+              <div class="content1" @click="goLogin" v-if="!is_login" style="cursor:pointer">로그인이 필요합니다.</div>
+              <div class="content1" v-if="is_login">{{ movie?.title }} 어떠셨나요?</div> 
+              <div class="content2" v-if="is_login">다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
+              <!-- 리뷰 버튼/여기에 modalToggle넣기 -->
+              <div v-if="is_login" @click="modalToggle" style="cursor:pointer">
                 <img src="@/assets/star_10.png" style="width : 175px; height : 35px;">
               </div>
-            </div>
+          </div>
         </div>
         <div class="review-right-box scroll-div">
           <ReviewItem
@@ -139,7 +141,8 @@ export default {
       reviews: [],
       is_show : false,
       director : null,
-      actors : []
+      actors : [],
+      is_login: false,
     }
   },
   beforeRouteUpdate(to, from, next){
@@ -216,12 +219,21 @@ export default {
             this.director = actor
           }
       })
+    },
+    goLogin() {
+      this.$router.push({'name' : 'login'})
+    },
+    isLogin() {
+      const token = localStorage.getItem('jwt')
+      if (token) {
+        this.is_login = true
+      }
     }
 
   },
   created() {
       this.getMovieDetail()
-      
+      this.isLogin()
   },
 }
 </script>
