@@ -24,13 +24,15 @@
       <div>{{ review.rank }}.0</div>
     </div>
     <div class="review-item-right">
-      <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a>님 작성</div>
+      <div style="display:flex;justify-content:space-between">
+        <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a>님 작성</div>
+        <div @click="reviewDelete"><i class="fa-solid fa-trash-can"></i></div>
+      </div>
       <div class="review-content">{{ review.content }}</div>
       <div class="review-submit-btn" @click="reviewLike" :class="{'review-like-btn': !is_like}">
         <div :class="{ 'review-like-thumbs': !is_like }"><i class="fa-solid fa-thumbs-up"></i></div>
         <div>도움이 돼요 {{ reviewinfo?.like_users.length }}</div>
       </div>
-      <button @click="reviewDelete">DELETE</button>
     </div>
   </div>
 </template>
@@ -97,6 +99,10 @@ export default {
         .catch((err)=>{console.log(err)})
     },
     reviewDelete() {
+      if (!confirm("정말 삭제하시겠습니까??")){    //확인
+        return
+  }else{   //취소
+      
       const token = localStorage.getItem('jwt')
 
       axios({
@@ -111,6 +117,7 @@ export default {
           console.log(res)
         })
         .catch((err)=>{console.log(err)})
+    }
     }
   },
   created() {

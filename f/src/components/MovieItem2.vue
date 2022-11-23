@@ -1,5 +1,5 @@
 <template>
-  <div
+  <div  
     @click="modalLike"
     class="firsttime-items"
     :class="{'shadow-light': is_like}"
@@ -46,7 +46,7 @@ export default {
           },
           headers: {
             'Authorization' : `Bearer ${token}`
-          }
+    }
         })
         .then((res)=>{
           this.is_like = res.data

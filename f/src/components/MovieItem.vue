@@ -153,6 +153,11 @@ export default {
     justify-content: center;
     justify-items: center;
     text-align : center;
+    font-size : 30px;
+  }
+
+  .item-hover p {
+    font-size: 20px;
   }
 
 .like-btn-p {

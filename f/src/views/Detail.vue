@@ -8,12 +8,14 @@
           <div class="detail-adult">{{ movie?.adult ? "청소년 관람 불가" : "청소년 관람 가능" }}</div>
         </div>
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }}년 {{ movie?.['release_date'].slice(5,7) }}월 {{ movie?.['release_date'].slice(8) }}일</div>
-        <div class="detail-overview">{{ movie?.overview }}</div>
+        <div class="detail-overview">{{ movieOverview }}</div>
         <div class="detail-video">
           <div>
             예고편 보러가기
           </div>
         </div>
+        {{ movie?.id}}
+        {{ movie?.backdrop_path }}
         {{ movie?.video }}
       </div>
     </div>
@@ -35,7 +37,7 @@
       <div class="review-list-box">
         <div class="review-left-box">
           <div class="review-left-top">
-            <div class="rank-avg">{{ rankAverage? rankAverage : "첫번째 리뷰를 작성해보세요" }}</div>
+            <div class="rank-avg">{{ rankAverage == NaN?  0.0 : rankAverage  }}</div>
             <div class="star-box">
               <div class="star"> <div class="star-div">
                 <div v-if="rankAverage < 2">
@@ -131,11 +133,21 @@ export default {
     },
     rankAverage(){
       const total = this.reviews?.reduce((total, review) => total + review.rank, 0)
+      if (!total) {
+        return Math.round(0).toFixed(1)
+      }
       return Math.round(total / this.reviews?.length, 2).toFixed(1)
     },
     videoUrl() {
       return `http://www.youtube.com/embed/${this.movie?.video}`
     },
+    movieOverview() {
+      if (this.movie?.overview.length >= 200) {
+        return this.movie?.overview.slice(0, 200) + "..."
+      } else {
+        return this.movie?.overview
+      }
+    }
   },
   methods: {
     getMovieDetail() {
@@ -250,7 +262,7 @@ export default {
 .review-list-box {
   display: flex;
   background-color:  #343440;
-  width : 85%; 
+  width : 70%; 
   height: 70%;
   margin : auto;
   justify-content: space-between;
