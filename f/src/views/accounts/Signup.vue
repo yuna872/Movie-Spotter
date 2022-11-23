@@ -5,7 +5,7 @@
       <div class="row full-height justify-content-center">
         <div class="col-12 text-center align-self-center py-5">
           <div class="section pb-5 pt-5 pt-sm-2 text-center">
-            <h6 class="mb-0 pb-3"><span>Sign Up </span><span>Log In</span></h6>
+            <h6 class="mb-0 pb-3"><span>Sign Up </span><span @click="goLogin" style="cursor:pointer">Log In</span></h6>
               <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
               <label for="reg-log"></label>
               <div class="card-3d-wrap mx-auto">
@@ -20,20 +20,20 @@
                             <input type="text" id="username" v-model="username" class="form-style" placeholder="예) ssafy8888" autocomplete="off">
                             <i class="input-icon fas fa-user"></i>
                           </div>
-                          <p v-show="valid.username">특수문자를 제외한 ID를 입력해주세요. (6-16자)</p>
+                          <p v-show="valid.username">특수문자를 제외한 ID를 입력해주세요. (4-12자)</p>
                           <div class="form-group mt-2">
                             <input type="password" id="password" v-model="password" class="form-style" placeholder="영문, 숫자, 특수문자 조합 8-16자" autocomplete="off">
                             <i class="input-icon fas fa-lock"></i>
                           </div>
                           <p v-show="valid.password">영문,숫자,특수문자를 조합하여 입력해주세요. (8-16자)</p>
                           <div class="form-group mt-2">
-                            <input type="password" id="password2" v-model="password2" class="form-style" placeholder="Password Confirmation" autocomplete="off">
+                            <input type="password" id="password2" v-model="password2" class="form-style" placeholder="비밀번호 확인" autocomplete="off">
                             <i class="input-icon fas fa-lock"></i>
                             <!-- <i class="input-icon fas fa-check fa-stack-1x" style="color:#343440"></i> -->
                           </div>
                           <p v-show="valid.pwcorrect">비밀번호가 일치하지 않습니다</p>
                           <div class="form-group mt-2">
-                            <input type="text" id="nickname" v-model="nickname" class="form-style" placeholder="Nickname" autocomplete="off">
+                            <input type="text" id="nickname" v-model="nickname" class="form-style" placeholder="닉네임" autocomplete="off">
                             <i class="input-icon fa-solid fa-user-pen"></i>
                           </div>
                           <p v-show="valid.nickname">닉네임을 정확히 입력해 주세요</p>
@@ -64,7 +64,7 @@
                       <div>
                         <hr>
                         <p>회원이 아니라면?</p>
-                        <router-link :to="{ name: 'signup' }">Sign Up</router-link>
+                        <p class="signupbtn" @click="check">Sign Up</p>
                       </div>
                     </div>
                   </div>
@@ -114,6 +114,9 @@ export default {
   },
 
   methods: {
+    check() {
+      this.$router.go()
+    },
     logIn() {
       axios({
         method: 'post',
@@ -153,7 +156,6 @@ export default {
         },
       })
         .then(() => {
-          // login 메서드 넣고싶어여
           this.logIn()
           this.$emit('first-time')
         })
@@ -167,19 +169,15 @@ export default {
       const validateUsername = /^[a-zA-z0-9]{4,12}$/
       if (!validateUsername.test(this.username) || !this.username) {
         this.valid.username = true
-        // this.usernameHasError = true
         return
       } this.valid.username = false
-        // this.usernameHasError = false
     },
     checkPassword() {
       const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
       if (!validatePassword.test(this.password) || !this.password) {
         this.valid.password = true
-        // this.passwordHasError = true
         return
       } this.valid.password = false
-        // this.passwordHasError = false
     },
     checkPwcorrect() {
       if (this.password !== this.password2){
@@ -188,8 +186,8 @@ export default {
         this.valid.pwcorrect = false
       }
     },
-    checkNickname() {
-      // include면 true
+    goLogin() {
+      this.$router.push({name: 'login'})
     }
   }
 }
@@ -283,9 +281,9 @@ h6 span{
 
 .card-3d-wrap {
   position: relative;
-  width: 440px;
+  width: 500px;
   max-width: 100%;
-  height: 400px;
+  height: 454px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
@@ -464,6 +462,11 @@ h6 span{
   background-color: #343440;
   color: #F6BE00;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
+.signupbtn {
+  text-decoration: underline;
+  color: #F6BE00;
+  font-size: 16px;
 }
 
 </style>

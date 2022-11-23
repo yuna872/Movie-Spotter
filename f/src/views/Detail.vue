@@ -10,12 +10,10 @@
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }}년 {{ movie?.['release_date'].slice(5,7) }}월 {{ movie?.['release_date'].slice(8) }}일</div>
         <div class="detail-overview">{{ movieOverview }}</div>
         <div class="detail-video">
-          {{ movie?.backdrop_path}}
           <div @click="onClickVideo" style="cursor:pointer">
             예고편 보러가기
           </div>
         </div>
-        <!-- {{ movie?.actors }} -->
         <!-- 감독, 배우 출력 -->
         <div class="people">
         <div>
@@ -185,6 +183,7 @@ export default {
       .then((res)=>{
         this.movie = res.data
         this.getActors()
+        this.getReviews()
       })
       .catch((err)=>{console.log(err)})
     },
@@ -223,8 +222,8 @@ export default {
   },
   created() {
       this.getMovieDetail()
-      this.getReviews()
-  }
+      
+  },
 }
 </script>
 
