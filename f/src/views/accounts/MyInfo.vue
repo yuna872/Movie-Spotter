@@ -1,53 +1,60 @@
 <template>
   <div class="userinfo">
-    <div class="userinfo-box">
     <div class="userinfo-top">
-      <!-- 상세정보 -->
-      <div class="userinfo-top-top">
+      <div></div>
+      <div class="user-profile">
+        <div class="user-profile-img"></div>
         <p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
-        <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
-        <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p>
-        <p style="font-size : 1.4em;margin-top:20px;">내가 쓴 리뷰 📑</p>
-        <div class="myreview-list scroll-div">
-          
-          <div 
-            v-for="(review, index) in reviewinfo" 
-            :key="index"
-            class="info-div"  
-          > 
-            <div> <i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i> 
-              &nbsp;{{ review.rank }}점
-            </div>
-           <p>
-            <!-- {{ movies.id }} -->
-           </p>
-           <p>{{ review.content }}</p>
-            <p>
-              <i class="fa-solid fa-thumbs-up"></i>&nbsp;
-              {{ review.like_users.length }}&nbsp;likes
-            </p>
-          </div>
-        </div>
       </div>
-      <div class="userinfo-top-bottom">
-      <!-- 좋아요 누른 영화 -->
-      <div class="swiper-box">
-        <div>
-          <div class="semi-title">내가 좋아요 누른 컨텐츠</div>
-            <swiper class="swiper" :options="swiperOption">
-              <swiper-slide class="swiper-slide" v-for="(movie, index) in movies" :key="`n-${index}`">
-                <MovieItem class="movie-item1" :movie="movie"/>
-              </swiper-slide>
-              <div class="swiper-button-prev" slot="button-prev"></div>
-              <div class="swiper-button-next" slot="button-next"></div>
-            </swiper>
-          </div>
-        </div>
+      <div class="userinfo-top-bg">
+        
       </div>
+      <!-- 상세정보 -->
     </div>
   </div>
-  </div>
 </template>
+
+<!-- <div class="userinfo-top-top">
+  <p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
+  <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
+  <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p>
+  <p style="font-size : 1.4em;margin-top:20px;">내가 쓴 리뷰 📑</p>
+  <div class="myreview-list scroll-div">
+    
+    <div 
+      v-for="(review, index) in reviewinfo" 
+      :key="index"
+      class="info-div"  
+    > 
+      <div> <i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i> 
+        &nbsp;{{ review.rank }}점
+      </div>
+     <p>
+    
+     </p>
+     <p>{{ review.content }}</p>
+      <p>
+        <i class="fa-solid fa-thumbs-up"></i>&nbsp;
+        {{ review.like_users.length }}&nbsp;likes
+      </p>
+    </div>
+  </div>
+</div>
+<div class="userinfo-top-bottom">
+
+<div class="swiper-box">
+  <div>
+    <div class="semi-title">내가 좋아요 누른 컨텐츠</div>
+      <swiper class="swiper" :options="swiperOption">
+        <swiper-slide class="swiper-slide" v-for="(movie, index) in movies" :key="`n-${index}`">
+          <MovieItem class="movie-item1" :movie="movie"/>
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
+    </div>
+  </div> 
+</div>-->
 
 <script>
 import axios from 'axios'
@@ -148,31 +155,60 @@ export default {
 
 .userinfo {
   width : 100vw;
-  height : 100vh;
+  /* height : 100vh; */
 }
 .userinfo-box {
   display: flex;
   flex-direction: column;
   width : 90%;
   margin : auto;
+  border : 3px solid green;
 }
 .userinfo-top {
-  height : 100vh;
+  background-image: url('@/assets/caramel.jpg');
+  background-size: cover;
+  height : 40vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-
-
+  border : 3px solid red;
 }
-.userinfo-top-top {
+
+.userinfo-top-bg {
+  position: absolute;
+  height: 20vh;
+  top : 20vh;
+  right:0;left:0;
+  background-color: #25252e;
+  border : 3px solid blue;
+}
+.user-profile {
+  width : 15vw;
+  margin-left : 10vw;
+  position: absolute;
+  z-index: 1;
+}
+.user-profile-img{
+  border-radius: 100%;
+  padding-bottom : 100%;
+  background-image: url('@/assets/null.png');
+  background-size: cover;
+}
+
+.info-id{
+  display: inline-block;
+  width : auto;
+  border : 3px solid blue;
+  font-size : 1.1em;
+}
+
+/* .userinfo-top-top {
   height : 40%;
   width : 70%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   margin : auto;
-  /* border : solid 2px red; */
-
 }
 
 .userinfo-top-top p {
@@ -181,6 +217,7 @@ export default {
 }
 
 .info-div {
+
   display: flex;
   justify-content: space-evenly;
   font-size : 1.1em;
@@ -191,11 +228,11 @@ export default {
   margin : auto;
 }
 
-.info-div p {
-  font-size : 1.1em;
-}
+
 .info-id {
+  margin-left: 10vw;
   font-size : 2.5em;
+  border : 3px solid blue;
 }
 .info-nickname {
   font-size : 1.8em;
@@ -210,11 +247,10 @@ export default {
 }
 
 .myreview-list {
-  /* border : solid 2px red; */
   height : 50%;
   width : 60%;
   margin : auto;
   overflow-y: scroll;
-}
+}  */
 
 </style>
