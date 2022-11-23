@@ -236,12 +236,19 @@ export default {
 
 .poster:hover {
   cursor: pointer;
+  scale : 1.02;
 }
 
 .poster-div {
   width : 40vw;
   display: inline-block;
   text-align: center;
+  border-radius: 20px;
+}
+
+.poster-div:hover {
+  scale : 1.02;
+  border-radius: 20px;
 }
 .container {
   width : 45vw;
