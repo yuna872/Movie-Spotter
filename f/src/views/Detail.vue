@@ -183,6 +183,7 @@ export default {
       .then((res)=>{
         this.movie = res.data
         this.getActors()
+        this.getReviews()
       })
       .catch((err)=>{console.log(err)})
     },
@@ -221,8 +222,8 @@ export default {
   },
   created() {
       this.getMovieDetail()
-      this.getReviews()
-  }
+      
+  },
 }
 </script>
 
