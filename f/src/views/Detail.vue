@@ -98,6 +98,7 @@
             :key="index"
             :review="review"
             @deleted="getReviews"
+            @update-review="getReviews"
           />
         </div>
       </div>
@@ -171,7 +172,7 @@ export default {
       }
     },
     youtubeLink() {
-      return `https://www.youtube.com/watch?v=${this.movie?.video}`
+      return `https://www.youtube.com/embed/${this.movie?.video}`
     }
   },
   methods: {
@@ -207,7 +208,7 @@ export default {
     },
     onClickVideo() {
       var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
-      window.open(this.youtubeLink, '얍', options)
+      window.open(this.youtubeLink, '얍', fullscreen)
     },
     getActors() {
       this.actors = this.movie?.actors.filter((actor)=>{

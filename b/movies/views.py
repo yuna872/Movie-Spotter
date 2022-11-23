@@ -24,7 +24,6 @@ def movie_list(request):
 @api_view(['GET'])
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    print(movie.actors)
     if request.method == 'GET':
         serializer = MovieSerializer(movie)
         return Response(serializer.data)
@@ -172,6 +171,22 @@ def recommendbymylikes(request):
     me = get_object_or_404(get_user_model(), pk=request.data['user_id'])
     my_like_movie = me.like_movies.all()
     
+    # 좋아요한 영화가 없는 경우 랜덤 추천
+    if len(my_like_movie) == 0:
+        movie_sub = []
+        all_movies = Movie.objects.all()
+        for movie in all_movies:
+            if movie.vote_average >= 6:
+                if movie.vote_count >= 10000:
+                    movie_sub.append(movie.pk)
+
+        random.shuffle(movie_sub)
+        recommend = []     
+        for movie_pk in movie_sub[:20]:
+            movie = get_object_or_404(Movie, pk=movie_pk)
+            serializer = MovieSerializer(movie)
+            recommend.append(serializer.data)
+        return Response(recommend)
     
     # 좋아하는 영화별
     for movie in my_like_movie:
@@ -185,7 +200,6 @@ def recommendbymylikes(request):
                 my_genre_rate[tmp] += 1
     # 비율 계산
     tmp = 20/sum(my_genre_rate.values())
-    print(my_genre_rate)
     for key in my_genre_rate:
         my_genre_rate[key] = math.ceil(my_genre_rate[key]*tmp)
 
@@ -216,6 +230,7 @@ def recommendbymylikes(request):
         if movie.vote_average >= my_vote_average_avg - 2:
             if my_vote_count_avg*0.5 <= movie.vote_count <= my_vote_count_avg*1.5:
                 movie_sub.append(movie.pk)
+                
     random.shuffle(movie_sub)
     for movie_pk in movie_sub:
         movie = get_object_or_404(Movie, pk=movie_pk)
