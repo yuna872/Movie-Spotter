@@ -59,6 +59,7 @@
       </div>
      </div>
     </div>
+    <div class="about-us-btn" @click="toHome">🏠</div>
   </div>
     
 </template>
@@ -69,7 +70,10 @@ export default {
   methods: {
     goToLink(link) {
       window.open(link)
-    }
+    },
+    toHome() {
+      this.$router.push({ name : 'movies' })
+    },
   }
 }
 </script>

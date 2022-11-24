@@ -16,7 +16,7 @@
     </nav>
     <router-view class="router-view" @first-time="getFirstTime" @login="login" :isLogin="isLogin"/>
     <!-- 개발자 소개 페이지 버튼 -->
-    <div class="about-us-btn" @click="toAboutUs">👨‍👧‍👧</div>
+    
     
     <!-- 페이지 위로 가는 버튼 -->
     <button class="top-btn" onclick="window.scrollTo(0,0);">
@@ -111,9 +111,7 @@ export default {
     login() {
       this.isLogin = true
     },
-    toAboutUs() {
-      this.$router.push({ name : 'aboutus' })
-    },
+    
     toHome() {
       this.$router.push({ name : 'movies' })
     },

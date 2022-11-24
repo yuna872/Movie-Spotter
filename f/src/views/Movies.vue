@@ -45,6 +45,7 @@
     <div class="movies-box">
       <MovieList/>
     </div>
+    <div class="about-us-btn" @click="toAboutUs">👨‍👧‍👧</div>
   </div>
 </template>
 
@@ -117,7 +118,10 @@ export default {
     },
     getRandomBackdrop() {
       this.backdropUrls =  _.sampleSize(this.backdrops, 2)
-    }
+    },
+    toAboutUs() {
+      this.$router.push({ name : 'aboutus' })
+    },
   },
   watch: {
     inputData: function() {

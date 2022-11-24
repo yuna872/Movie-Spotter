@@ -70,6 +70,7 @@
         </div>
       </div>
     </div>
+    <div class="about-us-btn" @click="toAboutUs">👨‍👧‍👧</div>
   </div>
 </template>
 
@@ -180,6 +181,9 @@ export default {
     },
     goSignup() {
       this.$router.push({name : 'signup'})
+    },
+    toAboutUs() {
+      this.$router.push({ name : 'aboutus' })
     },
   }
 }
