@@ -5,7 +5,6 @@
         <div class="detail-title">{{ movie?.title }}</div>
         <div style="display:flex;align-items:center;">
           <div class="detail-vote"><i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i>&nbsp;{{ movie?.['vote_average'] }}</div>
-          <!-- <div class="detail-adult">{{ movie?.adult ? "청소년 관람 불가" : "청소년 관람 가능" }}</div> -->
         </div>
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }} / {{ movie?.['release_date'].slice(5,7) }} / {{ movie?.['release_date'].slice(8) }}</div>
         <div class="detail-overview">{{ movieOverview }}</div>
