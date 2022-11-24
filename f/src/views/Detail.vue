@@ -7,37 +7,35 @@
           <div class="detail-vote"><i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i>&nbsp;{{ movie?.['vote_average'] }}</div>
           <!-- <div class="detail-adult">{{ movie?.adult ? "청소년 관람 불가" : "청소년 관람 가능" }}</div> -->
         </div>
-        <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }}년 {{ movie?.['release_date'].slice(5,7) }}월 {{ movie?.['release_date'].slice(8) }}일</div>
+        <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }} / {{ movie?.['release_date'].slice(5,7) }} / {{ movie?.['release_date'].slice(8) }}</div>
         <div class="detail-overview">{{ movieOverview }}</div>
         <div class="detail-video">
           <div @click="onClickVideo" style="cursor:pointer">
             예고편 보러가기
           </div>
         </div>
-        
         <!-- 감독, 배우 출력 -->
         <div class="people">
-        <div>
-          <div class="detail-actor-div">
-            <div v-if="director?.image === null" class="actor-null"></div>
+          <div class="detail-actor-div director">
+            <div v-if="director==null" class="actor-null"></div>
+            <div v-else-if="director?.image === null" class="actor-null"></div>
             <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${director?.image})`}"></div>
-            <i class="fa-solid fa-clapperboard"></i> {{ director?.name }}
+            <i class="fa-solid fa-clapperboard"></i> {{ director? director?.name :'Director'}}
           </div>
-        </div>
-        <div class="actors">
-        <div
-          v-for="(actor,index) in actors"
-          :key="index">
-          <div class="detail-actor-div">
-            <div v-if="actor.role === 'Actor'">
-              <div v-if="actor.image === null" class="actor-null"></div>
-              <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${actor.image})`}"></div>
-              {{ actor.name }}
+          <div class="actors">
+            <div
+              v-for="(actor,index) in actors"
+              :key="index">
+              <div class="detail-actor-div">
+                <div v-if="actor.role === 'Actor'">
+                  <div v-if="actor.image === null" class="actor-null"></div>
+                  <div v-else class="detail-actor" :style="{'backgroundImage': `url(https://image.tmdb.org/t/p/original${actor.image})`}"></div>
+                  {{ actor.name }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      </div>
       </div>
     </div>
     <div class="detail-box" :style="{'backgroundImage':`url(${backdropUrl})`}">
@@ -60,7 +58,7 @@
           <div class="review-left-top">
             <div class="rank-avg">{{ rankAverage == NaN?  0.0 : rankAverage  }}</div>
             <div class="star-box">
-              <div class="star"> <div class="star-div">
+              <div class="star">
                 <div v-if="rankAverage <= 0.5">
                   <img src="@/assets/star_1.png" style="width : 35px; height : 35px;"></div>
                 <div v-else-if="rankAverage <= 1">
@@ -81,17 +79,17 @@
                   <img src="@/assets/star_9.png" style="width : 175px; height : 35px;"></div>
                 <div v-else>
                   <img src="@/assets/star_10.png" style="width : 175px; height : 35px;"></div>
-              </div></div>
+              </div>
               <div class="review-count">총 {{ reviews.length }}개의 리뷰</div>
         </div>
           </div>
           <div class="review-left-bottom">
-              <div class="content1" @click="goLogin" v-if="!is_login" style="cursor:pointer">로그인이 필요합니다.</div>
+              <div class="content3" @click="goLogin" v-if="!is_login" style="cursor:pointer">로그인이 필요합니다.</div>
               <div class="content1" v-if="is_login">{{ movie?.title }} 어떠셨나요?</div> 
               <div class="content2" v-if="is_login">다른 사용자가 참고할 수 있도록 리뷰를 남겨보세요</div>
               <!-- 리뷰 버튼/여기에 modalToggle넣기 -->
-              <div v-if="is_login" @click="modalToggle" style="cursor:pointer">
-                <img src="@/assets/star_10.png" style="width : 175px; height : 35px;">
+              <div v-if="is_login" @click="modalToggle" style="cursor:pointer" class="review-btn">
+                리뷰 작성하기
               </div>
           </div>
         </div>
@@ -163,7 +161,8 @@ export default {
       if (!total) {
         return Math.round(0).toFixed(1)
       }
-      return Math.ceil((total / this.reviews?.length) * 10) / 10
+      const average = Math.ceil((total / this.reviews?.length) * 10) / 10
+      return average.toFixed(1)
     },
     videoUrl() {
       return `http://www.youtube.com/watch_popup?v=${this.movie?.video}`
@@ -265,7 +264,7 @@ export default {
 
 .detail-content {
   text-align: left;
-  height: 40%;
+  /* height: 40%; */
   position: absolute;
   bottom : 20vh;
   left : 5vw;
@@ -324,6 +323,7 @@ export default {
   flex-direction: column;
 }
 
+
 .actors {
   display: flex;
 }
@@ -376,6 +376,15 @@ export default {
   margin : 10px auto;
   font-size : 1.1em;
 }
+.content3 {
+  width : 90%;
+  margin : 10px auto;
+  font-size : 1.3em;
+}
+.content3:hover {
+  color: #F6BE00;
+  text-decoration-line: underline;
+}
 .review-right-box {
   display: flex;
   flex-direction: column;
@@ -385,9 +394,9 @@ export default {
 }
 
 .rank-avg {
-  font-size: 5em;
+  font-size: 7em;
   width : 50%;
-  height : 100%;
+  height : 80%;
 }
 
 .star-box {
@@ -398,16 +407,34 @@ export default {
 
 
 .star {
-  height : 50%;
+  height : 60%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .review-count {
-  height : 50%;
   font-size: 1.3em;
   padding : 10px;
+}
+
+.review-btn {
+  margin: 20px auto;
+  border: 3px solid white;
+  width : 60%;
+  border-radius: 50px;
+  height : 60px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding : 5px;
+  margin-bottom: 20px
+}
+
+.review-btn:hover {
+  color: #F6BE00;
+  border-color: #F6BE00
 }
 
 /* 모달 클릭시 배경 어둡게 */

@@ -70,7 +70,7 @@ export default {
   },
   data() {
     return {
-      is_like: null,
+      is_like: true,
       reviewinfo : null,
       is_show : false,
       is_me: false,
