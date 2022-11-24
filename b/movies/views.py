@@ -1,5 +1,4 @@
 import heapq, math, random
-from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -278,7 +277,7 @@ def recommendformainpage(request):
     all_movies_sorted = sorted(all_movies, key=lambda x: x['vote_average'], reverse=True)
     # new_movies
     new_movies_sorted = sorted(all_movies_sorted, key=lambda x: x['release_date'], reverse=True)
-    new_movies_sub = new_movies_sorted[:40]
+    new_movies_sub = new_movies_sorted[:30]
     random.shuffle(new_movies_sub)
     new_movies = []     
     for movie in new_movies_sub[:20]:
@@ -319,7 +318,7 @@ def recommendformainpage(request):
     # new_movies
     hot_movies_sub = []
     hot_movies_sorted = sorted(all_movies_sorted, key=lambda x: x['vote_count'], reverse=True)
-    hot_movies_sub = hot_movies_sorted[:40]
+    hot_movies_sub = hot_movies_sorted[:30]
     random.shuffle(hot_movies_sub)
     hot_movies = []     
     for movie in hot_movies_sub[:20]:

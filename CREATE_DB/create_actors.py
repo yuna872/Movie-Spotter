@@ -87,7 +87,7 @@ def get_movie_datas():
 
 
 
-                if len(actors) < 5 or video == 'novideo':
+                if len(actors) < 5:
                     continue
 
                 for i in actors_data_list:
