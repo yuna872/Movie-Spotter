@@ -73,7 +73,7 @@ export default {
       is_like: true,
       reviewinfo : null,
       is_show : false,
-      is_me: false,
+      is_me: null,
     }
   },
   directives: {
@@ -132,6 +132,8 @@ export default {
 
           if (this.review.user === now_user_id) {
             this.is_me = true
+          } else {
+            this.is_me = false
           }
         })
         .catch((err)=>{console.log(err)})
@@ -150,7 +152,7 @@ export default {
           }
         })
           .then((res) => {
-            this.is_me = !this.is_me
+            this.is_me = false
             this.$emit("deleted")
             console.log(res)
           })
@@ -166,10 +168,15 @@ export default {
     },
     letsGoDetail() {
       this.$emit("update-review")
-    }
+    },
   },
   created() {
     this.getReviewLikeInfo()
+  },
+  watch: {
+    'review': function() {
+      this.getReviewLikeInfo()
+    }
   }
 }
 </script>
