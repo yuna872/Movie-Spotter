@@ -24,11 +24,11 @@
       <div>{{ review.rank }}</div>
     </div>
     <div class="review-item-right">
-      <div style="display:flex;justify-content:space-between">
+      <div style="display:flex;justify-content:space-between;font-size:14px">
         <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a>님 작성</div>
         <div v-if="is_me" class="ud-div">
-          <div @click="modalToggle" style="cursor:pointer" class="u-div"><i class="fa-solid fa-pen"></i></div>
-          <div @click="reviewDelete" style="cursor:pointer"><i class="fa-solid fa-trash-can"></i></div>
+          <div @click="modalToggle" style="cursor:pointer" class="u-div"><i class="fa-solid fa-pen fa-lg"></i></div>
+          <div @click="reviewDelete" style="cursor:pointer" class="u-div"><i class="fa-solid fa-trash-can fa-lg"></i></div>
         </div>
         <div class="black-bg" v-if="is_show == true">
           <ReviewUpdateForm 
@@ -43,7 +43,7 @@
           />
         </div>
       </div>
-      <div class="review-content">{{ review.content }}</div>
+      <div class="review-con">{{ review.content }}</div>
       <div class="review-submit-btn" @click="reviewLike" :class="{'review-like-btn': !is_like}">
         <div :class="{ 'review-like-thumbs': !is_like }"><i class="fa-solid fa-thumbs-up"></i></div>
         <div>도움이 돼요 {{ reviewinfo?.like_users.length }}</div>
@@ -179,7 +179,10 @@ export default {
   display: flex;
   margin : 1.5vh auto;
   width : 90%;
-  border-bottom : solid 1px white;
+  background-color: rgba( 255, 255, 255, 0.2 );
+  border-radius: 8px;
+  padding: 5%;
+  /* border-bottom : solid 1px rgba(255, 255, 255, 0.733); */
   padding-bottom : 2vh; 
 }
 
@@ -195,10 +198,10 @@ export default {
 }
 
 .review-submit-btn{
-  font-size : 0.9em;
-  margin-top : 15px;
+  font-size : 0.85em;
+  margin-top : 10px;
   border: solid 3px white;
-  width : 35%;
+  width : 34%;
   height : 43px;
   border-radius: 50px;
   display: flex;
@@ -217,8 +220,8 @@ export default {
   transition: 0.2s;
 }
 
-.review-content {
-  font-size: 1.3em;
+.review-con {
+  font-size: 1.1em;
   margin-top : 5px;
 }
 
@@ -228,5 +231,8 @@ export default {
 
 .u-div {
   margin-right: 15px;
+}
+.u-div:hover {
+  color: #F6BE00;
 }
 </style>
