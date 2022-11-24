@@ -5,15 +5,19 @@
 
 # MOVIE SPOTTER
 
-![logo](../image/logo.png)
+![logo](../image/mini_logo.png)
 
 <hr>
 
 ## 업무분담
-### 📑[전체 일정](https://www.notion.so/a-k-a-a5ea666ed3c948caaaaaf72b41db66ec)
+![역할분담](../image/역할분담1.png)
+![역할분담](../image/역할분담2.png)
+![역할분담](../image/역할분담3.png)
+
+### 📑최김박 프로젝트 노션 (https://www.notion.so/a-k-a-a5ea666ed3c948caaaaaf72b41db66ec)
 <br>
 
-## 목표 서비스
+## 목표 서비스 구현 및 실제 구현 정도
 <br>
 
 > 컨텐츠 기반 추천 알고리즘
@@ -32,15 +36,15 @@
 - 실시간으로 해당하는 영화 목록을 사용자에게 보여줌
 
 ## 🛠 데이터 베이스 모델링 (ERD)
-![erd](../image/erd.png)
+<!-- ![erd](../image/erd.png) -->
 <br>
 
 ## 🗺 사이트 맵
-![sitemap](../image/sitemap.png)
+<!-- ![sitemap](../image/sitemap.png) -->
 <br>
 
 ## 🎨 UX/UI 설계
-![uxui](../image/uxui.png)
+<!-- ![uxui](../image/uxui.png) -->
 <br>
 
 ## 영화 추천 알고리즘 (기술적 설명)
@@ -49,5 +53,8 @@
 ## 서비스 대표 기능
 <br>
 
-## 배포 서버 URL
+## 느낀점, 후기
+- 설계의 중요성? 명세도 중요
+- 끊임없는 소통 -> 아무리 작은 변경사항이라도 팀원 모두가 잘 알고 있어야 함
+- 좋은 Ux/ui => 사용자의 입장에서 바라보기
 
