@@ -1,6 +1,6 @@
 <template>
   <div class="review-form" >
-      <i class="fa-solid fa-circle-xmark fa-lg x-btn" @click="modalToggle"></i>
+      <i class="fa-solid fa-x fa-lg x-btn" @click="modalToggle" style="cursor:pointer"></i>
       <div class="review-text">이 영화, 어떠셨나요?</div>
       <form @submit.prevent="postReview" class="form">
         <div class="star-div">

@@ -24,8 +24,8 @@
       <div>{{ review.rank }}</div>
     </div>
     <div class="review-item-right">
-      <div style="display:flex;justify-content:space-between;font-size:14px">
-        <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a>님 작성</div>
+      <div style="display:flex;justify-content:space-between;">
+        <div><a @click="goProfile" style="text-decoration-line: underline;">{{ review.writer }}</a></div>
         <div v-if="is_me" class="ud-div">
           <div @click="modalToggle" style="cursor:pointer" class="u-div"><i class="fa-solid fa-pen fa-lg"></i></div>
           <div @click="reviewDelete" style="cursor:pointer" class="u-div"><i class="fa-solid fa-trash-can fa-lg"></i></div>
@@ -202,7 +202,7 @@ export default {
   margin-top : 10px;
   border: solid 3px white;
   width : 34%;
-  height : 43px;
+  height : 35px;
   border-radius: 50px;
   display: flex;
   justify-content: space-evenly;
