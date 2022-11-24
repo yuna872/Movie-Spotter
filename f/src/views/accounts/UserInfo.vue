@@ -8,7 +8,10 @@
         <p class="info-id">{{ userinfo?.username }}님의 페이지</p>
         <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
         <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p>
-        <div @click='follow' class="info-follow-btn">
+        <div @click='follow' class="info-follow-btn" v-if="is_follow==='Follow'">
+          <div>{{ is_follow }}</div>
+        </div>
+        <div @click='follow' class="info-unfollow-btn" v-if="is_follow==='UnFollow'">
           <div>{{ is_follow }}</div>
         </div>
       </div>
@@ -142,15 +145,30 @@ export default {
 .info-follow-btn {
   width : 20%;
   height : 50px;
-  border : 3px solid white;
+  /* border : 3px solid white; */
   margin: 20px auto;
   border-radius: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  color: white;
+  background-color: #0d6efd;
 }
 
+.info-unfollow-btn {
+  width : 20%;
+  height : 50px;
+  /* border : 3px solid white; */
+  margin: 20px auto;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  background-color: #6c757d;
+}
 
 .flex-div {
   display: flex;

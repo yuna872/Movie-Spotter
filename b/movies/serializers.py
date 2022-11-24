@@ -2,13 +2,21 @@ from rest_framework import serializers
 from .models import Movie, Review, Genre, Actor
 
 
-
-class ReviewSerializer(serializers.ModelSerializer):
+# Myinfo.vue에서 호출, myreviews.py에서 사용할 serializer
+class ReviewListSerializer(serializers.ModelSerializer):
     class MovieSerializer(serializers.ModelSerializer):
         class Meta:
             model = Movie
-            fields = ('id', 'title',)
+            fields = '__all__'
     movie = MovieSerializer()
+    
+    class Meta:
+        model = Review
+        fields = '__all__'
+        read_only_fields = ('user', 'movie', 'like_users',)
+
+class ReviewSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Review
         fields = '__all__'

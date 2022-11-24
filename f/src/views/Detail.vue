@@ -321,6 +321,7 @@ export default {
 }
 
 .people {
+  font-size: 12px;
   display: flex;
   flex-direction: column;
 }

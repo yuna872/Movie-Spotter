@@ -26,6 +26,8 @@ class Movie(models.Model):
     genres = models.ManyToManyField(Genre, related_name='movie_genres')
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
 
+    # heapq 모듈로 객체를 정렬하는 알고리즘에서 사용될,
+    # 객체 대소 비교를 위한 매직메서드 추가
     def __lt__(self, other):
         return self.vote_count > other.vote_count
         

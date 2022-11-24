@@ -5,14 +5,11 @@ from rest_framework.decorators import api_view
 # Authentication Decorators
 # from rest_framework.decorators import authentication_classes, permission_classes
 # from rest_framework.permissions import IsAuthenticated
-
-
 from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .serializers import MovieSerializer, ReviewSerializer
+from .serializers import MovieSerializer, ReviewSerializer, ReviewListSerializer
 from .models import Movie, Review
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse 
 
 @api_view(['GET'])
 def movie_list(request):
@@ -46,6 +43,7 @@ def reviews(request, movie_pk):
         request.data['writer'] = user.nickname
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
+
             serializer.save(user=user, movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     
@@ -73,7 +71,7 @@ def review_detail(request, review_pk):
 def my_reviews(request, user_pk):
     if request.method == 'GET':
         review_list = Review.objects.all().filter(user_id=user_pk)
-        serializer = ReviewSerializer(review_list, many=True)
+        serializer = ReviewListSerializer(review_list, many=True)
         return Response(serializer.data)
 
 
