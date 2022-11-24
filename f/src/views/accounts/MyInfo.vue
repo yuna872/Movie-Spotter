@@ -1,60 +1,54 @@
 <template>
   <div class="userinfo">
     <div class="userinfo-top">
-      <div></div>
+      <div><p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
+      <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
+      <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p></div>
       <div class="user-profile">
-        <div class="user-profile-img"></div>
-        <p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
-      </div>
-      <div class="userinfo-top-bg">
-        
+        <div class="user-profile-img"></div>>
       </div>
       <!-- 상세정보 -->
     </div>
+    <div class="userinfo-top-top">
+      <div class="review-wrap">
+        <p style="font-size : 1.4em;margin-top:20px;">내가 쓴 리뷰 📑</p>
+        <div class="myreview-list scroll-div">
+          <div 
+            v-for="(review, index) in reviewinfo" 
+            :key="index"
+            class="info-div"  
+          > 
+            <div class='review-rank'> <i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i> 
+              &nbsp;{{ review.rank }}점
+            </div>
+          <div class='review-content'>{{ review.content }}</div>
+            <div class = 'review-like'>
+              <i class="fa-solid fa-thumbs-up"></i>&nbsp;
+              {{ review.like_users.length }}&nbsp;likes
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="userinfo-top-bottom">
+
+      <div class="swiper-box">
+        <div>
+          <div class="semi-title">내가 좋아요 누른 컨텐츠</div>
+            <swiper class="swiper" :options="swiperOption">
+              <swiper-slide class="swiper-slide" v-for="(movie, index) in movies" :key="`n-${index}`">
+                <MovieItem class="movie-item1" :movie="movie"/>
+              </swiper-slide>
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+            </swiper>
+          </div>
+        </div> 
+      </div>
   </div>
 </template>
 
-<!-- <div class="userinfo-top-top">
-  <p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
-  <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
-  <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p>
-  <p style="font-size : 1.4em;margin-top:20px;">내가 쓴 리뷰 📑</p>
-  <div class="myreview-list scroll-div">
-    
-    <div 
-      v-for="(review, index) in reviewinfo" 
-      :key="index"
-      class="info-div"  
-    > 
-      <div> <i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i> 
-        &nbsp;{{ review.rank }}점
-      </div>
-     <p>
-    
-     </p>
-     <p>{{ review.content }}</p>
-      <p>
-        <i class="fa-solid fa-thumbs-up"></i>&nbsp;
-        {{ review.like_users.length }}&nbsp;likes
-      </p>
-    </div>
-  </div>
-</div>
-<div class="userinfo-top-bottom">
 
-<div class="swiper-box">
-  <div>
-    <div class="semi-title">내가 좋아요 누른 컨텐츠</div>
-      <swiper class="swiper" :options="swiperOption">
-        <swiper-slide class="swiper-slide" v-for="(movie, index) in movies" :key="`n-${index}`">
-          <MovieItem class="movie-item1" :movie="movie"/>
-        </swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-      </swiper>
-    </div>
-  </div> 
-</div>-->
 
 <script>
 import axios from 'axios'
@@ -202,24 +196,37 @@ export default {
   font-size : 1.1em;
 }
 
-/* .userinfo-top-top {
-  height : 40%;
-  width : 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin : auto;
-}
+
 
 .userinfo-top-top p {
   text-align: center;
   margin-bottom: 5px;
 }
 
-.info-div {
-
+.review-wrap {
+  width : 100vh;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.review-rank {
+  border : 3px solid blue;
+
+}
+
+.review-content {
+  border : 3px solid blue;
+
+}
+.review-like {
+  border : 3px solid blue;
+}
+
+.info-div {
+  text-align: left;
+  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
   font-size : 1.1em;
   align-items: center;
   border-bottom: solid 2px white;
@@ -251,6 +258,6 @@ export default {
   width : 60%;
   margin : auto;
   overflow-y: scroll;
-}  */
+}
 
 </style>
