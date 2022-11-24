@@ -6,7 +6,6 @@
     <div class="recommend1">
       <div class="comment1">
         <p>{{ userinfo?.nickname }}님의 취향저격</p>
-        
 
         <div style="display:flex;justify-content:left">
           <span>베</span>
@@ -20,8 +19,9 @@
           <span><i class="fa-regular fa-thumbs-up"></i></span>
         </div>
       </div>
-
-      <div id="carouselExampleInterval" class="carousel slide container by-likes" data-bs-ride="carousel">
+      
+  
+      <div  id="carouselExampleInterval" class="carousel slide container by-likes" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div @click ='goDetail(recommendMoviesByMyLikes?.[0])' class="carousel-item active inner-container" data-bs-interval="1000">
             <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[0].poster_path }`" class="poster" >
@@ -29,7 +29,9 @@
           <div class="carousel-item" data-bs-interval="2000">
             <img @click ='goDetail(recommendMoviesByMyLikes?.[1])' :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[1].poster_path }`" class="poster" >
           </div>
-          <div  @click ='goDetail(movie)' class="carousel-item" v-for="(movie,index) in recommendMoviesByMyLikes?.slice(2)" :key="`n-${index}`">
+          {{ recommendMoviesByMyLikes?.length }}
+          <div  @click ='goDetail(movie)' class="carousel-item" v-for="(movie,index) in recommendMoviesByMyLikes?.slice(2,)" :key="`n-${index}`">
+            <!-- {{ movie }} -->
             <img :src="`https://image.tmdb.org/t/p/original/${ movie?.poster_path }`" class="poster" >
           </div>
         </div>
@@ -61,7 +63,7 @@
         </div>
       </div>
     
-      <div v-if="recommendMoviesByMyFollowings" id="carousel2Interval" class="carousel slide container by-follower" data-bs-ride="carousel">
+      <div v-if="recommendMoviesByMyFollowings?.length" id="carousel2Interval" class="carousel slide container by-follower" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div 
             @click ='goDetail(recommendMoviesByMyFollowings?.[0])'
@@ -73,7 +75,7 @@
           <div @click ='goDetail(recommendMoviesByMyFollowings?.[1])' class="carousel-item" data-bs-interval="1000">
             <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyFollowings?.[1].poster_path }`" class="poster" >
           </div>
-          <div @click ='goDetail(movie)' class="carousel-item" v-for="(movie,index) in recommendMoviesByMyFollowings?.slice(2)" :key="`n-${index}`">
+          <div @click ='goDetail(movie)' class="carousel-item" v-for="(movie,index) in recommendMoviesByMyFollowings?.slice(2)" :key="`ff-${index}`">
             <img :src="`https://image.tmdb.org/t/p/original/${ movie?.poster_path }`" class="poster" >
           </div>
         </div>
@@ -105,6 +107,7 @@ export default {
   },
   data() {
     return {
+      isLoading : false,
       userinfo:null,
       recommendMoviesByMyLikes: null,
       recommendMoviesByMyFollowings: null,
@@ -142,14 +145,14 @@ export default {
         })
         .then((res)=>{
           this.userinfo = res.data
-          console.log(this.userinfo)
+          console.log(this.userinfo,'🎂')
         })
         .catch((err)=>{console.log(err)})
     },
     getRecommendByMyLikes() {
       const token = localStorage.getItem('jwt')
       const now_user_id = jwt_decode(token).user_id
-      
+      this.isLoading = false
       axios({
           method: 'post',
           url: `${API_URL}/movies/recommendbymylikes/`,
@@ -161,8 +164,10 @@ export default {
           }
         })
         .then((res)=>{
+          console.log('❤')
           this.recommendMoviesByMyLikes = res.data
-          console.log(res.data)
+          this.isLoading = true
+          console.log(this.recommendMoviesByMyLikes,'🎨')
         })
         .catch((err)=>{console.log(err)})
     },
