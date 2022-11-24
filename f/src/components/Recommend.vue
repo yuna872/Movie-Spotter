@@ -18,6 +18,10 @@
           <span>&nbsp;</span>
           <span><i class="fa-regular fa-thumbs-up"></i></span>
         </div>
+
+        <p style="font-size:1.4em;margin-top:30px">회원님이 좋아하시는 영화들을 기반으로<br/>많은 비중을 차지하는 장르의 영화를 추천해드립니다!</p>
+
+
       </div>
       
   
@@ -63,8 +67,11 @@
           <span>영</span>
           <span>화</span>
           <span>&nbsp;</span>
-          <span><i class="fa-solid fa-film"></i></span>
+          <span><i class="fa-solid fa-clapperboard"></i></span>
         </div>
+
+        <p style="font-size:1.4em;margin-top:30px">회원님이 팔로워하고 있는 사람들 중, 나와 비슷한 취향의 친구가<br/>현재 관심 있어하는 영화들을 추천해드립니다!</p>
+        
       </div>
     
       <div id="carousel2Interval" class="carousel slide container by-follower" data-bs-ride="carousel">
@@ -233,6 +240,8 @@ export default {
   font-family: 'Libre Baskerville', serif;
 }
 
+
+
 .by-follower {
   position: absolute;
   right : 45%;
@@ -392,6 +401,13 @@ animation:txtup 1.5s infinite; -webkit-animation:txtup 1.5s infinite;  -ms-anima
 }
 .comment2 span:nth-of-type(9) {
   animation-delay: .8s;
+}
+
+
+.desc {
+  width: 30vw;
+  margin-top : 20px;
+  font-size: 1.5em;
 }
 
 </style>

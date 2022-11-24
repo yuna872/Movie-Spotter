@@ -6,12 +6,12 @@
         <div class="nav-title">Movie Spotter</div>
       </div>
       <div class="nav-right">
-        <router-link :to="{ name : 'movies' }">Home</router-link>
-        <router-link :to="{ name : 'login' }" v-if="!isLogin">Login</router-link>
-        <router-link :to="{ name : 'signup' }" v-if="!isLogin">Signup</router-link>
+        <router-link class='router-link' :to="{ name : 'movies' }">Home</router-link>
+        <router-link class='router-link' :to="{ name : 'login' }" v-if="!isLogin">Login</router-link>
+        <router-link class='router-link' :to="{ name : 'signup' }" v-if="!isLogin">Signup</router-link>
         <!-- 유저 아이디에 해당하는 UserInfo 라우터 링크 -->
-        <router-link :to="{ name : 'myinfo' }" v-if="isLogin">My Page</router-link>
-        <a @click='logout' v-if="isLogin">logout</a>
+        <router-link class='router-link' :to="{ name : 'myinfo' }" v-if="isLogin">My Page</router-link>
+        <a class='router-link' @click='logout' v-if="isLogin">logout</a>
       </div>
     </nav>
     <router-view class="router-view" @first-time="getFirstTime" @login="login" :isLogin="isLogin"/>
@@ -221,9 +221,14 @@ nav a {
 }
 
 .nav-right {
-  margin : 5px;
+  margin : 15px;
   display: flex;
   align-items: center;
+  font-size: 1.3em;
+}
+
+.router-link {
+  margin : 0 10px;
 }
 
 /* 라우터 뷰 */
