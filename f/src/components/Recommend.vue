@@ -6,7 +6,6 @@
       </div>
       <div class="comment1">
         <p>{{ userinfo?.nickname }}님의 취향저격</p>
-
         <div style="display:flex;justify-content:left">
           <span>베</span>
           <span>스</span>
@@ -18,14 +17,11 @@
           <span>&nbsp;</span>
           <span><i class="fa-regular fa-thumbs-up"></i></span>
         </div>
-
         <p style="font-size:1.4em;margin-top:30px">회원님이 좋아하시는 영화들을 기반으로<br/>많은 비중을 차지하는 장르의 영화를 추천해드립니다!</p>
-
-
       </div>
       
   
-      <div  id="carouselExampleInterval" class="carousel slide container by-likes" data-bs-ride="carousel">
+      <div id="carouselExampleInterval" class="carousel slide container by-likes" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div @click ='goDetail(recommendMoviesByMyLikes?.[0])' class="carousel-item active inner-container" data-bs-interval="1000">
             <img :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[0].poster_path }`" class="poster" >
