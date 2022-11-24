@@ -5,7 +5,7 @@
 
 # MOVIE SPOTTER
 
-![logo](../image/mini_logo.png){: width="300" height="300"}
+<img src="../image/mini_logo.png" width="30%" height="30%"/>
 
 <hr>
 
