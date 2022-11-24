@@ -2,11 +2,32 @@
   <div class="detail">
     <div class="detail-bg">
       <div class="detail-content">
-        <div class="detail-title">{{ movie?.title }}</div>
+        <div style="display:flex;align-items:center;">
+          <div class="detail-title">{{ movie?.title }}</div>
+          <!-- 좋아요 버튼 -->
+          <div v-if="is_login">
+            <button @click="movieLike" class='like-btn1' v-if="!is_like">
+              <i class="fa-solid fa-heart" style="color:red"></i>
+            </button>
+            <button @click="movieLike" class='like-btn1' v-if="is_like">
+              <i class="fa-regular fa-heart" style="color:red"></i>
+            </button>
+          </div>
+      </div>
+
         <div style="display:flex;align-items:center;">
           <div class="detail-vote"><i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i>&nbsp;{{ movie?.['vote_average'] }}</div>
         </div>
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }} / {{ movie?.['release_date'].slice(5,7) }} / {{ movie?.['release_date'].slice(8) }}</div>
+        <div class="detail-genres">
+          <!-- {{ movie?.genres }} -->
+          <div class="detail-genre" 
+            v-for="(genre, index) in movie?.genres"
+            :key="index"
+          >
+          <p>#{{genre?.name}}</p>
+          </div>
+        </div>
         <div class="detail-overview">{{ movieOverview }}</div>
         <div v-if="movie?.video === 'novideo'">
           <div class="detail-video">
@@ -120,6 +141,8 @@
 <script>
 import axios from 'axios'
 import vClickOutside from 'v-click-outside'
+import jwt_decode from 'jwt-decode'
+
 // import StarRating from 'vue-star-rating'
 
 import ReviewForm from '@/components/ReviewForm';
@@ -147,6 +170,7 @@ export default {
       director : null,
       actors : [],
       is_login: false,
+      is_like : null,
     }
   },
   beforeRouteUpdate(to, from, next){
@@ -233,6 +257,51 @@ export default {
       if (token) {
         this.is_login = true
       }
+    },
+    movieLike() {
+      if (!localStorage.getItem('jwt')) {
+        alert('로그인이 필요한 서비스 입니다!')
+        return
+      }
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+
+      axios({
+          method: 'post',
+          url: `${API_URL}/movies/${this.movie.id}/movielikes/`,
+          data: {
+            user_id: now_user_id
+          },
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        .then((res)=>{
+          this.is_like = res.data
+          this.getMovieLikeInfo()
+        })
+        .catch((err)=>{console.log(err)})
+    },
+    getMovieLikeInfo() {
+      const token = localStorage.getItem('jwt')
+      const now_user_id = jwt_decode(token).user_id
+
+      axios({
+        method: 'get',
+        url: `${API_URL}/movies/${this.movie?.id}/`,
+        headers: {
+            'Authorization' : `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          this.movieinfo = res.data
+          if (this.movieinfo.like_users.includes(now_user_id)) {
+            this.is_like = false
+          } else {
+            this.is_like = true
+          }
+        })
+        .catch((err)=>{console.log(err)})
     }
 
   },
@@ -240,6 +309,11 @@ export default {
       this.getMovieDetail()
       this.isLogin()
   },
+  watch: {
+    'movie' : function() {
+      this.getMovieLikeInfo()
+    }
+  }
 }
 </script>
 
@@ -276,6 +350,19 @@ export default {
   left : 5vw;
 }
 
+
+
+.like-btn1 {
+    width :40px;
+    height : 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    filter: drop-shadow(0px 0px 2px gray);
+    opacity: 0.75;
+    margin-left : 10px;
+  }
+
 .detail-title {
   font-size:2.5em;
 }
@@ -290,10 +377,29 @@ export default {
 .detail-date {
   font-size:1.2em;
 }
+
+.detail-genres {
+  display: flex;
+  flex-wrap : wrap;
+}
+.detail-genre {
+  padding : 10px 15px;
+  height : 40px;
+  border-radius: 20px;
+  display:flex;
+  align-content: center;
+  justify-content: center;
+  margin : 5px 5px;
+  background: rgba(255,255,255,0.4);
+}
+.detail-genre p {
+  font-size: 1em;
+}
+
 .detail-overview {
   font-size:1.2em;
   width : 30vw;
-  margin-top : 25px;
+  margin-top : 5px;
   margin-bottom: 15px; 
 }
 .detail-video {
