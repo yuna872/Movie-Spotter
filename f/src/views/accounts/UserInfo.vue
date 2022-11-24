@@ -31,6 +31,7 @@
           </div>
         </div> 
     </div>
+    <div class="about-us-btn" @click="toAboutUs">👨‍👧‍👧</div>
   </div>
 </template>
 
@@ -134,7 +135,10 @@ export default {
         })
         .catch((err)=>{console.log(err)})
       
-    }
+    },
+    toAboutUs() {
+      this.$router.push({ name : 'aboutus' })
+    },
   },
 }
   

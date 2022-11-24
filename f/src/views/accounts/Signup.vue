@@ -72,6 +72,7 @@
         </div>
       </div>
     </div>
+    <div class="about-us-btn" @click="toAboutUs">👨‍👧‍👧</div>
   </div>
 </template>
 
@@ -202,7 +203,10 @@ export default {
     },
     goLogin() {
       this.$router.push({name: 'login'})
-    }
+    },
+    toAboutUs() {
+      this.$router.push({ name : 'aboutus' })
+    },
   }
 }
 

@@ -50,6 +50,7 @@
           </div>
         </div> 
       </div>
+    <div class="about-us-btn" @click="toAboutUs">👨‍👧‍👧</div>
   </div>
 </template>
 
@@ -147,8 +148,12 @@ export default {
     },
     goDetail(review) {
       this.$router.push({'name' : 'detail', params : { id : review.movie.id }})
-    }
+    },
+    toAboutUs() {
+      this.$router.push({ name : 'aboutus' })
+    },
   },
+  
 }
   
 
