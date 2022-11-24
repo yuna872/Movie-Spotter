@@ -9,9 +9,9 @@
 <hr>
 
 ## 업무분담
-<img src="../image/역할분담1.png" width="50%" height="50%"/>
-<img src="../image/역할분담2.png" width="50%" height="50%"/>
-<img src="../image/역할분담3.png" width="50%" height="50%"/>
+<img src="../image/역할분담1.png" width="50%" height="70%"/>
+<img src="../image/역할분담2.png" width="50%" height="70%"/>
+<img src="../image/역할분담3.png" width="50%" height="70%"/>
 
 ### 📑최김박 프로젝트 노션 (https://www.notion.so/a-k-a-a5ea666ed3c948caaaaaf72b41db66ec)
 <br>
