@@ -33,7 +33,6 @@
           <div class="carousel-item" data-bs-interval="2000">
             <img @click ='goDetail(recommendMoviesByMyLikes?.[1])' :src="`https://image.tmdb.org/t/p/original/${ recommendMoviesByMyLikes?.[1].poster_path }`" class="poster" >
           </div>
-          {{ recommendMoviesByMyLikes?.length }}
           <div  @click ='goDetail(movie)' class="carousel-item" v-for="(movie,index) in recommendMoviesByMyLikes?.slice(2,)" :key="`n-${index}`">
             <!-- {{ movie }} -->
             <img :src="`https://image.tmdb.org/t/p/original/${ movie?.poster_path }`" class="poster" >
