@@ -1,4 +1,6 @@
 import heapq, math, random
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 # Authentication Decorators
@@ -331,6 +333,75 @@ def recommendformainpage(request):
     recommend['korean_movies'] = korean_movies
     recommend['international_movies'] = international_movies
     recommend['hot_movies'] = hot_movies
+
+    return Response(recommend)
+
+@api_view(['POST'])
+def similarmovies(request):
+    get_all_movies = Movie.objects.all()
+    now_movie = get_object_or_404(Movie,title=request.data['title'])
+    similar_sub = []
+    check_genres = request.data['genres']
+    for movie in get_all_movies:
+        is_valid = 0
+        movie_genres = []
+        for genre in movie.genres.all():
+            movie_genres.append(genre.pk)
+        for check in check_genres:
+            if check['id'] in movie_genres:
+                is_valid = 1
+                break
+
+        if is_valid:
+            if now_movie.vote_average -1 <= movie.vote_average:
+                if now_movie.vote_count*0.5 <= movie.vote_count <= now_movie.vote_count*1.5:
+                    if now_movie.release_date - relativedelta(years=5) <= movie.release_date <= now_movie.release_date + relativedelta(years=5):
+                        if movie.pk != now_movie.pk:
+                            similar_sub.append(movie.pk)
+    
+    result = []
+    if len(similar_sub) > 10:
+        random.shuffle(similar_sub)
+        result = similar_sub[:10]
+    else:
+        random.shuffle(similar_sub)
+        result = similar_sub
+
+    recommend = []     
+    for movie_pk in result:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        recommend.append(serializer.data)
+
+    return Response(recommend)
+
+@api_view(['GET'])
+def firstmodal(request):
+    get_all_movies = Movie.objects.all()
+    all_movies = []
+    for movie in get_all_movies:
+        dic = {}
+        dic['id'] = movie.pk
+        dic['original_language'] = movie.original_language
+        dic['vote_count'] = movie.vote_count
+        dic['vote_average'] = movie.vote_average
+        dic['release_date'] = movie.release_date
+        all_movies.append(dic)
+
+    all_movies_sorted = sorted(all_movies, key=lambda x: x['vote_average'], reverse=True)
+    movie_sub = []
+    random.shuffle(all_movies_sorted)
+    for movie in all_movies_sorted:
+        if movie['vote_count'] >= 8000:
+            movie_sub.append(movie['id'])
+
+    
+
+    recommend = [] 
+    for movie_pk in movie_sub[:30]:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        recommend.append(serializer.data)
 
     return Response(recommend)
 

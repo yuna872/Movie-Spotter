@@ -24,6 +24,7 @@ export default {
   name : 'SimilarList',
   components: {
     MovieItem,
+   
   },
   props: {
     genres:Array,
@@ -35,39 +36,32 @@ export default {
     }
   },
   methods: {
+    // 이건 뭔가요
+    // 현재 무비의 장르들을 하나라도 포함하면 보여줘요
+    // 10개 넘으면 랜덤으로 10개
     getSimilarList() {
       axios({
-        method: 'get',
-        url: `${API_URL}/movies/`
+        method: 'POST',
+        url: `${API_URL}/movies/similarmovies`,
+        data: {
+          genres: this.genres,
+          title: this.movieTitle
+        },
       })
       .then((res)=>{
-        // 평점을 기준으로 모든 영화에 대하여 내림차순 정렬
-        const movieAll = res.data.sort(function (a, b){
-          return b['vote_average'] - a['vote_average']
-        })
-
-
-        this.similarList = movieAll.filter((movie)=>{
-          for (const genre of this.genres) {
-            const movieGenres = movie.genres.map((genre)=>{
-              return genre.id
-            }) 
-            return movieGenres.includes(genre.id)
-          }
-        })
-
-        if (this.similarList.length <= 10) {
-          return this.similarList.slice(0, this.similarList.length)
-        } else {
-          this.similarList = _.sampleSize(this.similarList, 10)
-        }
+        this.similarList = res.data
       })
       .catch((err)=>{console.log(err)})
     }
   },
-  created() {
-    this.getSimilarList()
+  watch: {
+    'genres': function() {
+      this.getSimilarList()
+    },
   }
+  // created() {
+  //   this.getSimilarList()
+  // }
 }
 </script>
 

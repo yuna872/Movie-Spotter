@@ -72,17 +72,15 @@ export default {
     MovieItem2
   },
   methods: {
+    // 내림차순해서 30개 랜덤?
     getRandomMovies() {
       axios({
         method: 'get',
-        url: `${API_URL}/movies/`
+        url: `${API_URL}/movies/firstmodal`
       })
       .then((res)=>{
         // 평점을 기준으로 모든 영화에 대하여 내림차순 정렬
-        this.randomMovies = _.sampleSize(res.data.sort(function (a, b){
-          return b['vote_count'] - a['vote_count']
-        }), 30)
-        console.log(this.randomMovies)
+        this.randomMovies = res.data
       })
       .catch((err)=>{console.log(err)})
     },
