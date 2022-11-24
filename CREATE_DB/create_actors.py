@@ -37,7 +37,7 @@ def get_movie_datas():
 
         for movie in movies['results']:
             # if movie.get('release_date', ''):
-            if movie.get('vote_average') > 5:
+            if movie.get('vote_average') > 5 and movie.get('backdrop_path') != None and movie.get('poster_path') != None and movie.get('vote_count') > 1000:
                 movie_id = movie['id']
                 Get_Credit = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=633fd9754acba9ddc40773b19c562ed9&language=ko').json()
                 
