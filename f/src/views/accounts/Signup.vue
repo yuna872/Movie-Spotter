@@ -91,7 +91,6 @@ export default {
         username: false,
         password: false,
         pwcorrect: false,
-        nickname: false,
       },
     }
   },
@@ -102,9 +101,6 @@ export default {
     'password': function() {
       this.checkPassword()
       console.log('현재 비밀번호 상태',this.valid.password)
-    },
-    'nickname': function() {
-      this.checkNickname()
     },
     'password2': function() {
       this.checkPwcorrect()
@@ -141,9 +137,26 @@ export default {
     },
     signUp() {
       if (this.password != this.password2) {
-        alert('비밀번호가 틀렸습니다.')
+        alert('비밀번호가 일치하지 않습니다.')
         return
       }
+      if (this.valid.username) {
+        alert('아이디가 유효하지 않습니다.')
+        this.username = null
+        return
+      }
+      if (this.valid.password) {
+        alert('패스워드가 유효하지 않습니다.')
+        this.password = null
+        this.password2 = null
+        return
+      }
+      if (this.valid.pwcorrect) {
+        alert('패스워드가 일치하지 않습니다.')
+        this.password2 = null
+        return
+      }
+      console.log(this.valid.username)
       axios({
         method: 'post',
         url: 'http://127.0.0.1:8000/accounts/signup/',
@@ -163,6 +176,8 @@ export default {
           alert('중복된 아이디입니다.')
           this.username=null
         })
+      
+      
     },
     checkUsername() {
       const validateUsername = /^[a-zA-z0-9]{4,12}$/
