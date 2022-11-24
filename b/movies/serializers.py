@@ -4,7 +4,11 @@ from .models import Movie, Review, Genre, Actor
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-
+    class MovieSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Movie
+            fields = ('id', 'title',)
+    movie = MovieSerializer()
     class Meta:
         model = Review
         fields = '__all__'

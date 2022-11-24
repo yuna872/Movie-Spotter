@@ -8,10 +8,8 @@
         </div>
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }} / {{ movie?.['release_date'].slice(5,7) }} / {{ movie?.['release_date'].slice(8) }}</div>
         <div class="detail-overview">{{ movieOverview }}</div>
-        <div class="detail-video">
-          <div @click="onClickVideo" style="cursor:pointer">
+        <div class="detail-video" style="cursor:pointer" @click="onClickVideo">
             예고편 보러가기
-          </div>
         </div>
         <!-- 감독, 배우 출력 -->
         <div class="people">
@@ -265,7 +263,7 @@ export default {
   text-align: left;
   /* height: 40%; */
   position: absolute;
-  bottom : 20vh;
+  bottom : 10vh;
   left : 5vw;
 }
 
@@ -286,11 +284,12 @@ export default {
 .detail-overview {
   font-size:1.2em;
   width : 30vw;
-  margin : 30px 0; 
+  margin-top : 25px;
+  margin-bottom: 15px; 
 }
 .detail-video {
   border: 3px solid white;
-  width : 15vw;
+  width : 12vw;
   border-radius: 50px;
   height : 60px;
   text-align: center;
@@ -298,7 +297,11 @@ export default {
   align-items: center;
   justify-content: center;
   padding : 5px;
-  margin-bottom: 20px
+  margin-bottom: 20px;
+}
+.detail-video:hover {
+  color: black;
+  background-color: white
 }
 .detail-actor-div {
   width: 90px;
@@ -422,22 +425,22 @@ export default {
 }
 
 .review-btn {
-  margin: 20px auto;
-  border: 3px solid white;
-  width : 60%;
+  width: 50%;
+  margin: auto;
   border-radius: 50px;
-  height : 60px;
-  text-align: center;
+  border : none;
+  color : #25252e;
+  height : 40px;
+  background-color: rgb(230, 227, 227);
   display: flex;
-  align-items: center;
+  text-align: center;
   justify-content: center;
-  padding : 5px;
-  margin-bottom: 20px
+  padding-top: 7px;
 }
 
 .review-btn:hover {
-  color: #F6BE00;
-  border-color: #F6BE00
+  scale: 1.02;
+  background-color: rgb(199, 198, 198);
 }
 
 /* 모달 클릭시 배경 어둡게 */

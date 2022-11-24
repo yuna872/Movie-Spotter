@@ -4,8 +4,9 @@
       <div class="userinfo-top-bg"></div>
 
       <div class="userinfo-top-box">
-        <p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
+        <p class="info-id">{{ userinfo?.username }}님의 페이지</p>
         <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
+        <!-- {{reviewinfo}} -->
         <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p>
       </div>
   
@@ -21,12 +22,12 @@
             class="info-div"  
           > 
             <div class='review-rank'> <i class="fa-solid fa-star fa-sm" style="color:#F6BE00"></i> 
-              &nbsp;{{ review.rank }}점
+              &nbsp;{{ review?.rank }}
             </div>
-          <div class='review-content'>{{ review.content }}</div>
-            <div class = 'review-like'>
+          <div class='review-content'>🎬 <span style="text-decoration: underline; cursor:pointer" @click="goDetail(review)">{{ review?.movie.title }}</span> <p></p> {{ review?.content }}</div>
+            <div style="text-align:center">
               <i class="fa-solid fa-thumbs-up"></i>&nbsp;
-              {{ review.like_users.length }}&nbsp;likes
+              {{ review?.like_users.length }}
             </div>
           </div>
         </div>
@@ -144,6 +145,9 @@ export default {
         })
         .catch((err)=>{console.log(err)})
     },
+    goDetail(review) {
+      this.$router.push({'name' : 'detail', params : { id : review.movie.id }})
+    }
   },
 }
   
@@ -172,7 +176,7 @@ export default {
   height : 100%;
   display: flex;
   flex-direction: column;
-  background-color: rgb(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .user-profile {
@@ -185,6 +189,7 @@ export default {
 
 .info-id{
   font-size : 3em;
+  color: white;
 }
 
 /* 리뷰 */
@@ -196,8 +201,6 @@ export default {
   flex-direction: column;
 }
 
-
-
 .info-div {
   text-align: left;
   justify-content: space-between;
@@ -205,20 +208,23 @@ export default {
   grid-template-columns: 1fr 3fr 1fr;
   font-size : 1.1em;
   align-items: center;
-  border-bottom: solid 2px white;
-  padding-bottom : 10px;
+  background-color: rgba( 255, 255, 255, 0.2 );
+  padding : 13px;
   width : 90%;
-  margin : auto;
+  margin : 15px auto;
+  border-radius: 13px;
 }
 
 
 
 .info-nickname {
   font-size : 1.8em;
+  color: white;
 }
 
 .info-follow {
   font-size : 1.2em;
+  color: white;
 }
 
 .userinfo-top-bottom {
@@ -227,7 +233,7 @@ export default {
 }
 
 .myreview-list {
-  height : 50%;
+  height : 400px;
   width : 60%;
   margin : auto;
   overflow-y: scroll;
