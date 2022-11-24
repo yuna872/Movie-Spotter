@@ -9,9 +9,10 @@
 <hr>
 
 ## 업무분담
-![업무분담1](../image/업무분담1.png)
-![업무분담2](../image/업무분담2.png)
-![업무분담3](../image/업무분담3.png)
+![역할분담](../image/역할분담1.png)
+![역할분담](../image/역할분담2.png)
+![역할분담](../image/역할분담3.png)
+<br>
 
 ### 📑최김박 프로젝트 노션 (https://www.notion.so/a-k-a-a5ea666ed3c948caaaaaf72b41db66ec)
 <br>
