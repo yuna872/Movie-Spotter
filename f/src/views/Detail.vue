@@ -343,6 +343,7 @@ export default {
   height: 70%;
   margin : auto;
   justify-content: space-between;
+  border-radius: 30px;
 }
 
 .review-left-box {
@@ -391,6 +392,9 @@ export default {
   width : 55%;
   margin : 5%;
   overflow-y: scroll;
+  background-color: rgba( 255, 255, 255, 0.1 );
+  border-radius: 5px;
+  padding: 1%;
 }
 
 .rank-avg {
