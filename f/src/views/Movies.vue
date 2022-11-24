@@ -233,7 +233,7 @@ export default {
   font-family: 'Secular One', sans-serif;
   font-size : 6em;
   width: 15ch;
-  animation-delay: 2s;
+  animation-delay: 5s;
   animation: typing 2.5s steps(15), blink .4s step-end infinite alternate;
   white-space: nowrap;
   overflow: hidden;
@@ -241,6 +241,7 @@ export default {
   display: flex;
   align-items: center;
   margin : auto;
+  
 }
 
 @keyframes typing {
