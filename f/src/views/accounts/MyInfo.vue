@@ -1,18 +1,20 @@
 <template>
   <div class="userinfo">
     <div class="userinfo-top">
-      <div><p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
-      <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
-      <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p></div>
-      <div class="user-profile">
-        <div class="user-profile-img"></div>>
+      <div class="userinfo-top-bg"></div>
+
+      <div class="userinfo-top-box">
+        <p class="info-id">{{ userinfo?.username }}님의 마이 페이지</p>
+        <p class="info-nickname">닉네임 : {{ userinfo?.nickname }} 😉</p>
+        <p class="info-follow"><i class="fa-solid fa-user-group"></i> &nbsp; followers {{ userinfo?.followers.length }} &nbsp;&nbsp; | &nbsp;&nbsp; followings {{ userinfo?.followings.length }}</p>
       </div>
+  
       <!-- 상세정보 -->
     </div>
     <div class="userinfo-top-top">
       <div class="review-wrap">
         <p style="font-size : 1.4em;margin-top:20px;">내가 쓴 리뷰 📑</p>
-        <div class="myreview-list scroll-div">
+        <div v-if="reviewinfo?.length" class="myreview-list scroll-div">
           <div 
             v-for="(review, index) in reviewinfo" 
             :key="index"
@@ -28,8 +30,10 @@
             </div>
           </div>
         </div>
+        <div v-else style="font-size:1.5em;">리뷰가 아직 없어요 :-(</div>
       </div>
     </div>
+
     <div class="userinfo-top-bottom">
 
       <div class="swiper-box">
@@ -51,6 +55,7 @@
 
 
 <script>
+import _ from 'lodash'
 import axios from 'axios'
 import jwt_decode from "jwt-decode"
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
@@ -149,15 +154,8 @@ export default {
 
 .userinfo {
   width : 100vw;
-  /* height : 100vh; */
 }
-.userinfo-box {
-  display: flex;
-  flex-direction: column;
-  width : 90%;
-  margin : auto;
-  border : 3px solid green;
-}
+
 .userinfo-top {
   background-image: url('@/assets/caramel.jpg');
   background-size: cover;
@@ -165,62 +163,40 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  border : 3px solid red;
+  color: black;
 }
 
-.userinfo-top-bg {
-  position: absolute;
-  height: 20vh;
-  top : 20vh;
-  right:0;left:0;
-  background-color: #25252e;
-  border : 3px solid blue;
+
+.userinfo-top-box {
+  padding-top : 10vh;
+  height : 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255, 0.5);
 }
+
 .user-profile {
   width : 15vw;
   margin-left : 10vw;
   position: absolute;
   z-index: 1;
 }
-.user-profile-img{
-  border-radius: 100%;
-  padding-bottom : 100%;
-  background-image: url('@/assets/null.png');
-  background-size: cover;
-}
+
 
 .info-id{
-  display: inline-block;
-  width : auto;
-  border : 3px solid blue;
-  font-size : 1.1em;
+  font-size : 3em;
 }
 
-
-
-.userinfo-top-top p {
-  text-align: center;
-  margin-bottom: 5px;
-}
+/* 리뷰 */
 
 .review-wrap {
-  width : 100vh;
+  margin-top : 5vh;
+  justify-content: center;
   display: flex;
   flex-direction: column;
 }
 
-.review-rank {
-  border : 3px solid blue;
 
-}
-
-.review-content {
-  border : 3px solid blue;
-
-}
-.review-like {
-  border : 3px solid blue;
-}
 
 .info-div {
   text-align: left;
@@ -236,11 +212,7 @@ export default {
 }
 
 
-.info-id {
-  margin-left: 10vw;
-  font-size : 2.5em;
-  border : 3px solid blue;
-}
+
 .info-nickname {
   font-size : 1.8em;
 }
@@ -251,6 +223,7 @@ export default {
 
 .userinfo-top-bottom {
   height : 40%;
+  margin-top : 10vh;
 }
 
 .myreview-list {

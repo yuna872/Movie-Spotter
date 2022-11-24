@@ -1,9 +1,9 @@
 <template>
   <div class="movie-list">
-    <div class="recommend-title">
-      <p>Only For Movie Spotters</p>
-      <div><i class="fa-solid fa-arrow-down fa-3x"></i></div></div>
     <div class="recommend1">
+      <div class="recommend-title">
+        <p>Only For Movie Spotters</p>
+      </div>
       <div class="comment1">
         <p>{{ userinfo?.nickname }}님의 취향저격</p>
 
@@ -48,6 +48,10 @@
         
 
     <div class="recommend2" v-if="recommendMoviesByMyFollowings?.length">
+      
+      <div class="recommend-title">
+        <p>Only For Movie Spotters</p>
+      </div>
       <div class="comment2">
         <p>{{ userinfo?.nickname }}님의 친구들은?</p>
         <div>
@@ -206,27 +210,27 @@ export default {
   width : 100%;
   height : 100%;
 }
-.recommend-title {
-  padding-top : 5vh;
-  background-color: black;
-  
-  display: flex;
-  flex-direction: column;
-  /* font-family: 'Secular One', sans-serif; */
-}
-
-.recommend-title p {
-  font-size: 3em;
-  font-family: 'Libre Baskerville', serif;
-}
-
 
 .recommend1 {
+  position: relative;
   display: flex;
   align-items: center;
   width:100vw;
   height : 100vh;
   background: radial-gradient(circle closest-corner at 70%, rgba(255,210,60,0.8), rgba(255,210,60,0.5),  rgba(0,0,0,0.7),rgba(0,0,0,1));
+}
+
+.recommend-title {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top:3vh;right: 0;left:0
+}
+
+.recommend-title p {
+  font-size: 1.7em;
+  font-family: 'Libre Baskerville', serif;
 }
 
 .by-follower {
@@ -239,6 +243,7 @@ export default {
   left : 45%;
 }
 .recommend2 {
+  position: relative;
   display: flex;
   align-items: center;
   width: 100vw;
@@ -249,7 +254,6 @@ export default {
 .poster {
   border-radius: 20px;
   height:60vh;
-  /* padding-bottom : 10%; */
 }
 
 .poster:hover {
@@ -270,40 +274,36 @@ export default {
 }
 .container {
   width : 45vw;
-  /* border : 3px solid pink; */
 }
 
 .comment1 {
   position: absolute;
   left : 10%;
-  padding-bottom: 10%;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: ; */
+  padding-bottom: 5%;
 }
 
 .comment1 p {
-  font-size: 5em;
+  font-size: 4em;
   text-align: left;
 }
 .comment1 span {
-  font-size: 5em;
+  font-size: 4em;
   text-align: left;
 }
 
 .comment2 {
-  padding-bottom: 10%;
+  padding-bottom: 5%;
   position: absolute;
   right : 10%;
 }
 
 .comment2 p {
-  font-size: 5em;
+  font-size: 4em;
   text-align: right;
 }
 
 .comment2 span {
-  font-size: 5em;
+  font-size: 4em;
   text-align: right;
 }
 
