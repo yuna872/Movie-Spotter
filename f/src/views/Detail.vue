@@ -8,8 +8,15 @@
         </div>
         <div class="detail-date">개봉일: {{ movie?.['release_date'].slice(0,4) }} / {{ movie?.['release_date'].slice(5,7) }} / {{ movie?.['release_date'].slice(8) }}</div>
         <div class="detail-overview">{{ movieOverview }}</div>
-        <div class="detail-video" style="cursor:pointer" @click="onClickVideo">
+        <div v-if="movie?.video === 'novideo'">
+          <div class="detail-video">
+            예고편이 없습니다.
+          </div>
+        </div>
+        <div v-else>
+          <div class="detail-video" style="cursor:pointer" @click="onClickVideo">
             예고편 보러가기
+          </div>
         </div>
         <!-- 감독, 배우 출력 -->
         <div class="people">
@@ -111,7 +118,6 @@
 <script>
 import axios from 'axios'
 import vClickOutside from 'v-click-outside'
-// import StarRating from 'vue-star-rating'
 
 import ReviewForm from '@/components/ReviewForm';
 import ReviewItem from '@/components/ReviewItem';
@@ -126,7 +132,6 @@ export default {
     ReviewForm,
     ReviewItem,
     SimilarList,
-    // StarRating,
   },
   data() {
     return {
