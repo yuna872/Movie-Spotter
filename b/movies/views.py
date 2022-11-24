@@ -260,9 +260,79 @@ def recommendbymylikes(request):
         return Response(recommend)
                 
             
-    
+@api_view(['GET'])
+def recommendformainpage(request):
+    get_all_movies = Movie.objects.all()
+    all_movies = []
+    for movie in get_all_movies:
+        dic = {}
+        dic['id'] = movie.pk
+        dic['original_language'] = movie.original_language
+        dic['vote_count'] = movie.vote_count
+        dic['vote_average'] = movie.vote_average
+        dic['release_date'] = movie.release_date
+        all_movies.append(dic)
+
+    all_movies_sorted = sorted(all_movies, key=lambda x: x['vote_average'], reverse=True)
+    # new_movies
+    new_movies_sorted = sorted(all_movies_sorted, key=lambda x: x['release_date'], reverse=True)
+    new_movies_sub = new_movies_sorted[:40]
+    random.shuffle(new_movies_sub)
+    new_movies = []     
+    for movie in new_movies_sub[:20]:
+        movie = get_object_or_404(Movie, pk=movie['id'])
+        serializer = MovieSerializer(movie)
+        new_movies.append(serializer.data)
+
+    # korean_movies, international_movies
+    korean_movies_sub = []
+    international_movies_sub = []
+    movie_cnt = 0
+    for movie in all_movies_sorted:
+        if movie['original_language'] == 'ko':
+            if len(korean_movies_sub) < 40:
+                korean_movies_sub.append(movie['id'])
+                movie_cnt += 1
+        else:
+            if len(international_movies_sub) < 40:
+                international_movies_sub.append(movie['id'])
+                movie_cnt += 1
+        if movie_cnt == 80:
+            break
+
+    random.shuffle(korean_movies_sub)
+    random.shuffle(international_movies_sub)
+    korean_movies = []   
+    international_movies = []  
+    for movie_pk in korean_movies_sub[:20]:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        korean_movies.append(serializer.data)
+    for movie_pk in international_movies_sub[:20]:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        international_movies.append(serializer.data)
 
 
+    # new_movies
+    hot_movies_sub = []
+    hot_movies_sorted = sorted(all_movies_sorted, key=lambda x: x['vote_count'], reverse=True)
+    hot_movies_sub = hot_movies_sorted[:40]
+    random.shuffle(hot_movies_sub)
+    hot_movies = []     
+    for movie in hot_movies_sub[:20]:
+        movie = get_object_or_404(Movie, pk=movie['id'])
+        serializer = MovieSerializer(movie)
+        hot_movies.append(serializer.data)
+
+    recommend = {}
+
+    recommend['new_movies'] = new_movies
+    recommend['korean_movies'] = korean_movies
+    recommend['international_movies'] = international_movies
+    recommend['hot_movies'] = hot_movies
+
+    return Response(recommend)
 
 # @api_view(['POST'])
 # def recommendbymyfollowings(request):

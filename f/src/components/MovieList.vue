@@ -60,6 +60,9 @@
 // import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import MovieItem from '@/components/MovieItem.vue'
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8000'
+
 
 export default {
   name : 'MovieList',
@@ -82,69 +85,34 @@ export default {
             delay: 3500,
             disableOnInteraction: false
           },
-        }
+        },
+      newMovies: null,
+      koreanMovies: null,
+      internationalMovies: null,
+      hotMovies: null,
     }
   },  
-  props:{
-    movies : Array,
-  },
-  computed: {
-    newMovies() {
-      const tmpArr1 = this.movies?.map((movie)=>{
-        movie['release_date'] = parseInt(movie?.['release_date'].replace(/\-/g,''))
-        return movie
-      })
+
+  methods: {
+    getRecommend() {
       
-      tmpArr1?.sort(function (a, b){
-        return b['release_date'] - a['release_date']
-      })
+      axios({
+          method: 'get',
+          url: `${API_URL}/movies/recommendformainpage`,
+        })
+        .then((res)=>{
 
-      if (tmpArr1.length <= 20) {
-        return tmpArr1.slice(0, tmpArr1.length)
-      } else {
-        return tmpArr1.slice(0, 20)
-      }
-      
-    },
-    // 국내 영화
-    koreanMovies(){
-      const tmpArr2 = this.movies?.filter((movie)=>{
-            return movie['original_language'] === 'ko'
-      })
-
-      if (tmpArr2.length <= 20) {
-        return tmpArr2.slice(0, tmpArr2.length)
-      } else {
-        return tmpArr2.slice(0, 20)
-      }
-    },
-    // 해외영화
-    internationalMovies() {
-       const tmpArr3 =  this.movies?.filter((movie)=>{
-            return movie['original_language'] != 'ko'
-      })
-
-      if (tmpArr3.length <= 20) {
-        return tmpArr3.slice(0, tmpArr3.length)
-      } else {
-        return tmpArr3.slice(0, 20)
-      }
-    },
-    hotMovies() {
-      // 리스트 깊은 복사
-      const tmpMovies = this.movies?.slice()
-      // 투표수를 기준으로 모든 영화에 대하여 내림차순 정렬
-      tmpMovies?.sort(function (a, b){
-        return b['vote_count'] - a['vote_count']
-      })
-
-      if (tmpMovies.length <= 20) {
-        return tmpMovies.slice(0, tmpMovies.length)
-      } else {
-        return tmpMovies.slice(0, 20)
-      }
+          this.newMovies = res.data.new_movies
+          this.koreanMovies = res.data.korean_movies
+          this.internationalMovies = res.data.international_movies
+          this.hotMovies = res.data.hot_movies
+        })
+        .catch((err)=>{console.log(err)})
     },
   },
+  created() {
+    this.getRecommend()
+  }
 }
 </script>
 
