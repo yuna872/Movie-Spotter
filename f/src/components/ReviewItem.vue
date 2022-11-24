@@ -201,7 +201,7 @@ export default {
   font-size : 0.85em;
   margin-top : 10px;
   border: solid 3px white;
-  width : 34%;
+  width : 36%;
   height : 35px;
   border-radius: 50px;
   display: flex;

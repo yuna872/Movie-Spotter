@@ -283,6 +283,7 @@ nav a {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   justify-content: space-between;
   overflow-y: scroll;
+  padding-left: 10px;
 }
 .firsttime-title {
   font-size: 2em;
@@ -305,10 +306,10 @@ nav a {
 
 .shadow-light {
   padding: 1rem;
-  color: rgb(36, 255, 102);
-  filter: drop-shadow(0 0 2px rgba(36, 255, 102, 0.7))
-    drop-shadow(0 0 5px rgba(36, 255, 102, 0.7))
-    drop-shadow(0 0 15px rgba(36, 255, 102, 0.7));
+  color: rgb(255, 210, 60);
+  filter: drop-shadow(0 0 2px rgba(255, 210, 60, 0.7))
+    drop-shadow(0 0 5px rgba(255, 210, 60, 0.7))
+    drop-shadow(0 0 15px rgba(255, 210, 60, 0.7));
 }
 
 .firsttime-btn {

@@ -1,7 +1,7 @@
 <template>
   <div class="review-form" >
       <i class="fa-solid fa-x fa-lg x-btn" @click="modalToggle" style="cursor:pointer"></i>
-      <div class="review-text">이 영화, 어떠셨나요?</div>
+      <div class="review-text" style="text-align:center">이 영화, 어떠셨나요?</div>
       <form @submit.prevent="putReview" class="form">
         <div class="star-div">
           <star-rating
