@@ -43,7 +43,7 @@
     
     
     <div class="movies-box">
-      <MovieList :movies="movies"/>
+      <MovieList/>
     </div>
   </div>
 </template>
@@ -104,8 +104,6 @@ export default {
       })
       .then((res)=>{
         // 평점을 기준으로 모든 영화에 대하여 내림차순 정렬
-        console.log('얍')
-        console.log(res.data)
         this.movies = res.data.sort(function (a, b){
           return b['vote_average'] - a['vote_average']
         })

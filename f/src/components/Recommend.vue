@@ -47,7 +47,7 @@
     </div>
         
 
-    <div class="recommend2">
+    <div class="recommend2" v-if="recommendMoviesByMyFollowings?.length">
       <div class="comment2">
         <p>{{ userinfo?.nickname }}님의 친구들은?</p>
         <div>
@@ -63,7 +63,7 @@
         </div>
       </div>
     
-      <div v-if="recommendMoviesByMyFollowings?.length" id="carousel2Interval" class="carousel slide container by-follower" data-bs-ride="carousel">
+      <div id="carousel2Interval" class="carousel slide container by-follower" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div 
             @click ='goDetail(recommendMoviesByMyFollowings?.[0])'
@@ -145,7 +145,6 @@ export default {
         })
         .then((res)=>{
           this.userinfo = res.data
-          console.log(this.userinfo,'🎂')
         })
         .catch((err)=>{console.log(err)})
     },
@@ -164,10 +163,8 @@ export default {
           }
         })
         .then((res)=>{
-          console.log('❤')
           this.recommendMoviesByMyLikes = res.data
           this.isLoading = true
-          console.log(this.recommendMoviesByMyLikes,'🎨')
         })
         .catch((err)=>{console.log(err)})
     },
