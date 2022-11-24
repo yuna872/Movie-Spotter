@@ -4,15 +4,14 @@
 <br><br><br>
 
 # MOVIE SPOTTER
-
 <img src="../image/mini_logo.png" width="30%" height="30%"/>
 
 <hr>
 
 ## 업무분담
-![역할분담](../image/역할분담1.png)
-![역할분담](../image/역할분담2.png)
-![역할분담](../image/역할분담3.png)
+<img src="../image/역할분담1.png" width="30%" height="30%"/>
+<img src="../image/역할분담2.png" width="30%" height="30%"/>
+<img src="../image/역할분담3.png" width="30%" height="30%"/>
 
 ### 📑최김박 프로젝트 노션 (https://www.notion.so/a-k-a-a5ea666ed3c948caaaaaf72b41db66ec)
 <br>
@@ -48,7 +47,7 @@
 <br>
 
 ## 💻URL 명세
-![url](../image/url.png)
+<img src="../image/url.png" width="30%" height="30%"/>
 <br>
 
 ## 서비스 기능
